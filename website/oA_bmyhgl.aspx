@@ -66,7 +66,7 @@
             height: 100px;
             width: 250px;
             float: left;
-            margin-left: 400px;
+            margin-left: 391px;
         }
 
         .top2 {
@@ -91,19 +91,19 @@
         .left{
             height:580px;
             width:400px;
-            border:1px solid #0092D7;
+            box-shadow: 1px 1px 1px #0E8613;
             float:left;
         }
         .right {
             height: 580px;
             width: 580px;
-            border: 1px solid #0092D7;
             margin-left: 420px;
+            box-shadow: 1px 1px 1px #607D8B;
         }
        .left1{
-           height:80px;
+           height:100px;
            width:auto;
-           background-color:#0092D7;
+           background-color:#0E8613;
            
        }
         .column {
@@ -148,7 +148,7 @@
             height: 30px;
             width: 30px;
             float: left;
-            margin: 28px 0 0 10px;
+            margin: 42px 0 0 -6px;
             background-image: url(img/z3.png);
             -moz-transition: all 0.2s ease-in-out;
             -webkit-transition: all 0.2s ease-in-out;
@@ -173,7 +173,7 @@
             height: 30px;
             width: 30px;
             float: left;
-            margin: 4px 0 0 10px;
+            margin: 2px 0 0 30px;
             background-image: url(img/z3.png);
             -moz-transition: all 0.2s ease-in-out;
             -webkit-transition: all 0.2s ease-in-out;
@@ -195,95 +195,116 @@
                 transform: rotate(360deg);
             }
         .right1{
-            height:50px;
+            height:60px;
            width:auto;
-           background-color:#0092D7;
+           background-color:#607D8B;
         }
         .right11{
-            height:30px;
+            height:40px;
            width:auto;
-           background-color:#0092D7;
+           background-color:#607D8B;
         }
         .left2{
-            height:500px;
+            height:480px;
             width:auto;
-            background-color:#f1f1f1;
+            background-color:#4CAF50;
         }
         .lb{
             height:49px;
             width:auto;
-            border-bottom:1px solid #B5B5B5;
+            border-bottom: 1px solid #57B55B;
+             background-color:#4CAF50;
 
+        }
+        .lb:hover{
+            background-color:#68CA6C;
+        }
+         .lb1{
+            height:49px;
+            width:580px;
+            border-bottom: 1px solid #9FB6C1;
+           
+
+        }
+        .lb1:hover{
+            background-color:#ABC2CE;
         }
         .lbspan {
             display: block;
             margin-top: 16px;
             margin-left: 25px;
+            color: #fff;
             
         }
         .lb2 {
             width: 62px;
             height: 30px;
             display: block;
-            background-color: #92DCE0;
+            color: #fff;
             float: left;
             line-height: 30px;
             text-align: center;
             border-radius: 6px;
-            margin: 10px 0 0 217px;
+            margin: -35px 0 0 302px;
+            background-color:#FF9800;
         }
 
             .lb2:hover {
                 color: #ffffff;
-                background-color:#0092D7;
+                background-color:#FFC107;
             }
             .lb3 {
             width: 62px;
             height: 30px;
             display: block;
-            background-color: #92DCE0;
             float: left;
             line-height: 30px;
+            background-color: #4CAF50;
             text-align: center;
             border-radius: 6px;
            margin: 10px 0 0 12px;
+           color:#ffffff;
         }
 
             .lb3:hover {
                 color: #ffffff;
-                background-color:#0092D7;
+                background-color:#35D63B;
             }
             .lb4 {
             width: 80px;
             height: 30px;
             display: block;
-            background-color: #92DCE0;
+            background-color: #0092D7;
             float: left;
             line-height: 30px;
             text-align: center;
             border-radius: 6px;
             margin: 10px;
+            color:#ffffff;
         }
 
             .lb4:hover {
                 color: #ffffff;
-                background-color:#0092D7;
+                background-color:#03A9F4;
             }
              .lb5 {
             width: 62px;
             height: 30px;
             display: block;
-            background-color: #92DCE0;
+            background-color:#FF9800;
             float: left;
             line-height: 30px;
             text-align: center;
             border-radius: 6px;
-            margin: 10px 0 0 141px;
+            margin: 10px 0 0 25px;
+            color: #fff;
+
+
         }
 
             .lb5:hover {
                 color: #ffffff;
-                background-color:#0092D7;
+                background-color:#FFC107;
             }
         .sx {
             height: 30px;
@@ -396,18 +417,85 @@
             width: 60px;
         }
         .inner{
-            height:50px;
-            width:40px;
-            background-color:#0092D7;
+            height:60px;
+            width:20px;
+            background-color:#607D8B;
             float:left;
         }
          .right2{
-            height:500px;
+            height:480px;
             width:auto;
-            background-color:#f1f1f1;
+            background-color:#9CB1BB;
+        } 
+         .pagination ul li a{
+             color: #fff !important;
+             background-color: #9CB1BB !important;
+         }
+        .ss {
+            height: 30px;
+            width: 220px;
         }
-</style>
+        .left3 {
+            width: 400px;
+            height: 480px;
+            margin-top: 15px;
+            display: inline-block;
+        }
+        .right3{
+            width: 580px;
+            height: 480px;
+            margin-top: 15px;
+            display: inline-block;
+        }
+        .img6 {
+            height: 25px;
+            width: 25px;
+            background-image: url(img/j5.png);
+            background-repeat: no-repeat;
+            background-position: center 0px;
+            filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+            -moz-background-size: 100% 100%;
+            background-size: 100% 100%;
+            margin: 10px 0 0 38px;
+            float: left;
+            display: inline-block;
+        }
+        .img7{
+            height: 25px;
+            width: 25px;
+            background-image: url(img/j10.png);
+            background-repeat: no-repeat;
+            background-position: center 0px;
+            filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+            -moz-background-size: 100% 100%;
+            background-size: 100% 100%;
+            margin: 10px 0 0 20px;
+            float: left;
+            display: inline-block;
+        }
+        .img8 {
+            height: 25px;
+            width: 25px;
+            background-image: url(img/j9.png);
+            background-repeat: no-repeat;
+            background-position: center 0px;
+            filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+            -moz-background-size: 100% 100%;
+            background-size: 100% 100%;
+            margin: 10px 0 0 30px;
+            float: left;
+            display: inline-block;
+        }
+
+        .pagination {
+            margin: 20px 0 0 282px;
+        }
+    </style>
     <script>
+        window.onload = function () {
+            ss();
+            ss1();
+        }
         $(function () {
             $("#select_pick").selectpick({
                 onSelect: function (value, text) {
@@ -417,6 +505,27 @@
             $("#test_4").selectpick({ optionColor: "#92DCE0", selectedColor: "#92DCE0" });
 
         });
+        
+        function ss() {
+            $('#input1').focus(function () {
+                $(this).css("background-image", "url(img/j1.png)");
+            });
+            $('#input1').blur(function () {
+                if ($('#input1').attr("value") == "") {
+                    $(this).css("background-image", "url(img/j3.png)");
+                }
+            });
+        };
+        function ss1() {
+            $('#input2').focus(function () {
+                $(this).css("background-image", "url(img/j6.png)");
+            });
+            $('#input2').blur(function () {
+                if ($('#input2').attr("value") == "") {
+                    $(this).css("background-image", "url(img/j8.png)");
+                }
+            });
+        };
     </script>
 </head>
 <body>
@@ -434,55 +543,64 @@
             <div class="left">
                 <div class="left1">
                     <div class="column">
-                        <div id="sb-search" class="sb-search sb-search-open">
-                            <form>
-                                <input class="sb-search-input" placeholder="输入部门的名称" type="text" value="" name="search" id="search"style="height:23px;float: left;margin-top: -22px;display: block;" />
-                                <div class="form1">
-                                    <div class="img2"></div>
-                                </div>
-                                <span class="sb-icon-search"></span>
-                            </form>
+                       
+                            
+                        <div class="ss">
+                            <input type="text" id="input1" style="background-image:url(img/j3.png);margin-top: 12px;margin-left: -30px;"/>
                         </div>
                     </div>
+               
                     <div class="img3"></div>
                 </div>
                 <div class="left2">
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >部门1</span>
+                    <div class="left3">
+                    <div class="lb" style="border-top: 1px solid #57B55B;">
+                        <div class="img6"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 50px;" >部门1</span>
                         <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
                     </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >部门1</span>
+                        <div class="lb">
+                        <div class="img6"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 50px;" >部门1</span>
                         <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
                     </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >部门1</span>
+                        <div class="lb">
+                        <div class="img6"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 50px;" >部门1</span>
                         <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
                     </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >部门1</span>
+                        <div class="lb">
+                        <div class="img6"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 50px;" >部门1</span>
                         <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
                     </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >部门1</span>
+                        <div class="lb">
+                        <div class="img6"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 50px;" >部门1</span>
                         <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
                     </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >部门1</span>
+                        <div class="lb">
+                        <div class="img6"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 50px;" >部门1</span>
                         <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
                     </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >部门1</span>
+                        <div class="lb">
+                        <div class="img6"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 50px;" >部门1</span>
                         <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
                     </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >部门1</span>
+                        <div class="lb">
+                        <div class="img6"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 50px;" >部门1</span>
                         <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
                     </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >部门1</span>
+                        <div class="lb">
+                        <div class="img6"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 50px;" >部门1</span>
                         <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
                     </div>
+                   
+                 </div>
 
                 </div>
             </div>
@@ -506,88 +624,105 @@
                     </div>
                     <div class="sx"></div>
                     <div class="column1">
-                        <div  class="sb-search sb-search-open">
-                            <form>
-                                <input class="sb-search-input" placeholder="输入人员的名称" type="text" value="" name="search" style="height:22px;float: left;width: 185px;margin-top: -22px;display: block;" />
-                                <div class="form1">
-                                    <div class="img2"></div>
-                                </div>
+                        <div  class="sss">
+                                <input class="sb-search-input"id="input2" type="text" style="height:22px;background-image:url(img/j8.png);margin-left: 67px;float: left;width: 185px;margin-top: -2px;display: block;" />
                                 <span class="sb-icon-search"></span>
-                            </form>
                         </div>
                     </div>
                     <div class="img4"></div>
                 </div>
                 <div class="right2">
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:41px;float:left;width: 50px;" >姓名</span>
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >用户名</span>
+                    <div class="right3">
+                    <div class="lb1"    style="border-top: 1px solid #9FB6C1;" >
+                        <div class="img7"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 70px;" >姓名:高阳</span>
+                        <div class="img8"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 120px;" >用户名:8888888</span>
                         <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
                         <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">照相</span>
                         <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
                     </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:41px;float:left;width: 50px;" >姓名</span>
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >用户名</span>
+                        <div class="lb1" >
+                        <div class="img7"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 70px;" >姓名:高阳</span>
+                        <div class="img8"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 120px;" >用户名:8888888</span>
                         <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
                         <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">照相</span>
                         <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
                     </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:41px;float:left;width: 50px;" >姓名</span>
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >用户名</span>
+                        <div class="lb1" >
+                        <div class="img7"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 70px;" >姓名:高阳</span>
+                        <div class="img8"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 120px;" >用户名:8888888</span>
                         <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
                         <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">照相</span>
                         <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
                     </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:41px;float:left;width: 50px;" >姓名</span>
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >用户名</span>
+                        <div class="lb1" >
+                        <div class="img7"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 70px;" >姓名:高阳</span>
+                        <div class="img8"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 120px;" >用户名:8888888</span>
                         <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
                         <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">照相</span>
                         <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
                     </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:41px;float:left;width: 50px;" >姓名</span>
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >用户名</span>
+                        <div class="lb1" >
+                        <div class="img7"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 70px;" >姓名:高阳</span>
+                        <div class="img8"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 120px;" >用户名:8888888</span>
                         <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
                         <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">照相</span>
                         <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
                     </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:41px;float:left;width: 50px;" >姓名</span>
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >用户名</span>
+                        <div class="lb1" >
+                        <div class="img7"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 70px;" >姓名:高阳</span>
+                        <div class="img8"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 120px;" >用户名:8888888</span>
                         <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
                         <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">照相</span>
                         <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
                     </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:41px;float:left;width: 50px;" >姓名</span>
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >用户名</span>
+                        <div class="lb1" >
+                        <div class="img7"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 70px;" >姓名:高阳</span>
+                        <div class="img8"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 120px;" >用户名:8888888</span>
                         <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
                         <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">照相</span>
                         <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
                     </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:41px;float:left;width: 50px;" >姓名</span>
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >用户名</span>
+                        <div class="lb1" >
+                        <div class="img7"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 70px;" >姓名:高阳</span>
+                        <div class="img8"></div>
+                        <span class="lbspan"style="margin-left:10px;float:left;width: 120px;" >用户名:8888888</span>
                         <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
                         <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">照相</span>
                         <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
                     </div>
-                     <div class="pagination" style="margin: 24px 0 0 283px;">
-                        <ul>
-                            <li><a href="#">上一页</a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">下一页</a></li>
-                        </ul>
+                       
+                            <div class="pagination" >
+                                <ul>
+                                    <li><a href="#">上一页</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">下一页</a></li>
+                                </ul>
+                            </div>
+       
                     </div>
-            </div>
+
+                </div>
                
         </div>
     </div>
+        </div>
 </body>
 </html>
