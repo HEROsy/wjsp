@@ -73,7 +73,7 @@ using System.Data.OleDb;
                         {
                             cmd.Parameters.AddRange(spr);
                         }
-                       r= cmd.ExecuteNonQuery();
+                       r= cmd.ExecuteNonQuery();    
                     }
                     con.Close();
                 }
@@ -129,30 +129,6 @@ using System.Data.OleDb;
             }
         }
 
-        public static void ExcoutSQLX(String sql, CommandType type, params SqlParameter[] spr)
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(ConnStr))
-                {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, con))
-                    {
-                        cmd.CommandType = type;
-                        if (spr != null)
-                        {
-                            cmd.Parameters.AddRange(spr);
-                        }
-                        cmd.ExecuteNonQuery();
-                    }
-                    con.Close();
-                }
-            }
-            catch (SqlException e)
-            {
-               
-            }
-        }
         /// <summary>
         /// 插入
         /// </summary>
