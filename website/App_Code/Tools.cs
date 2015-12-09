@@ -10,6 +10,8 @@ using System.Web;
 /// </summary>
 public static class Tools
 {
+    
+
     public static String BiuldJson(String Backcol, DataTable dt)
     {
         //前台js decode
