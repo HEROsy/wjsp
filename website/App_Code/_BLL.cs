@@ -24,4 +24,35 @@ public class _BLL
 
         return dt;
     }
+
+    /// <summary>
+    /// 获取考勤数据
+    /// </summary>
+    /// <param name="StartDate">开始日期</param>
+    /// <param name="EndDate">结束日期</param>
+    /// <param name="UserId">用户ＩＤ</param>
+    /// <returns>出错返回null</returns>
+    public DataTable GetKaoQing(String StartDate,String EndDate,String UserId)
+    {
+        DataTable dt = null;
+
+
+        return dt;
+    }
+
+    /// <summary>
+    /// 获取考勤分页数据
+    /// </summary>
+    /// <param name="Startdate">开始日期</param>
+    /// <param name="EndDate">结束日期</param>
+    /// <param name="UserId">用户ＩＤ</param>
+    /// <param name="PageSize">每页数据条数</param>
+    /// <param name="PageIndex">第几页</param>
+    /// <returns>出错返回ＮＵＬＬ</returns>
+    public DataTable GetKaoQingPage(String Startdate,String EndDate,String UserId,String PageSize,String PageIndex)
+    {
+        DataTable dt = null;
+
+        return dt;
+    }
 }
