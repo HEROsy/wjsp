@@ -4,12 +4,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <%--<script src="Script/jquery-1.8.2.min.js"></script>--%>
     <script src="Script/swkj.js"></script>
     <link href="Style/swkj.css" rel="stylesheet" />
     <link href="Style/swkjbt.css" rel="stylesheet" />
-    <script src="Script/selectpick.js"></script>
     <script src="Script/jquery-1.8.3.js"></script>
+    <script src="Script/selectpick.js"></script>
     <script src="Script/selectpick.js"></script>
     <title>我的考勤界面</title>
         <style type="text/css">
