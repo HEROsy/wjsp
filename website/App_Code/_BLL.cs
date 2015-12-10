@@ -33,11 +33,25 @@ public class _BLL
     /// <param name="UserId">用户ＩＤ</param>
     /// <returns>出错返回null</returns>
     public DataTable GetKaoQing(String StartDate,String EndDate,String UserId)
-    {
+    {   
         DataTable dt = null;
-
-
-        return dt;
+        SqlParameter[] spr = {
+                                  new SqlParameter("@startdate",StartDate),
+                                  new SqlParameter ("@enddate",EndDate),
+                                  new SqlParameter ("@userid", UserId )
+                              };
+        try 
+	{
+        string sql = SqlHelper.GetSQLSelect_normal("", "", "user",spr, ">=,<=,=", "and,and,and", "StartDate,EndDate,UserId");
+  
+            dt = SqlHelper.GetTable(sql, CommandType.Text,spr);
+         
+            return dt;
+	}
+	catch (Exception)
+	{
+		return null;
+	}
     }
 
     /// <summary>
@@ -51,8 +65,32 @@ public class _BLL
     /// <returns>出错返回ＮＵＬＬ</returns>
     public DataTable GetKaoQingPage(String Startdate,String EndDate,String UserId,String PageSize,String PageIndex)
     {
-        DataTable dt = null;
 
-        return dt;
+
+
+        DataTable dt = null;
+        SqlParameter[] spr = {
+                                  new SqlParameter("@startdate",Startdate),
+                                  new SqlParameter ("@enddate",EndDate),
+                                  new SqlParameter ("@userid", UserId ),
+                                  new SqlParameter("@startdate",PageSize),
+                                  new SqlParameter ("@enddate",PageIndex)
+                                 
+                              };
+        try
+        {
+            string sql = SqlHelper.GetSQLSelect_normal("", "", "user", spr, ">=,<=,=,=,=", "and,and,and,and,and", "StartDate,EndDate,UserId,PageSize,PageIndex");
+            
+            dt = SqlHelper.GetTable(sql, CommandType.Text, spr);
+
+            return dt;
+                         
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+
+       
     }
 }
