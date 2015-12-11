@@ -833,10 +833,10 @@
                             <div class="inner1"></div>
                             <div style="float: left; width: 180px;">
                                 <select id="test_3" >
-                                    <option value="1">2015年</option>
-                                    <option value="2">2014年</option>
-                                    <option value="3">2013年</option>
-                                    <option value="4">2012年</option>
+                                    <option value="2015">2015年</option>
+                                    <option value="2014">2014年</option>
+                                    <option value="2013">2013年</option>
+                                    <option value="2012">2012年</option>
                                 </select>
                             </div>
                             <div style="float: left; width: 180px;">
