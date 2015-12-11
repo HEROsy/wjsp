@@ -4,14 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <script src="Script/swkj.js"></script>
     <link href="Style/swkj.css" rel="stylesheet" />
     <link href="Style/swkjbt.css" rel="stylesheet" />
-    <script src="Script/jquery-1.8.3.js"></script>
-    <script src="Script/selectpick.js"></script>
-    <script src="Script/selectpick.js"></script>
-    <title>所有员工考勤界面</title>
-       <style type="text/css">
+    <script src="Script/jquery-1.8.2.min.js"></script>
+    <script src="Script/swkj.js"></script>
+
+    <title>我的考勤界面</title>
+    <style type="text/css">
         p {
             font-family: "微软雅黑" !important; /*强制使用这种字体*/
             letter-spacing: 1px; /*最小间距1px，可根据需要调整，不得低于1px*/
@@ -89,9 +88,9 @@
         }
 
         .mid {
-            height: 60px;
+            height: 100px;
             width: auto;
-            background-image: url(img/bb1.png);
+            background-image: url(img/G2.png);
             background-repeat: no-repeat;
             background-position: center 0px;
             filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
@@ -99,103 +98,8 @@
             background-size: 100% 100%;
         }
 
-        .select {
-            height: 30px;
-            width: 150px;
-        }
-
-        .selectpick_div {
-            background-color: #FFFFFF;
-            font-size: 13px;
-            font-weight: 500;
-            border-radius: 5px;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-            border: solid 1px #CFCFCF;
-            line-height: 30px;
-            position: absolute;
-            padding-left: 5px;
-            overflow: hidden;
-            cursor: pointer;
-            overflow: hidden;
-            z-index: 9060;
-        }
-
-        .selectpick_icon {
-            float: right;
-            background: url(img/C5.png) no-repeat center;
-            margin-right: 5px;
-            height: 20px;
-            margin-top: 5px;
-            width: 20px;
-            cursor: pointer;
-        }
-
-        .selectpick_div:hover {
-            background-color: #F5F5F5;
-            border: solid 1px #ccc;
-        }
-
-        .selectpick_div:active {
-            -moz-box-shadow: 0 0 3px #0099CC;
-            -webkit-box-shadow: 0 0 3px #0099CC;
-            box-shadow: 0 0 3px #0099CC;
-            border: solid 1px #0099CC;
-        }
-
-        .selectpick_options {
-            border: solid 1px #CFCFCF;
-            border-bottom: none;
-            position: absolute;
-            z-index: 9060;
-            font-size: 13.5px;
-        }
-
-            .selectpick_options ul {
-                list-style: none;
-                height: auto;
-                margin: 0px;
-                padding: 0px;
-                z-index: 9060;
-                font-size: 13.5px;
-            }
-
-                .selectpick_options ul li {
-                    border-bottom: solid 1px #CFCFCF;
-                    padding-left: 5px;
-                    display: block;
-                    font-size: 13.5px;
-                    z-index: 9060;
-                    background-color: #fff;
-                }
-
-        .selectpick_options_selected {
-            font-size: 13.5px;
-            z-index: 9060;
-        }
-
-        .select_hide {
-            -moz-opacity: 0;
-            opacity: 0;
-            -webkit-opacity: 0;
-            filter: alpha(opacity = 0);
-            width: 150px;
-        }
-
-        .selectpick_no_select {
-            cursor: default;
-            color: #9a9898;
-            background-color: #F5F5F5;
-        }
-
-        .select_span {
-            float: left;
-            height: 30px;
-            width: 60px;
-        }
-
         .inner {
-            height: 30px;
+            height: 19px;
             width: auto;
             background-color: #0092D7;
         }
@@ -208,8 +112,9 @@
 
         .img2 {
             height: 30px;
+            float: left;
             width: 30px;
-            margin-left: 590px;
+            margin-top: 26px;
             background-image: url(img/v2.png);
             background-repeat: no-repeat;
             background-position: center 0px;
@@ -218,41 +123,30 @@
             background-size: 100% 100%;
         }
 
-        .shijian {
-            display: block;
-            margin-left: 50px;
-            color: #fff;
-            font-size: 14px;
-            font-family: 微软雅黑 !important;
-            margin-top: 9px;
-        }
-
         .bm {
             height: 490px;
-            background-color: #F1F1F1;
+            border: 1px solid #F0EFEF;
         }
 
         .bm1 {
             height: 50px;
             width: auto;
-            border-bottom: 1px solid #B4B5B5;
+            border-bottom: 1px solid #F4F5F5;
         }
 
+            .bm1:hover {
+                background-color: #F5F5F5;
+            }
+
         .img3 {
-            height: 25px;
-            width: 25px;
-            background-repeat: no-repeat;
-            background-position: center 0px;
-            filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
-            -moz-background-size: 100% 100%;
-            background-size: 100% 100%;
-            background-image: url(img/y2.png);
-            display: block;
-            margin: 16px 0 0 39px;
-            float: left;
+            background-image: url(img/y2.png) !important;
         }
 
         .img4 {
+            background-image: url(img/y3.png) !important;
+        }
+
+        .imgno {
             height: 25px;
             width: 25px;
             background-repeat: no-repeat;
@@ -260,39 +154,38 @@
             filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
             -moz-background-size: 100% 100%;
             background-size: 100% 100%;
-            background-image: url(img/y3.png);
+            background-image: url(img/y1.png);
             display: block;
-            margin: 16px 0 0 39px;
+            margin: 12px 0 0 39px;
             float: left;
         }
 
         .s1 {
             display: block;
-            width: 200px;
+            width: 213px;
             height: 50px;
-            line-height: 60px;
-            margin-left: 50px;
-            font-family: "微软雅黑" !important;
-            letter-spacing: 1px;
+            line-height: 50px;
+            margin-left: 57px;
             font-size: 14px;
             float: left;
         }
 
         .s2 {
             height: 50px;
-            width: 200px;
+            width: 141px;
             line-height: 50px;
-            margin-left: -24px;
-            font-family: "微软雅黑" !important;
-            letter-spacing: 1px;
             font-size: 14px;
+            display: block;
+            float: left;
         }
 
         .s3 {
-            font-family: "微软雅黑" !important;
-            letter-spacing: 1px;
             font-size: 14px;
-            margin-left: 50px;
+            display: block;
+            float: left;
+            height: 50px;
+            width: 100px;
+            line-height: 50px;
         }
 
         .top3 {
@@ -377,273 +270,401 @@
         }
 
         .pagination {
-            margin: 40px 0 0 610px;
+            margin: 30px 0 0 710px;
         }
 
-        #w1 {
+        select {
+            width: 118px !important;
+            margin-top: 26px;
+            font-family:"微软雅黑" !important;
+            letter-spacing:1px;
+        }
+
+        #xzsj {
+            color: #ffffff;
+            font-weight: bold;
+            line-height: 29px;
+            letter-spacing: 2px;
+        }
+
+        .tongji {
+            color: #ffffff;
+            display: inline-block;
+            width: 129px;
+            line-height: 25px;
+        }
+
+        .sb {
+            display: inline-block;
+            width: 11px;
+            height: 11px;
+            margin-right: 12px;
+            -moz-border-radius: 15px; /* Gecko browsers */
+            -webkit-border-radius: 15px; /* Webkit browsers */
+            border-radius: 15px; /* W3C syntax */
+        }
+
+        .bs1 {
+            background-color: #f2c618;
+        }
+
+        .bs2 {
+            background-color: #f2c618;
+        }
+
+        .bs3 {
+            background-color: #db46ff;
+        }
+
+        .bs4 {
+            background-color: #07e2d5;
+        }
+
+        .bs5 {
+            background-color: #f26666;
+        }
+
+        .bs6 {
+            background-color: #11f808;
+        }
+
+
+        .bq1 {
+            color: #f2c618;
+        }
+
+        .bq2 {
+            color: #f2c618;
+        }
+
+        .bq3 {
+            color: #db46ff;
+        }
+
+        .bq4 {
+            color: #07e2d5;
+        }
+
+        .bq5 {
             color: #f26666;
         }
 
-        #w2 {
-            color: #f26666;
+        .bq6 {
+            color: #11f808;
         }
 
-        #w3 {
-            color: #f26666;
+        .readbzt {
+            height: 45px;
+            width: 250px;
+            background-color: #F47575;
+            display: block;
+            color: #ffffff;
+            text-align: center;
+            line-height: 46px;
+            margin: 20px 0 0 375px;
+            letter-spacing: 4px;
+            font-size: 16px;
+        }
+
+            .readbzt:hover {
+                background-color: #fb8484;
+            }
+
+        #zhezhao {
+            width: 100%;
+            height: 658px;
+            position: absolute;
+            background-color: #ffffff;
+            visibility: hidden;
+        }
+
+        .zzclose {
+            margin: 25px 0 0 950px;
+            width: 25px;
+            height: 25px;
+            position: absolute;
         }
     </style>
 
     <script type="text/javascript">
-        $(function () {
-            $("#select_pick").selectpick({
-                onSelect: function (value, text) {
-                }
-            });
-            $("#test_3").selectpick({ optionColor: "#92DCE0", selectedColor: "#92DCE0" });
-            $("#test_4").selectpick({ optionColor: "#92DCE0", selectedColor: "#92DCE0" });
-            $("#test_5").selectpick({ optionColor: "#92DCE0", selectedColor: "#92DCE0" });
 
-        });
-        function getCurDate() {
-            var d = new Date();
-            var week;
-            var years = d.getFullYear();
-            var month = add_zero(d.getMonth() + 1);
-            var days = add_zero(d.getDate());
-            var hours = add_zero(d.getHours());
-            var minites = add_zero(d.getMinutes());
-            var seconds = add_zero(d.getSeconds());
-            var ndate = "当前时间:" + years + "年" + month + "月" + days + "日" + hours + "：" + minites + ":" + seconds + "";
-            document.getElementById("shijian").innerHTML = ndate;
+        //获取服务器时间
+        var xmlHttp = false;
+        try {
+            xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            try {
+                xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e2) {
+                xmlHttp = false;
+            }
         }
-        function add_zero(temp) {
-            if (temp < 10) return "0" + temp;
-            else return temp;
+        if (!xmlHttp && typeof XMLHttpRequest != 'undefined') {
+            xmlHttp = new XMLHttpRequest();
         }
+        xmlHttp.open("GET", window.location.href.toString(), false);
+        xmlHttp.setRequestHeader("Range", "bytes=-1");
+        xmlHttp.send(null);
+        severtime = new Date(xmlHttp.getResponseHeader("Date"));
+        //获取服务器日期
+        var year = severtime.getFullYear();
+        var month = severtime.getMonth() + 1;
+        var n;
+        var y;
         window.onload = function () {
-            add_zero();
-            flush();
+            nian();
+            yue();
+            yesno();
         }
+        function tongji() {
+            n = document.getElementById("test_3").value;
+            y = document.getElementById("test_4").value;
+            var ren = document.getElementById("test_5").value;
+            document.getElementById("xzsj").innerHTML = "当前统计时间段为：" + n + "年" + y + "月" + ren + "的考勤情况";
+            document.getElementById("xzsj").style.color = "#444545";
+        }
+        function nian() {
+            var nian_html = "";
+            for (var i = 0; i < 5; i++) {
+                nian_html = nian_html + "<option value='" + (year - i) + "'>" + (year - i) + "年</option>";
+            }
+            test_3.innerHTML = nian_html;
+        }
+        function yue() {
+            var yue_html = "";
+            for (var i = month; i > 0; i--) {
+                yue_html = yue_html + "<option value='" + i + "'>" + i + "月</option>";
+            }
+            test_4.innerHTML = yue_html;
+        }
+        function yesno() {
+            var d = $('#bm').find(".bm1");
+            var dd = $('#bm').find(".imgno");
+            var ddd = $('#bm').find(".s3");
+            for (var i = 0; i < d.length; i++) {
+                if (d[i].innerHTML.indexOf("迟到") >= 0 || d[i].innerHTML.indexOf("早退") >= 0 || d[i].innerHTML.indexOf("病假") >= 0 || d[i].innerHTML.indexOf("事假") >= 0 || d[i].innerHTML.indexOf("旷工") >= 0) {
+                    dd[i].setAttribute("class", "imgno img3");
+                } else {
+                    dd[i].setAttribute("class", "imgno img4");
+                }
+            }
+            for (var j = 0; j < ddd.length; j++) {
+                if (ddd[j].innerHTML.indexOf("迟到") >= 0) {
+                    ddd[j].setAttribute("class", "s3 bq1");
+                }
+                if (ddd[j].innerHTML.indexOf("早退") >= 0) {
+                    ddd[j].setAttribute("class", "s3 bq2");
+                }
+                if (ddd[j].innerHTML.indexOf("病假") >= 0) {
+                    ddd[j].setAttribute("class", "s3 bq3");
+                }
+                if (ddd[j].innerHTML.indexOf("事假") >= 0) {
+                    ddd[j].setAttribute("class", "s3 bq4");
+                }
+                if (ddd[j].innerHTML.indexOf("旷工") >= 0) {
+                    ddd[j].setAttribute("class", "s3 bq5");
+                }
+                if (ddd[j].innerHTML.indexOf("正常") >= 0) {
+                    ddd[j].setAttribute("class", "s3 bq6");
+                }
+            }
+        }
+        function bzt() {
+            var xzsj = document.getElementById("xzsj").innerHTML;
+            var t1 = document.getElementById("t1").innerHTML;
+            t1 = (t1 / 480).toFixed(2);
+            var t2 = document.getElementById("t2").innerHTML;
+            t2 = (t2 / 480).toFixed(2);
+            var t3 = document.getElementById("t3").innerHTML;
+            var t4 = document.getElementById("t4").innerHTML;
+            var t5 = document.getElementById("t5").innerHTML;
+            var t6 = document.getElementById("t6").innerHTML;
+            var canshu = "?t1=" + t1 + "&t2=" + t2 + "&t3=" + t3 + "&t4=" + t4 + "&t5=" + t5 + "&t6=" + t6 + "&year=" + n + "&month=" + y;
+            if (xzsj.indexOf("左侧选择时间") >= 0) {
+                alert("请先选择时间，加载数据以后，再点击查看饼状图");
+            }
+            else {
+                document.getElementById("zhezhaoshow").innerHTML = "<iframe src='plus/bing.html" + canshu + "' style='width:990px;height:601px;border: 1px solid #F4F4F4;' id='ppshow'></iframe>";
+                document.getElementById("zhezhao").style.visibility = "visible";
+            }
 
-        function flush() {
-            setInterval("getCurDate()", 1000);
         }
-    </script>
+        function zhezhao() {
+            document.getElementById("zhezhaoshow").innerHTML = "";
+            document.getElementById("zhezhao").style.visibility = "hidden";
+        }
+</script>
 </head>
 <body>
-    <div style="width: 1000px; height: 680px; margin: auto">
+    <div id="zhezhao">
+        <div style="width: 1000px; height: 658px; margin: auto">
+            <div style="width: 1000px; height: 10px;">
+                <img src="img/zz_close.png" class="zzclose" onmouseover="this.style.cursor='pointer'" onclick="javascript:zhezhao();" />
+            </div>
+            <div style="width: 1000px; height: 615px;" id="zhezhaoshow">
+            </div>
+        </div>
+    </div>
+    <div style="width: 1000px; height: 658px; margin: auto">
         <%--此行不能修改--%>
-        <div class="row-fluid" style="margin-top: 10px">
+        <div class="row-fluid" style="margin-top: 5px">
             <%--此行不能修改--%>
             <div class="top">
-                <div class="top1">
-                    <div class="img"></div>
-                    <span style="font-size: 30px; margin-left: 50px; margin-top: -36px; height: 50px; display: block;">所有员工考勤</span>
-                </div>
-                <div class="top2">
-                    <div class="top3">
-                        <div class="img5"></div>
-                        <span class="chuqin">2015年一月出勤统计</span>
-                    </div>
-                    <div class="top4">
-                        <div class="img6"></div>
-                        <span class="chidao1">迟到：</span>
-                        <span class="chidao2">2</span>
-                        <span class="chidao1">天</span>
-                    </div>
-                    <div class="top4">
-                        <div class="img6"></div>
-                        <span class="chidao1">早退：</span>
-                        <span class="chidao2">2</span>
-                        <span class="chidao1">天</span>
-                    </div>
-                    <div class="top4">
-                        <div class="img6"></div>
-                        <span class="chidao1">病假：</span>
-                        <span class="chidao2">2</span>
-                        <span class="chidao1">天</span>
-                    </div>
-                    <div class="top4">
-                        <div class="img6"></div>
-                        <span class="chidao1">事假：</span>
-                        <span class="chidao2">2</span>
-                        <span class="chidao1">天</span>
-                    </div>
-                    <div class="top4">
-                        <div class="img6"></div>
-                        <span class="chidao1">旷工：</span>
-                        <span class="chidao2">2</span>
-                        <span class="chidao1">天</span>
-                    </div>
-                    <div class="top4">
-                        <div class="img11"></div>
-                        <span class="chidao1">正常：</span>
-                        <span class="chidao2">2</span>
-                        <span class="chidao1">天</span>
-                    </div>
-                </div>
-
-
-                <div class="inner"></div>
-
                 <div class="mid">
                     <div class="row-fluid">
-                        <div class="span8" style="height: 60px;">
+                        <div class="span12" style="height: 80px; margin-top: 10px;">
                             <div class="inner1"></div>
-                            <div style="float: left; width: 180px;">
+                            <div style="float: left; width: 127px; height: 80px;">
                                 <select id="test_3">
-                                    <option value="1">2015年</option>
-                                    <option value="2">2014年</option>
-                                    <option value="3">2013年</option>
-                                    <option value="4">2012年</option>
+                                    <option value="none">正在获取年份...</option>
                                 </select>
                             </div>
-                            <div style="float: left; width: 180px;">
+                            <div style="float: left; width: 127px; height: 80px;">
                                 <select id="test_4">
-                                    <option value="1">12月</option>
-                                    <option value="2">11月</option>
-                                    <option value="3">10月</option>
-                                    <option value="4">09月</option>
-                                    <option value="4">08月</option>
-                                    <option value="4">07月</option>
-                                    <option value="4">06月</option>
-                                    <option value="4">05月</option>
-                                    <option value="4">04月</option>
-                                    <option value="4">03月</option>
-                                    <option value="4">02月</option>
-                                    <option value="4">01月</option>
+                                    <option value="none">正在获取月份...</option>
                                 </select>
                             </div>
-                           
-                            <div style="float: left; width: 180px;">
+                            <div style="float: left; width: 127px; height: 80px;">
                                 <select id="test_5">
-                                    <option value="1">张三</option>
-                                    <option value="2">李四</option>
-                                    <option value="3">王五</option>
-                                    <option value="4">石头</option>
-                                    <option value="4">老大</option>
+                                    <option value="张三">张三</option>
+                                    <option value="李四">李四</option>
+                                    <option value="王麻子">王麻子</option>
+                                    <option value="赵武">赵武</option>
+                                    <option value="余留">余留</option>
+                                    <option value="杨七">杨七</option>
                                 </select>
                             </div>
-                            <div class="img2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"></div>
-                        </div>
-                        <div class="span4" style="height: 60px;">
-                            <span class="shijian" id="shijian">当前时间15:26分</span>
+                            <div class="img2" onmouseover="this.style.cursor='pointer'" onclick="javascript:tongji();"></div>
+                            <div style="width: 470px; height: 80px; float: left; margin-left: 70px;">
+                                <div><span id="xzsj">当前统计时间段为：请在左侧选择时间</span></div>
+                                <%--下面的时间如果是分钟就转为分钟数显示，如果是天数就转为天数显示，分钟精度为1分钟，天数精度为0.5天，请勿更改格式--%>
+                                <div><span class="sb bs1"></span><span class="tongji">迟到：<span id="t1">130</span>分钟</span><span class="sb bs2"></span><span class="tongji">早退：<span id="t2">500</span>分钟</span><span class="sb bs3"></span><span class="tongji">病假：<span id="t3">2</span>天</span></div>
+                                <div><span class="sb bs4"></span><span class="tongji">事假：<span id="t4">3.5</span>天</span><span class="sb bs5"></span><span class="tongji">旷工：<span id="t5">5.5</span>天</span><span class="sb bs6"></span><span class="tongji">正常：<span id="t6">18</span>天</span></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="bm">
+                <div class="bm" id="bm">
                     <div class="bm1">
                         <div class="row-fluid">
-                            <div class="span6">
-                                <div class="img3"></div>
+                            <div class="span8">
+                                <div class="imgno"></div>
                                 <span class="s1">2015年12月05号</span>
-                                <span class="s2">9:00-11:00</span>
-                                <span class="s3" id="w1">迟到</span>
+                                <span class="s2">9:07-12:00</span>
+                                <span class="s3">迟到</span>
                             </div>
-                            <div class="span6">
-                                <span class="s2" style="margin-left: 100px;">14:00-16:00</span>
-                                <span class="s3" id="w2">早退</span>
+                            <div class="span4">
+                                <span class="s2">14:30-17:22</span>
+                                <span class="s3">早退</span>
                             </div>
                         </div>
                     </div>
+
                     <div class="bm1">
                         <div class="row-fluid">
-                            <div class="span6">
-                                <div class="img4"></div>
+                            <div class="span8">
+                                <div class="imgno"></div>
                                 <span class="s1">2015年12月05号</span>
                                 <span class="s2">9:00-11:00</span>
                                 <span class="s3">正常</span>
                             </div>
-                            <div class="span6">
-                                <span class="s2" style="margin-left: 100px;">14:00-16:00</span>
-                                <span class="s3">正常</span>
+                            <div class="span4">
+                                <span class="s2">无签到数据</span>
+                                <span class="s3">旷工</span>
                             </div>
                         </div>
                     </div>
+
                     <div class="bm1">
                         <div class="row-fluid">
-                            <div class="span6">
-                                <div class="img3"></div>
+                            <div class="span8">
+                                <div class="imgno"></div>
                                 <span class="s1">2015年12月05号</span>
-                                <span class="s2">9:00-11:00</span>
-                                <span class="s3" id="w3">病例</span>
+                                <span class="s2">无签到数据</span>
+                                <span class="s3">病假</span>
                             </div>
-                            <div class="span6">
-                                <span class="s2" style="margin-left: 100px;">14:00-16:00</span>
-                                <span class="s3" id="w4">事假</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bm1">
-                        <div class="row-fluid">
-                            <div class="span6">
-                                <div class="img4"></div>
-                                <span class="s1">2015年12月05号</span>
-                                <span class="s2">9:00-11:00</span>
-                                <span class="s3">正常</span>
-                            </div>
-                            <div class="span6">
-                                <span class="s2" style="margin-left: 100px;">14:00-16:00</span>
-                                <span class="s3">正常</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bm1">
-                        <div class="row-fluid">
-                            <div class="span6">
-                                <div class="img3"></div>
-                                <span class="s1">2015年12月05号</span>
-                                <span class="s2">9:00-11:00</span>
-                                <span class="s3">病例</span>
-                            </div>
-                            <div class="span6">
-                                <span class="s2" style="margin-left: 100px;">14:00-16:00</span>
+                            <div class="span4">
+                                <span class="s2">无签到数据</span>
                                 <span class="s3">事假</span>
                             </div>
                         </div>
                     </div>
+
                     <div class="bm1">
                         <div class="row-fluid">
-                            <div class="span6">
-                                <div class="img4"></div>
+                            <div class="span8">
+                                <div class="imgno"></div>
                                 <span class="s1">2015年12月05号</span>
-                                <span class="s2">9:00-11:00</span>
+                                <span class="s2">9:22-11:50</span>
+                                <span class="s3">迟到、早退</span>
+                            </div>
+                            <div class="span4">
+                                <span class="s2">14:45-15:20</span>
+                                <span class="s3">迟到、早退</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bm1">
+                        <div class="row-fluid">
+                            <div class="span8">
+                                <div class="imgno"></div>
+                                <span class="s1">2015年12月05号</span>
+                                <span class="s2">9:00-12:00</span>
                                 <span class="s3">正常</span>
                             </div>
-                            <div class="span6">
-                                <span class="s2" style="margin-left: 100px;">14:00-16:00</span>
+                            <div class="span4">
+                                <span class="s2">14:30-17:30</span>
                                 <span class="s3">正常</span>
                             </div>
                         </div>
                     </div>
+
                     <div class="bm1">
                         <div class="row-fluid">
-                            <div class="span6">
-                                <div class="img3"></div>
+                            <div class="span8">
+                                <div class="imgno"></div>
                                 <span class="s1">2015年12月05号</span>
-                                <span class="s2">9:00-11:00</span>
-                                <span class="s3">病例</span>
-                            </div>
-                            <div class="span6">
-                                <span class="s2" style="margin-left: 100px;">14:00-16:00</span>
-                                <span class="s3">事假</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bm1">
-                        <div class="row-fluid">
-                            <div class="span6">
-                                <div class="img4"></div>
-                                <span class="s1">2015年12月05号</span>
-                                <span class="s2">9:00-11:00</span>
+                                <span class="s2">9:00-12:00</span>
                                 <span class="s3">正常</span>
                             </div>
-                            <div class="span6">
-                                <span class="s2" style="margin-left: 100px;">14:00-16:00</span>
+                            <div class="span4">
+                                <span class="s2">14:30-17:30</span>
                                 <span class="s3">正常</span>
                             </div>
                         </div>
                     </div>
+
+                    <div class="bm1">
+                        <div class="row-fluid">
+                            <div class="span8">
+                                <div class="imgno"></div>
+                                <span class="s1">2015年12月05号</span>
+                                <span class="s2">9:00-12:00</span>
+                                <span class="s3">正常</span>
+                            </div>
+                            <div class="span4">
+                                <span class="s2">14:30-17:30</span>
+                                <span class="s3">正常</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bm1">
+                        <div class="row-fluid">
+                            <div class="span8">
+                                <div class="imgno"></div>
+                                <span class="s1">2015年12月05号</span>
+                                <span class="s2">9:00-12:00</span>
+                                <span class="s3">正常</span>
+                            </div>
+                            <div class="span4">
+                                <span class="s2">14:30-17:30</span>
+                                <span class="s3">正常</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="float: left;"><span class="readbzt" onmouseover="this.style.cursor='pointer'" onclick="javascript:bzt();">查看当月考勤饼状图</span></div>
                     <div class="pagination">
                         <ul>
                             <li><a href="#">上一页</a></li>
@@ -655,7 +676,6 @@
                         </ul>
                     </div>
                 </div>
-
             </div>
 
         </div>
