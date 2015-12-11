@@ -41,6 +41,7 @@ using System.Data.OleDb;
                         SqlDataAdapter sda = new SqlDataAdapter(cmd);
                         dt = new DataTable();
                         sda.Fill(dt);
+                        cmd.Parameters.Clear();
                         return dt;
                     }
                 }
