@@ -436,6 +436,15 @@
                             json_infor = eval("(" + data + ")");
                         }
                         catch (e) {
+                            document.getElementById("bm").innerHTML= "<div class='bm1'><div class='row-fluid'><div class='span6'><div></div><span class='s1'>无数据........</span>"
+                            + "<span class='s2'></span>"
+                            + "<span class='s3' id='w1'></span></div>"
+                            + "<div class='span6'>"
+                            + "<span class='s2' style='margin-left: 100px;'></span>"
+                            + "<span class='s3' id='w2'></span></div></div></div>";
+
+                            document.getElementById("pagebox").innerHTML = "";
+
                             return false;
                         }
                         var html = "";
@@ -460,9 +469,9 @@
                                     //binddate 
                                     if ((json_infor[i].a_state) == "正常" && (json_infor[i].p_state) == "正常")
                                     {
-                                        html = html + liebiao_2(decode(json_infor[i].id), decode(json_infor[i].a_state) ,decode(json_infor[i].p_state));
+                                        html = html + liebiao_2(decode(json_infor[i].day), decode(json_infor[i].a_state) ,decode(json_infor[i].p_state));
                                     } else {
-                                        html = html + liebiao_1(decode(json_infor[i].id), decode(json_infor[i].a_state), decode(json_infor[i].p_state));
+                                        html = html + liebiao_1(decode(json_infor[i].day), decode(json_infor[i].a_state), decode(json_infor[i].p_state));
                                     }
                                 }
                                
@@ -501,6 +510,7 @@
             box = document.getElementById("zsk");
             pagebox = document.getElementById("pagebox");
             GetData(1);
+            tit();
         }
         
         function decode(str) {
@@ -537,7 +547,7 @@
             }
         }
 
-        function liebiao_1(id,a_state,p_state) {
+        function liebiao_1(id,a_state,p_state,day) {
             var color_zt = "";
             var color_zt_1 = "";
             if (a_state == "正常")
@@ -551,7 +561,7 @@
             } else {
                 color_zt_1 = "#f26666";
             }
-            var a = "<div class='bm1'><div class='row-fluid'><div class='span6'><div class='img3'></div><span class='s1'>" + id + "</span>"
+            var a = "<div class='bm1'><div class='row-fluid'><div class='span6'><div class='img3'></div><span class='s1'>" + day + "</span>"
                             + "<span class='s2'> 9:00-11:00  </span>"
                             + "<span class='s3' id='w1' style='color:" + color_zt + "'>" + a_state + "</span></div>"
                             + "<div class='span6'>"
@@ -560,7 +570,7 @@
                             return a;
         }
 
-        function liebiao_2(id,a_state,p_state) {
+        function liebiao_2(id,a_state,p_state,day) {
             var color_zt = "";
             var coor_zt_1 = "";
             if (a_state == "正常") {
@@ -573,7 +583,7 @@
             } else {
                 color_zt_1 = "#f26666";
             }
-            var a = "<div class='bm1'><div class='row-fluid'><div class='span6'><div class='img4'></div><span class='s1'>" + id + "</span>"
+            var a = "<div class='bm1'><div class='row-fluid'><div class='span6'><div class='img4'></div><span class='s1'>" + day + "</span>"
                             + "<span class='s2'> 9:00-11:00 </span>"
                             + "<span class='s3' id='w1' style='color:" + color_zt + "'>" + a_state + "</span></div>"
                             + "<div class='span6'>"
@@ -755,9 +765,9 @@
                             } else {
                                 //binddate 
                                 if ((json_infor[i].a_state) == "正常" && (json_infor[i].p_state) == "正常") {
-                                    html = html + liebiao_2(decode(json_infor[i].id), decode(json_infor[i].a_state), decode(json_infor[i].p_state));
+                                    html = html + liebiao_2(decode(json_infor[i].day), decode(json_infor[i].a_state), decode(json_infor[i].p_state));
                                 } else {
-                                    html = html + liebiao_1(decode(json_infor[i].id), decode(json_infor[i].a_state), decode(json_infor[i].p_state));
+                                    html = html + liebiao_1(decode(json_infor[i].day), decode(json_infor[i].a_state), decode(json_infor[i].p_state));
                                 }
                             }
 
