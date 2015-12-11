@@ -458,11 +458,11 @@
                                     InitPages(document.getElementById("pagebox"), totalpage, 1);
                                 } else {
                                     //binddate 
-                                    if ((json_infor[i].title_1) == "正常" && (json_infor[i].title_2) == "正常")
+                                    if ((json_infor[i].a_state) == "正常" && (json_infor[i].p_state) == "正常")
                                     {
-                                        html = html + liebiao_2(decode(json_infor[i].times), decode(json_infor[i].am), decode(json_infor[i].title_1), decode(json_infor[i].pm), decode(json_infor[i].title_2));
+                                        html = html + liebiao_2(decode(json_infor[i].id), decode(json_infor[i].a_state) ,decode(json_infor[i].p_state));
                                     } else {
-                                        html = html + liebiao_1(decode(json_infor[i].times), decode(json_infor[i].am), decode(json_infor[i].title_1), decode(json_infor[i].pm), decode(json_infor[i].title_2));
+                                        html = html + liebiao_1(decode(json_infor[i].id), decode(json_infor[i].a_state), decode(json_infor[i].p_state));
                                     }
                                 }
                                
@@ -537,66 +537,51 @@
             }
         }
 
-        function liebiao_1(times, am, title_1, pm, title_2, i) {
+        function liebiao_1(id,a_state,p_state) {
             var color_zt = "";
             var color_zt_1 = "";
-            if (title_1 == "正常")
+            if (a_state == "正常")
             {
                 color_zt = "#000000";
             } else {
                 color_zt = "#f26666";
             }
-            if (title_2 == "正常") {
+            if (p_state == "正常") {
                 color_zt_1 = "#000000";
             } else {
                 color_zt_1 = "#f26666";
             }
-            var a = "<div class='bm1'><div class='row-fluid'><div class='span6'><div class='img3'></div><span class='s1'>" + times + "</span>"
-                            + "<span class='s2'> " + am + "  </span>"
-                            + "<span class='s3' id='w1' style='color:" + color_zt + "'>" + title_1 + "</span></div>"
+            var a = "<div class='bm1'><div class='row-fluid'><div class='span6'><div class='img3'></div><span class='s1'>" + id + "</span>"
+                            + "<span class='s2'> 9:00-11:00  </span>"
+                            + "<span class='s3' id='w1' style='color:" + color_zt + "'>" + a_state + "</span></div>"
                             + "<div class='span6'>"
-                            + "<span class='s2' style='margin-left: 100px;'>" + pm + "</span>"
-                            + "<span class='s3' id='w2' style='color:" + color_zt_1 + "'>" + title_2 + "</span></div></div></div>";
+                            + "<span class='s2' style='margin-left: 100px;'>14:00-16:00</span>"
+                            + "<span class='s3' id='w2' style='color:" + color_zt_1 + "'>" + p_state + "</span></div></div></div>";
                             return a;
         }
 
-        function liebiao_2(times, am, title_1, pm, title_2, i) {
+        function liebiao_2(id,a_state,p_state) {
             var color_zt = "";
             var coor_zt_1 = "";
-            if (title_1 == "正常") {
+            if (a_state == "正常") {
                 color_zt = "#000000";
             } else {
                 color_zt = "#f26666";
             }
-            if (title_2=="正常") {
+            if (p_state=="正常") {
                 color_zt_1 = "#000000";
             } else {
                 color_zt_1 = "#f26666";
             }
-            var a = "<div class='bm1'><div class='row-fluid'><div class='span6'><div class='img4'></div><span class='s1'>" + times + "</span>"
-                            + "<span class='s2'> " + am + "  </span>"
-                            + "<span class='s3' id='w1' style='color:" + color_zt + "'>" + title_1 + "</span></div>"
+            var a = "<div class='bm1'><div class='row-fluid'><div class='span6'><div class='img4'></div><span class='s1'>" + id + "</span>"
+                            + "<span class='s2'> 9:00-11:00 </span>"
+                            + "<span class='s3' id='w1' style='color:" + color_zt + "'>" + a_state + "</span></div>"
                             + "<div class='span6'>"
-                            + "<span class='s2' style='margin-left: 100px;'>" + pm + "</span>"
-                            + "<span class='s3' id='w2' style='color:" + color_zt_1 + "'>" + title_2 + "</span></div></div></div>";
+                            + "<span class='s2' style='margin-left: 100px;'>14:00-16:00</span>"
+                            + "<span class='s3' id='w2' style='color:" + color_zt_1 + "'>" + p_state + "</span></div></div></div>";
             return a;
         }
         
-        function tit() {
-            var data = "";
-            data = eval("(" + json_1 + ")");
-            var html = "";
-            for (var i = 0; i < data.length; i++) {
-                if ((data[i].title_1) == "正常" && (data[i].title_2) == "正常")
-                {
-                    html = html + liebiao_2(decode(data[i].times), decode(data[i].am), decode(data[i].title_1), decode(data[i].pm), decode(data[i].title_2));
-                } else {
-                    html = html + liebiao_1(decode(data[i].times), decode(data[i].am), decode(data[i].title_1), decode(data[i].pm), decode(data[i].title_2));
-                }
-            }
-            document.getElementById("bm").innerHTML = html; 
-        }
-
         function InitPages(pagebox, totalpage, pageindex) {
             pagebox.innerHTML = "";
             totalpage = parseInt(totalpage);                //强制类型转换 
@@ -752,17 +737,36 @@
                     var html = "";
                     if (json_infor != null) {
                         for (var i = 0; i < json_infor.length; i++) {
-                            if ((json_infor[i].title_1) == "正常" && (json_infor[i].title_2) == "正常") {
-                                html = html + liebiao_2(decode(json_infor[i].times), decode(json_infor[i].am), decode(json_infor[i].title_1), decode(json_infor[i].pm), decode(json_infor[i].title_2));
+                            if (i == 0) {
+                                var count = parseInt(json_infor[i].count);
+                                //get totalpage
+                                var totalpage = "";
+                                if (count < pagesize) {
+                                    totalpage = 1;
+                                } else {
+                                    if (count % pagesize == 0) {
+                                        totalpage = count / pagesize;
+                                    } else {
+                                        totalpage = parseInt((count / pagesize)) + 1;
+                                    }
+                                }
+                                //Initpage
+                                InitPages(document.getElementById("pagebox"), totalpage, 1);
                             } else {
-                                html = html + liebiao_1(decode(json_infor[i].times), decode(json_infor[i].am), decode(json_infor[i].title_1), decode(json_infor[i].pm), decode(json_infor[i].title_2));
+                                //binddate 
+                                if ((json_infor[i].a_state) == "正常" && (json_infor[i].p_state) == "正常") {
+                                    html = html + liebiao_2(decode(json_infor[i].id), decode(json_infor[i].a_state), decode(json_infor[i].p_state));
+                                } else {
+                                    html = html + liebiao_1(decode(json_infor[i].id), decode(json_infor[i].a_state), decode(json_infor[i].p_state));
+                                }
                             }
+
                         }
-                        document.getElementById("bm").innerHTML = html;
                     }
-                }   
+                    document.getElementById("bm").innerHTML = html;
+                }
             })
-        }
+            }
 
         function changeup() {
             var gengxing = document.getElementById("test_3").value;
