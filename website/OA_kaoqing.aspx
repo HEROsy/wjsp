@@ -5,11 +5,10 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <%--<script src="Script/jquery-1.8.2.min.js"></script>--%>
-    <script src="Script/swkj.js"></script>
+    <script src="Script/jquery-1.8.3.js"></script>
     <link href="Style/swkj.css" rel="stylesheet" />
     <link href="Style/swkjbt.css" rel="stylesheet" />
-    <script src="Script/selectpick.js"></script>
-    <script src="Script/jquery-1.8.3.js"></script>
+    <script src="Script/swkj.js"></script>
     <script src="Script/selectpick.js"></script>
     <title>我的考勤界面</title>
     <style type="text/css">
@@ -66,7 +65,6 @@
         .top1 {
             height: 100px;
             width: 250px;
-            float: left;
         }
 
         .top2 {
@@ -74,6 +72,9 @@
             width: 600px;
             margin-left: 398px;
             border: 1px solid #CFCFCF;
+            position:absolute;
+            z-index:-1;
+            top:110px;
         }
 
         .img {
@@ -395,15 +396,85 @@
     </style>
 
     <script type="text/javascript">
+        var select_year = "";
+        var value = "";
+        var times;
+        var box;
+        var pagebox = null;
+        var max = 110;
+        var min = 6;
+        var isopen = false;
+        var pagesize=8;
+
         $(function () {
             $("#select_pick").selectpick({
                 onSelect: function (value, text) {
                 }
             });
-            $("#test_3").selectpick({ optionColor: "#92DCE0", selectedColor: "#92DCE0" });
-            $("#test_4").selectpick({ optionColor: "#92DCE0", selectedColor: "#92DCE0" });
-
+            $("#test_3").selectpick({
+                optionColor: "#92DCE0", selectedColor: "#92DCE0", onSelect: function (value) {
+                    select_year = value;
+                }
+            });
+            $("#test_4").selectpick({ optionColor: "#92DCE0", selectedColor: "#92DCE0",onSelect: function (value)
+            {
+                value = value;
+                $.ajax({
+                    type: "post",
+                    url: "AsyCenter.aspx",
+                    data: {
+                        type: "kaoqingpage",
+                        year: select_year,
+                        month: value,
+                        pagesize: '8',
+                        pageindex: "1",
+                        //uid:document.getElementById("uid").value
+                    },
+                    success: function (data) {
+                        var json_infor = null;
+                        try {
+                            json_infor = eval("(" + data + ")");
+                        }
+                        catch (e) {
+                            return false;
+                        }
+                        var html = "";
+                        if (json_infor != null) {
+                            for (var i = 0; i < json_infor.length; i++) {
+                                if (i == 0) {
+                                    var count =parseInt(json_infor[i].count);
+                                    //get totalpage
+                                    var totalpage = "";
+                                    if (count < pagesize) {
+                                        totalpage = 1;
+                                    } else {
+                                        if (count % pagesize == 0) {
+                                            totalpage = count / pagesize;
+                                        } else {
+                                            totalpage =parseInt((count / pagesize))+1;
+                                        }
+                                    }
+                                    //Initpage
+                                    InitPages(document.getElementById("pagebox"), totalpage, 1);
+                                } else {
+                                    //binddate 
+                                    if ((json_infor[i].a_state) == "正常" && (json_infor[i].p_state) == "正常")
+                                    {
+                                        html = html + liebiao_2(decode(json_infor[i].id), decode(json_infor[i].a_state) ,decode(json_infor[i].p_state));
+                                    } else {
+                                        html = html + liebiao_1(decode(json_infor[i].id), decode(json_infor[i].a_state), decode(json_infor[i].p_state));
+                                    }
+                                }
+                               
+                            }
+                        }
+                        document.getElementById("bm").innerHTML = html;
+                    }
+                })
+            }
+            });
         });
+
         function getCurDate() {
             var d = new Date();
             var week;
@@ -416,21 +487,295 @@
             var ndate = "当前时间:" + years + "年" + month + "月" + days + "日" + hours + "：" + minites + ":" + seconds + "";
             document.getElementById("shijian").innerHTML = ndate;
         }
+
         function add_zero(temp) {
             if (temp < 10) return "0" + temp;
             else return temp;
         }
+
         window.onload = function () {
+            select_year = document.getElementById("test_3").value;
+            value = document.getElementById("test_4").value;
             add_zero();
             flush();
+            box = document.getElementById("zsk");
+            pagebox = document.getElementById("pagebox");
+            GetData(1);
+        }
+        
+        function decode(str) {
+            str = decodeURIComponent(str.replace(/\+/g, '%20'));
+            return str;
         }
 
         function flush() {
             setInterval("getCurDate()", 1000);
         }
+
+        function donghua() {
+            var oldtop = box.offsetTop;
+            if (isopen==true) {
+                if (oldtop <= max) {
+                    oldtop += 1;
+                    box.style.top = oldtop + "px";
+                    times = setTimeout("donghua()", 5);
+                }
+                else {
+                    clearTimeout(times);
+                    isopen = false;
+                }
+            } else {
+                if (oldtop > min) {
+                    oldtop -= 1;
+                    box.style.top = oldtop + "px";
+                    times = setTimeout("donghua()", 5);
+                }
+                else {
+                    clearTimeout(times);
+                    isopen = true;
+                }
+            }
+        }
+
+        function liebiao_1(id,a_state,p_state) {
+            var color_zt = "";
+            var color_zt_1 = "";
+            if (a_state == "正常")
+            {
+                color_zt = "#000000";
+            } else {
+                color_zt = "#f26666";
+            }
+            if (p_state == "正常") {
+                color_zt_1 = "#000000";
+            } else {
+                color_zt_1 = "#f26666";
+            }
+            var a = "<div class='bm1'><div class='row-fluid'><div class='span6'><div class='img3'></div><span class='s1'>" + id + "</span>"
+                            + "<span class='s2'> 9:00-11:00  </span>"
+                            + "<span class='s3' id='w1' style='color:" + color_zt + "'>" + a_state + "</span></div>"
+                            + "<div class='span6'>"
+                            + "<span class='s2' style='margin-left: 100px;'>14:00-16:00</span>"
+                            + "<span class='s3' id='w2' style='color:" + color_zt_1 + "'>" + p_state + "</span></div></div></div>";
+                            return a;
+        }
+
+        function liebiao_2(id,a_state,p_state) {
+            var color_zt = "";
+            var coor_zt_1 = "";
+            if (a_state == "正常") {
+                color_zt = "#000000";
+            } else {
+                color_zt = "#f26666";
+            }
+            if (p_state=="正常") {
+                color_zt_1 = "#000000";
+            } else {
+                color_zt_1 = "#f26666";
+            }
+            var a = "<div class='bm1'><div class='row-fluid'><div class='span6'><div class='img4'></div><span class='s1'>" + id + "</span>"
+                            + "<span class='s2'> 9:00-11:00 </span>"
+                            + "<span class='s3' id='w1' style='color:" + color_zt + "'>" + a_state + "</span></div>"
+                            + "<div class='span6'>"
+                            + "<span class='s2' style='margin-left: 100px;'>14:00-16:00</span>"
+                            + "<span class='s3' id='w2' style='color:" + color_zt_1 + "'>" + p_state + "</span></div></div></div>";
+            return a;
+        }
+        
+        function InitPages(pagebox, totalpage, pageindex) {
+            pagebox.innerHTML = "";
+            totalpage = parseInt(totalpage);                //强制类型转换 
+            pageindex = parseInt(pageindex);
+
+            var pagenum = 3;
+            var middleindex = parseInt(pagenum / 2) + 1;
+            var newobj = null;
+            if (pageindex == 1) {
+                newobj = Create("上页", "disabled");
+                pagebox.appendChild(newobj);
+            } else {
+                newobj = Create("上页", "");
+                pagebox.appendChild(newobj);
+            }
+
+            //if (pageindex == 1) {
+            //    newobj = Create("第一页", "disabled");
+            //    pagebox.appendChild(newobj);
+            //} else {
+            //    newobj = Create("第一页", "");
+            //    pagebox.appendChild(newobj);
+            //}
+
+            if (totalpage < pagenum) {
+                for (var i = 1; i < totalpage + 1; i++) {
+                    if (i != pageindex) {
+                        newobj = Create(i, "");
+                        pagebox.appendChild(newobj);
+                    } else {
+                        newobj = Create(i, "active");
+                        pagebox.appendChild(newobj);
+                    }
+                }
+            } else {
+                if (pageindex <= middleindex) {
+                    for (var i = 1; i < pagenum + 1; i++) {
+                        if (i != pageindex) {
+                            newobj = Create(i, "");
+                            pagebox.appendChild(newobj);
+                        } else {
+                            newobj = Create(i, "active");
+                            pagebox.appendChild(newobj);
+                        }
+                    }
+                } else {
+                    var offsetindex = middleindex - 1;
+                    var beginindex = pageindex - offsetindex;
+                    var endindex = 0;
+                    if (parseInt(pageindex) + offsetindex < totalpage) {
+                        endindex = parseInt(pageindex) + offsetindex;
+                    } else {
+                        endindex = beginindex + (totalpage - beginindex);
+                    }
+
+                    for (var i = beginindex; i < endindex + 1; i++) {
+                        if (i != pageindex) {
+                            newobj = Create(i, "");
+                            pagebox.appendChild(newobj);
+                        } else {
+                            newobj = Create(i, "active");
+                            pagebox.appendChild(newobj);
+                        }
+                    }
+                }
+            }
+
+            //if (parseInt(pageindex) >= totalpage) {
+            //    newobj = Create("最后一页", "disabled");
+            //    pagebox.appendChild(newobj);
+            //} else {
+            //    newobj = Create("最后一页", "");
+            //    pagebox.appendChild(newobj);
+            //}
+
+            if (parseInt(pageindex) >= totalpage) {
+                newobj = Create("下页", "disabled");
+                pagebox.appendChild(newobj);
+            } else {
+                newobj = Create("下页", "");
+                pagebox.appendChild(newobj);
+            }
+
+
+            function Create(inname, classtype) {
+                var obj = null;
+                var oli = document.createElement("li");
+                var oa = document.createElement("a");
+
+                if (classtype != "") { oli.className = classtype; }
+
+                oa.innerHTML = inname;
+                oa.href = "javascript:void(0)";
+                if ((inname + "").indexOf("页") < 0) {
+                    oa.style.width = 15 + "px";
+                }
+                oa.onclick = function () {
+                    pageclick(oa);
+                }
+                oli.appendChild(oa);
+
+                return oli;
+            }
+
+            function pageclick(sender) {
+                var pe = sender.parentElement.className;
+                if (pe == "disabled" || pe == "active") { return false; }
+                var _value = sender.innerHTML;
+                switch (_value) {
+                    case "上页":
+                        GetData(pageindex - 1);
+                        InitPages(pagebox, totalpage, pageindex - 1);
+                        break;
+                    case "下页":
+                        GetData(pageindex + 1);
+                        InitPages(pagebox, totalpage, pageindex + 1);
+                        break;
+                        //case "第一页":
+                        //    GetData(1);
+                        //    InitPages(pagebox, totalpage, 1);
+                        //    break;
+                        //case "最后一页":
+                        //    GetData(totalpage);
+                        //    InitPages(pagebox, totalpage, totalpage);
+                        //    break;
+                    default:
+                        GetData(_value);
+                        InitPages(pagebox, totalpage, _value);
+
+                }
+            }
+        }
+
+        function GetData(pageindex) {
+            $.ajax({
+                type: "post",
+                url: "AsyCenter.aspx",
+                data: {
+                    type: "kaoqingpage",
+                    year: select_year,
+                    month: value,
+                    pagesize: "8",
+                    pageindex: pageindex,
+                    //uid:document.getElementById("uid").value
+                },
+                success: function (data) {
+                    var json_infor = null;
+                    try {
+                        json_infor = eval("(" + data + ")");
+                    } catch (e) {
+
+                    }
+                    var html = "";
+                    if (json_infor != null) {
+                        for (var i = 0; i < json_infor.length; i++) {
+                            if (i == 0) {
+                                var count = parseInt(json_infor[i].count);
+                                //get totalpage
+                                var totalpage = "";
+                                if (count < pagesize) {
+                                    totalpage = 1;
+                                } else {
+                                    if (count % pagesize == 0) {
+                                        totalpage = count / pagesize;
+                                    } else {
+                                        totalpage = parseInt((count / pagesize)) + 1;
+                                    }
+                                }
+                                //Initpage
+                                InitPages(document.getElementById("pagebox"), totalpage, 1);
+                            } else {
+                                //binddate 
+                                if ((json_infor[i].a_state) == "正常" && (json_infor[i].p_state) == "正常") {
+                                    html = html + liebiao_2(decode(json_infor[i].id), decode(json_infor[i].a_state), decode(json_infor[i].p_state));
+                                } else {
+                                    html = html + liebiao_1(decode(json_infor[i].id), decode(json_infor[i].a_state), decode(json_infor[i].p_state));
+                                }
+                            }
+
+                        }
+                    }
+                    document.getElementById("bm").innerHTML = html;
+                }
+            })
+            }
+
+        function changeup() {
+            var gengxing = document.getElementById("test_3").value;
+            alert(gengxing);
+        }
     </script>
 </head>
 <body>
+<%--    <input type="hidden" id="uid" value="<%=uid %>" />;--%>
     <div style="width: 1000px; height: 680px; margin: auto">
         <%--此行不能修改--%>
         <div class="row-fluid" style="margin-top: 10px">
@@ -440,7 +785,7 @@
                     <div class="img"></div>
                     <span style="font-size: 30px; margin-left: 50px; margin-top: -36px; height: 50px; display: block;">我的考勤</span>
                 </div>
-                <div class="top2">
+                <div class="top2" id="zsk">
                     <div class="top3">
                         <div class="img5"></div>
                         <span class="chuqin">2015年一月出勤统计</span>
@@ -491,30 +836,30 @@
                         <div class="span6" style="height: 60px;">
                             <div class="inner1"></div>
                             <div style="float: left; width: 180px;">
-                                <select id="test_3">
-                                    <option value="1">2015年</option>
-                                    <option value="2">2014年</option>
-                                    <option value="3">2013年</option>
-                                    <option value="4">2012年</option>
+                                <select id="test_3" >
+                                    <option value="2015">2015年</option>
+                                    <option value="2014">2014年</option>
+                                    <option value="2013">2013年</option>
+                                    <option value="2012">2012年</option>
                                 </select>
                             </div>
                             <div style="float: left; width: 180px;">
-                                <select id="test_4">
-                                    <option value="1">12月</option>
-                                    <option value="2">11月</option>
-                                    <option value="3">10月</option>
-                                    <option value="4">09月</option>
-                                    <option value="4">08月</option>
-                                    <option value="4">07月</option>
-                                    <option value="4">06月</option>
-                                    <option value="4">05月</option>
-                                    <option value="4">04月</option>
-                                    <option value="4">03月</option>
-                                    <option value="4">02月</option>
-                                    <option value="4">01月</option>
+                                <select id="test_4" >
+                                    <option value="12">12月</option>
+                                    <option value="11">11月</option>
+                                    <option value="10">10月</option>
+                                    <option value="09">09月</option>
+                                    <option value="08">08月</option>
+                                    <option value="07">07月</option>
+                                    <option value="06">06月</option>
+                                    <option value="05">05月</option>
+                                    <option value="04">04月</option>
+                                    <option value="03">03月</option>
+                                    <option value="02">02月</option>
+                                    <option value="01">01月</option>
                                 </select>
                             </div>
-                            <div class="img2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"></div>
+                            <div class="img2" onmouseover="this.style.cursor='pointer'" onclick="donghua()"></div>
                         </div>
                         <div class="span6" style="height: 60px;">
                             <span class="shijian" id="shijian">当前时间15:26分</span>
@@ -522,126 +867,11 @@
                     </div>
                 </div>
                 <div class="bm">
-                    <div class="bm1">
-                        <div class="row-fluid">
-                            <div class="span6">
-                                <div class="img3"></div>
-                                <span class="s1">2015年12月05号</span>
-                                <span class="s2">9:00-11:00</span>
-                                <span class="s3" id="w1">迟到</span>
-                            </div>
-                            <div class="span6">
-                                <span class="s2" style="margin-left: 100px;">14:00-16:00</span>
-                                <span class="s3" id="w2">早退</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bm1">
-                        <div class="row-fluid">
-                            <div class="span6">
-                                <div class="img4"></div>
-                                <span class="s1">2015年12月05号</span>
-                                <span class="s2">9:00-11:00</span>
-                                <span class="s3">正常</span>
-                            </div>
-                            <div class="span6">
-                                <span class="s2" style="margin-left: 100px;">14:00-16:00</span>
-                                <span class="s3">正常</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bm1">
-                        <div class="row-fluid">
-                            <div class="span6">
-                                <div class="img3"></div>
-                                <span class="s1">2015年12月05号</span>
-                                <span class="s2">9:00-11:00</span>
-                                <span class="s3" id="w3">病例</span>
-                            </div>
-                            <div class="span6">
-                                <span class="s2" style="margin-left: 100px;">14:00-16:00</span>
-                                <span class="s3" id="w4">事假</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bm1">
-                        <div class="row-fluid">
-                            <div class="span6">
-                                <div class="img4"></div>
-                                <span class="s1">2015年12月05号</span>
-                                <span class="s2">9:00-11:00</span>
-                                <span class="s3">正常</span>
-                            </div>
-                            <div class="span6">
-                                <span class="s2" style="margin-left: 100px;">14:00-16:00</span>
-                                <span class="s3">正常</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bm1">
-                        <div class="row-fluid">
-                            <div class="span6">
-                                <div class="img3"></div>
-                                <span class="s1">2015年12月05号</span>
-                                <span class="s2">9:00-11:00</span>
-                                <span class="s3">病例</span>
-                            </div>
-                            <div class="span6">
-                                <span class="s2" style="margin-left: 100px;">14:00-16:00</span>
-                                <span class="s3">事假</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bm1">
-                        <div class="row-fluid">
-                            <div class="span6">
-                                <div class="img4"></div>
-                                <span class="s1">2015年12月05号</span>
-                                <span class="s2">9:00-11:00</span>
-                                <span class="s3">正常</span>
-                            </div>
-                            <div class="span6">
-                                <span class="s2" style="margin-left: 100px;">14:00-16:00</span>
-                                <span class="s3">正常</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bm1">
-                        <div class="row-fluid">
-                            <div class="span6">
-                                <div class="img3"></div>
-                                <span class="s1">2015年12月05号</span>
-                                <span class="s2">9:00-11:00</span>
-                                <span class="s3">病例</span>
-                            </div>
-                            <div class="span6">
-                                <span class="s2" style="margin-left: 100px;">14:00-16:00</span>
-                                <span class="s3">事假</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bm1">
-                        <div class="row-fluid">
-                            <div class="span6">
-                                <div class="img4"></div>
-                                <span class="s1">2015年12月05号</span>
-                                <span class="s2">9:00-11:00</span>
-                                <span class="s3">正常</span>
-                            </div>
-                            <div class="span6">
-                                <span class="s2" style="margin-left: 100px;">14:00-16:00</span>
-                                <span class="s3">正常</span>
-                            </div>
-                        </div>
+                    <div id="bm">
+
                     </div>
                     <div class="pagination">
-                        <ul>
-                            <li><a href="#">上一页</a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">下一页</a></li>
+                        <ul id="pagebox">
                         </ul>
                     </div>
                 </div>
