@@ -458,11 +458,11 @@
                                     InitPages(document.getElementById("pagebox"), totalpage, 1);
                                 } else {
                                     //binddate 
-                                    if ((data[i].title_1) == "正常" && (data[i].title_2) == "正常")
+                                    if ((json_infor[i].title_1) == "正常" && (json_infor[i].title_2) == "正常")
                                     {
-                                        html = html + liebiao_2(decode(data[i].times), decode(data[i].am), decode(data[i].title_1), decode(data[i].pm), decode(data[i].title_2));
+                                        html = html + liebiao_2(decode(json_infor[i].times), decode(json_infor[i].am), decode(json_infor[i].title_1), decode(json_infor[i].pm), decode(json_infor[i].title_2));
                                     } else {
-                                        html = html + liebiao_1(decode(data[i].times), decode(data[i].am), decode(data[i].title_1), decode(data[i].pm), decode(data[i].title_2));
+                                        html = html + liebiao_1(decode(json_infor[i].times), decode(json_infor[i].am), decode(json_infor[i].title_1), decode(json_infor[i].pm), decode(json_infor[i].title_2));
                                     }
                                 }
                                
@@ -752,15 +752,15 @@
                     var html = "";
                     if (json_infor != null) {
                         for (var i = 0; i < json_infor.length; i++) {
-                            if ((data[i].title_1) == "正常" && (data[i].title_2) == "正常") {
-                                html = html + liebiao_2(decode(data[i].times), decode(data[i].am), decode(data[i].title_1), decode(data[i].pm), decode(data[i].title_2));
+                            if ((json_infor[i].title_1) == "正常" && (json_infor[i].title_2) == "正常") {
+                                html = html + liebiao_2(decode(json_infor[i].times), decode(json_infor[i].am), decode(json_infor[i].title_1), decode(json_infor[i].pm), decode(json_infor[i].title_2));
                             } else {
-                                html = html + liebiao_1(decode(data[i].times), decode(data[i].am), decode(data[i].title_1), decode(data[i].pm), decode(data[i].title_2));
+                                html = html + liebiao_1(decode(json_infor[i].times), decode(json_infor[i].am), decode(json_infor[i].title_1), decode(json_infor[i].pm), decode(json_infor[i].title_2));
                             }
                         }
                         document.getElementById("bm").innerHTML = html;
                     }
-                }
+                }   
             })
         }
 
