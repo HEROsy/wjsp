@@ -405,7 +405,6 @@
         var min = 6;
         var isopen = false;
         var pagesize=8;
-        json_1 = "[{ 'times': '2015年12月8日', 'am': '9:00-11:00', 'title_1': '正常', 'pm': '14.00-16.00', 'title_2': '早退'},{ 'times': '2015年12月8日', 'am': '9:00-11:00', 'title_1': '迟到', 'pm': '14.00-16.00', 'title_2': '迟到', },{ 'times': '2015年12月8日', 'am': '9:00-11:00', 'title_1': '正常', 'pm': '14.00-16.00', 'title_2': '迟到', },{ 'times': '2015年12月8日', 'am': '9:00-11:00', 'title_1': '正常', 'pm': '14.00-16.00', 'title_2': '正常', },{ 'times': '2015年12月8日', 'am': '9:00-11:00', 'title_1': '正常', 'pm': '14.00-16.00', 'title_2': '迟到', },{ 'times': '2015年12月8日', 'am': '9:00-11:00', 'title_1': '正常', 'pm': '14.00-16.00', 'title_2': '迟到', },{ 'times': '2015年12月8日', 'am': '9:00-11:00', 'title_1': '正常', 'pm': '14.00-16.00', 'title_2': '迟到', },{ 'times': '2015年12月8日', 'am': '9:00-11:00', 'title_1': '正常', 'pm': '14.00-16.00', 'title_2': '迟到', }]";
 
         $(function () {
             $("#select_pick").selectpick({
@@ -461,9 +460,9 @@
                                     //binddate 
                                     if ((data[i].title_1) == "正常" && (data[i].title_2) == "正常")
                                     {
-                                        html = html + liebiao_2(data[i].times, data[i].am, data[i].title_1, data[i].pm, data[i].title_2);
+                                        html = html + liebiao_2(decode(data[i].times), decode(data[i].am), decode(data[i].title_1), decode(data[i].pm), decode(data[i].title_2));
                                     } else {
-                                        html = html + liebiao_1(data[i].times, data[i].am, data[i].title_1, data[i].pm, data[i].title_2);
+                                        html = html + liebiao_1(decode(data[i].times), decode(data[i].am), decode(data[i].title_1), decode(data[i].pm), decode(data[i].title_2));
                                     }
                                 }
                                
@@ -496,6 +495,7 @@
 
         window.onload = function () {
             select_year = document.getElementById("test_3").value;
+            value = document.getElementById("test_4").value;
             add_zero();
             flush();
             box = document.getElementById("zsk");
@@ -503,6 +503,11 @@
             GetData(1);
         }
         
+        function decode(str) {
+            str = decodeURIComponent(str.replace(/\+/g, '%20'));
+            return str;
+        }
+
         function flush() {
             setInterval("getCurDate()", 1000);
         }
@@ -584,9 +589,9 @@
             for (var i = 0; i < data.length; i++) {
                 if ((data[i].title_1) == "正常" && (data[i].title_2) == "正常")
                 {
-                    html = html + liebiao_2(data[i].times, data[i].am, data[i].title_1, data[i].pm, data[i].title_2);
+                    html = html + liebiao_2(decode(data[i].times), decode(data[i].am), decode(data[i].title_1), decode(data[i].pm), decode(data[i].title_2));
                 } else {
-                    html = html + liebiao_1(data[i].times, data[i].am, data[i].title_1, data[i].pm, data[i].title_2);
+                    html = html + liebiao_1(decode(data[i].times), decode(data[i].am), decode(data[i].title_1), decode(data[i].pm), decode(data[i].title_2));
                 }
             }
             document.getElementById("bm").innerHTML = html; 
@@ -748,9 +753,9 @@
                     if (json_infor != null) {
                         for (var i = 0; i < json_infor.length; i++) {
                             if ((data[i].title_1) == "正常" && (data[i].title_2) == "正常") {
-                                html = html + liebiao_2(data[i].times, data[i].am, data[i].title_1, data[i].pm, data[i].title_2);
+                                html = html + liebiao_2(decode(data[i].times), decode(data[i].am), decode(data[i].title_1), decode(data[i].pm), decode(data[i].title_2));
                             } else {
-                                html = html + liebiao_1(data[i].times, data[i].am, data[i].title_1, data[i].pm, data[i].title_2);
+                                html = html + liebiao_1(decode(data[i].times), decode(data[i].am), decode(data[i].title_1), decode(data[i].pm), decode(data[i].title_2));
                             }
                         }
                         document.getElementById("bm").innerHTML = html;
