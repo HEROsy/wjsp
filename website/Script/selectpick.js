@@ -20,6 +20,12 @@
          onSelect: "" // 点击后选中事件
       }
 
+      //selectpick_config.onSelect = function ()
+      //{
+      //    alert(settings.se);
+      //}
+    
+
       var settings = $.extend({}, selectpick_config, options);
       // 每个下拉框组件的操作
       return this.each(function(elem_id) {
