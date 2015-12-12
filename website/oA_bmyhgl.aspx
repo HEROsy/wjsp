@@ -433,9 +433,20 @@
         }
     </style>
     <script>
+        var bmbox = null;
+        var bmselect = null;
+        var yhbox = null;
+        var pagebox = null;
+
         window.onload = function () {
             ss();
             ss1();
+            bmbox = document.getElementById("bmbox");
+            bmselect = document.getElementById("test_3");
+            yhbox = document.getElementById("yhbox");
+            pagebox = document.getElementById("pagebox");
+            bmselect.onchange = function () { GFyh(1); };
+            GFbm();
         }
 
         function ss() {
@@ -466,6 +477,380 @@
             document.getElementById("zhezhaoshow").innerHTML = "";
             document.getElementById("zhezhao").style.display = "none";
         }
+
+        //////////////////////////////////////
+        function addbm()
+        {
+            var bmname = document.getElementById("input1").value;
+            if (bmname.replace(/\s+/g, "") == "") { return false; }
+            $.ajax({
+                type: "post",
+                url: "AsyCenter.aspx",
+                data: {
+                    type:"addbm",
+                    bmname:bmname
+                },
+                success: function (data)
+                {
+                    if (data == "1") {
+                        //flushrow
+                        GFbm();
+                        document.getElementById("input1").value = "";
+                    } else {
+                        alert("添加失败！");
+                    }
+                }
+            })
+
+
+        }
+
+        function addyh()
+        {
+            var partid = bmselect.options[bmselect.selectedIndex].value;
+            var yhname = document.getElementById("input2").value;
+            if (partid == "-1" || yhname.replace(/\s+/g, "") == "") { return false; }
+
+            $.ajax({
+                type: "post",
+                url: "AsyCenter.aspx",
+                data: {
+                    type: "addyh",
+                    yhname: yhname,
+                    partid:partid
+                },
+                success: function (data) {
+                    if (data == "1") {
+                        //flushrow
+                        GFyh(1);
+                        document.getElementById("input2").value = "";
+                    } else {
+                        alert("添加失败！");
+                    }
+                }
+            })
+        }
+
+        function GFbm()
+        {
+            $.ajax({
+                type: "post",
+                url: "AsyCenter.aspx",
+                data: {
+                    type: "getallbm"
+                },
+                success: function (data) {
+                    var json = "";
+                    try {
+                     json = eval("("+data+")");
+                    } catch (e) {
+                        addrow_bm_null("无数据...");
+                        return false;
+                    }
+                    bmbox.innerHTML = "";
+                    bmselect.options.length = 0;
+                    bmselect.options.add(new Option("请选择部门", "-1"));
+                    yhbox.innerHTML = "";
+                    for (var i = 0; i < json.length; i++) {
+                        addrow(json[i].id, decode(json[i].part));
+                    }
+                    addrow_yh_null("请选择部门...");
+                }
+
+            })
+        }
+
+        function GFyh(pageindex) {
+            var a=bmselect.options[bmselect.selectedIndex].value;
+            if(a=="-1"){addrow_yh_null("无数据..."); return false;};
+            $.ajax({
+                type: "post",
+                url: "AsyCenter.aspx",
+                data: {
+                    type: "getfyyh",
+                    partid: a,
+                    pagesize: 9,
+                    pageindex:pageindex
+                },
+                success: function (data) {
+                    var json = "";
+                    try {
+                        json = eval("(" + data + ")");
+                    } catch (e) {
+                        addrow_yh_null("无数据...");
+                        return false;
+                    }
+                    yhbox.innerHTML = "";
+                    for (var i = 0; i < json.length; i++) {
+                        if (i == 0) {
+                            InitPages(pagebox, json[i].count, pageindex);
+                        } else {
+                        addrow_yh(json[i].id, decode(json[i].name),decode(json[i].u_name));
+                        }
+                    }
+                }
+
+            })
+        }
+
+        function InitPages(pagebox, totalcount, pageindex) {
+            pagebox.innerHTML = "";
+
+            totalpage = parseInt(totalpage);
+            pageindex = parseInt(pageindex);
+
+            var totalpage = 0;
+            var pagenum = 5;
+            var pagesize = 9;
+            if (parseInt(totalcount) < pagesize) {
+                totalpage = 1;
+            } else {
+                if (parseInt(totalcount) % pagesize > 0) {
+                    totalpage = parseInt(totalcount / pagesize) + 1;
+                } else {
+                    totalpage = parseInt(totalcount / pagesize)
+                }
+            }
+            var middleindex = parseInt(pagenum / 2) + 1;
+            var newobj = null;
+            if (pageindex == 1) {
+                newobj = Create("上页", "disabled");
+                pagebox.appendChild(newobj);
+            } else {
+                newobj = Create("上页", "");
+                pagebox.appendChild(newobj);
+            }
+
+            //if (pageindex == 1) {
+            //    newobj = Create("第一页", "disabled");
+            //    pagebox.appendChild(newobj);
+            //} else {
+            //    newobj = Create("第一页", "");
+            //    pagebox.appendChild(newobj);
+            //}
+
+            if (totalpage < pagenum) {
+                for (var i = 1; i < totalpage + 1; i++) {
+                    if (i != pageindex) {
+                        newobj = Create(i, "");
+                        pagebox.appendChild(newobj);
+                    } else {
+                        newobj = Create(i, "active");
+                        pagebox.appendChild(newobj);
+                    }
+                }
+            } else {
+                if (pageindex <= middleindex) {
+                    for (var i = 1; i < pagenum + 1; i++) {
+                        if (i != pageindex) {
+                            newobj = Create(i, "");
+                            pagebox.appendChild(newobj);
+                        } else {
+                            newobj = Create(i, "active");
+                            pagebox.appendChild(newobj);
+                        }
+                    }
+                } else {
+                    var offsetindex = middleindex - 1;
+                    var beginindex = pageindex - offsetindex;
+                    var endindex = 0;
+                    if (parseInt(pageindex) + offsetindex < totalpage) {
+                        endindex = parseInt(pageindex) + offsetindex;
+                    } else {
+                        endindex = beginindex + (totalpage - beginindex);
+                    }
+
+                    for (var i = beginindex; i < endindex + 1; i++) {
+                        if (i != pageindex) {
+                            newobj = Create(i, "");
+                            pagebox.appendChild(newobj);
+                        } else {
+                            newobj = Create(i, "active");
+                            pagebox.appendChild(newobj);
+                        }
+                    }
+                }
+            }
+
+            //if (parseInt(pageindex) >= totalpage) {
+            //    newobj = Create("最后一页", "disabled");
+            //    pagebox.appendChild(newobj);
+            //} else {
+            //    newobj = Create("最后一页", "");
+            //    pagebox.appendChild(newobj);
+            //}
+
+            if (parseInt(pageindex) >= totalpage) {
+                newobj = Create("下页", "disabled");
+                pagebox.appendChild(newobj);
+            } else {
+                newobj = Create("下页", "");
+                pagebox.appendChild(newobj);
+            }
+
+
+            function Create(inname, classtype) {
+                var obj = null;
+                var oli = document.createElement("li");
+                var oa = document.createElement("a");
+
+                if (classtype != "") { oli.className = classtype; }
+
+                oa.innerHTML = inname;
+                oa.href = "javascript:void(0)";
+                if ((inname + "").indexOf("页") < 0) {
+                    oa.style.width = 15 + "px";
+                }
+                oa.onclick = function () {
+                    pageclick(oa);
+                }
+                oli.appendChild(oa);
+
+                return oli;
+            }
+
+            function pageclick(sender) {
+                var pe = sender.parentElement.className;
+                if (pe == "disabled" || pe == "active") { return false; }
+                var _value = sender.innerHTML;
+                switch (_value) {
+                    case "上页":
+                        GFyh(pageindex-1);
+                        InitPages(pagebox, totalpage, pageindex - 1);
+                        break;
+                    case "下页":
+                        GFyh(pageindex + 1);
+                        InitPages(pagebox, totalpage, pageindex + 1);
+                        break;
+                    case "第一页":
+                        GetData(1);
+                        InitPages(pagebox, totalpage, 1);
+                        break;
+                    case "最后一页":
+                        GetData(totalpage);
+                        InitPages(pagebox, totalpage, totalpage);
+                        break;
+                    default:
+                        GFyh(_value);
+                        InitPages(pagebox, totalpage, _value);
+
+                }
+            }
+        }
+
+        function addrow(id,name)
+        {
+            var newobj = document.createElement("div");
+            var html = "<div class='lb'>"+
+                            "<div class='img6'></div>" +
+                            "<span class='lbspan' style='margin-left: 10px; float: left; width: 225px;'>"+name+"</span>"+
+                            "<span class='lb2' onmouseover=this.style.cursor='pointer' onclick=deletebm('"+id+"','"+name+"');>删除</span>"+
+                        "</div>";
+            newobj.innerHTML = html;
+            bmbox.appendChild(newobj);
+
+            bmselect.options.add(new Option(name,id));
+        }
+
+        function addrow_yh(id,name,uname)
+        {
+            var newobj = document.createElement("div");
+            var html = " <div class='lb1'>"+
+                            "<div class='img7'></div>"+
+                            "<span class='lbspan' style='margin-left: 10px; float: left; width: 80px;'>姓名:"+name+"</span>"+
+                            "<div class='img8'></div>"+
+                            "<span class='lbspan' style='margin-left: 10px; float: left; width: 130px;'>用户名:"+uname+"</span>"+
+                            "<span class='lb5' onmouseover=this.style.cursor='pointer' onclick=deleteyh('"+id+"','"+name+"')>删除</span>"+
+                            "<span class='lb3' onmouseover=this.style.cursor='pointer' onclick=javascript:photo('"+uname+"');>照相</span>"+
+                            "<span class='lb4' onmouseover=this.style.cursor='pointer' onclick='window.location.href='#''>重置密码</span>"+
+                       " </div>";
+            newobj.innerHTML = html;
+            yhbox.appendChild(newobj);
+        }
+
+        function addrow_yh_null(msg) {
+            var newobj = document.createElement("div");
+            var html = " <div class='lb1'>" +
+                           // "<div class='img7'></div>" +
+                            "<span class='lbspan' style='margin-left: 10px; float: left; width: 120px;'>"+msg+"</span>" +
+                           // "<div class='img8'></div>" +
+                            "<span class='lbspan' style='margin-left: 10px; float: left; width: 130px;'></span>" +
+                            //"<span class='lb5' onmouseover=this.style.cursor='pointer' onclick='window.location.href='#''>删除</span>" +
+                            //"<span class='lb3' onmouseover=this.style.cursor='pointer' onclick='javascript:photo('lwgs_1001');'>照相</span>" +
+                            //"<span class='lb4' onmouseover=this.style.cursor='pointer' onclick='window.location.href='#''>重置密码</span>" +
+                       " </div>";
+            yhbox.innerHTML = "";
+            newobj.innerHTML = html;
+            yhbox.appendChild(newobj);
+        }
+
+        function addrow_bm_null(msg)
+        {
+            var newobj = document.createElement("div");
+            var html = "<div class='lb'>" +
+                           // "<div class='img6'></div>" +
+                            "<span class='lbspan' style='margin-left: 10px; float: left; width: 225px;'>" + msg + "</span>" +
+                          //  "<span class='lb2' onmouseover=this.style.cursor='pointer' onclick=deletebm('" + id + "','" + name + "');>删除</span>" +
+                        "</div>";
+            bmbox.innerHTML = "";
+            newobj.innerHTML = html;
+            bmbox.appendChild(newobj);
+        }
+
+        function decode(str) {
+            str = decodeURIComponent(str.replace(/\+/g, '%20'));
+            return str;
+        }
+
+        function deletebm(id, name)
+        {
+            var r = confirm("确定要删除　" + name + " 吗?");
+            if (r) {
+                $.ajax({
+                    type: "post",
+                    url: "AsyCenter.aspx",
+                    data: {
+                        type: "deletebm",
+                        id:id
+                    },
+                    success: function (data)
+                    {
+                        if (data == "1") {
+                            GFbm();
+                            alert("已删除！");
+                        } else {
+                            alert("删除失败！");
+                        }
+                    }
+
+                });
+            }
+        }
+
+        function deleteyh(id, name)
+        {
+            var r = confirm("确定要删除　" + name + " 吗?");
+            if (r) {
+                $.ajax({
+                    type: "post",
+                    url: "AsyCenter.aspx",
+                    data: {
+                        type: "deleteyh",
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data == "1") {
+                            GFyh(1);
+                            alert("已删除！");
+                        } else {
+                            alert("删除失败！");
+                        }
+                    }
+
+                });
+            }
+        }
+
     </script>
 </head>
 <body>
@@ -491,11 +876,11 @@
                         </div>
                     </div>
 
-                    <div class="img3" onmouseover="this.style.cursor='pointer'" onclick="javascript:void(0);"></div>
+                    <div class="img3" onmouseover="this.style.cursor='pointer'" onclick="addbm();"></div>
                 </div>
                 <div class="left2">
-                    <div class="left3">
-                        <div class="lb">
+                    <div class="left3" id="bmbox">
+<%--                        <div class="lb">
                             <div class="img6"></div>
                             <span class="lbspan" style="margin-left: 10px; float: left; width: 225px;">部门1部门1部门1部门1部门1</span>
                             <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
@@ -544,7 +929,7 @@
                             <div class="img6"></div>
                             <span class="lbspan" style="margin-left: 10px; float: left; width: 225px;">部门1</span>
                             <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        </div>
+                        </div>--%>
                     </div>
 
                 </div>
@@ -573,11 +958,11 @@
                             <span class="sb-icon-search"></span>
                         </div>
                     </div>
-                    <div class="img4" onmouseover="this.style.cursor='pointer'" onclick="javascript:void(0);"></div>
+                    <div class="img4" onmouseover="this.style.cursor='pointer'" onclick="addyh();"></div>
                 </div>
                 <div class="right2">
                     <div class="right3">
-                        <div class="lb1">
+                     <%--   <div class="lb1">
                             <div class="img7"></div>
                             <span class="lbspan" style="margin-left: 10px; float: left; width: 80px;">姓名:高阳高</span>
                             <div class="img8"></div>
@@ -657,15 +1042,18 @@
                             <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
                             <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="javascript:photo('8888888');">照相</span>
                             <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
+                        </div>--%>
+                        <div id="yhbox">
+
                         </div>
                         <div class="pagination">
-                            <ul>
-                                <li><a href="#">上一页</a></li>
+                            <ul id="pagebox">
+                               <%-- <li><a href="#">上一页</a></li>
                                 <li><a href="#">1</a></li>
                                 <li><a href="#">2</a></li>
                                 <li><a href="#">3</a></li>
                                 <li><a href="#">4</a></li>
-                                <li><a href="#">下一页</a></li>
+                                <li><a href="#">下一页</a></li>--%>
                             </ul>
                         </div>
                     </div>
