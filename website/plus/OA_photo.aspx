@@ -127,7 +127,31 @@
             imgbase64 = canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "");
             //document.getElementById("base").innerHTML = imgbase64;
             // imgbase64已经测试正常，字符串大小大概有50k-150k的长度。将其按用户名提交imgbase64数据到相应用户u_name数据库下
-             alert("数据提交成功，请点击右上方红色关闭按钮关闭拍照。");
+
+            var id = $_GET['id'];
+            savedata(id, imgbase64);
+        }
+
+        function savedata(id,imgbase64)
+        {
+            $.ajax({
+                type: "post",
+                url: "../AsyCenter.aspx",
+                data: {
+                    type: "saveimgb64",
+                    id: id,
+                    b64:imgbase64
+                },
+                success: function (data)
+                {
+                    if (data == "1") {
+                        alert("数据提交成功，请点击右上方红色关闭按钮关闭拍照。");
+                    } else {
+                        alert("数据提交失败!");
+                    }
+                }
+
+            })
         }
     </script>
 </head>

@@ -469,8 +469,8 @@
                 }
             });
         };
-        function photo(u_name) {
-            document.getElementById("zhezhaoshow").innerHTML = "<iframe src='plus/OA_photo.aspx?u_name=" + u_name + "' style='width:990px;height:601px;border: 1px solid #F4F4F4;' id='ppshow'></iframe>";
+        function photo(id,u_name) {
+            document.getElementById("zhezhaoshow").innerHTML = "<iframe src='plus/OA_photo.aspx?u_name=" + u_name + "&id="+id+"' style='width:990px;height:601px;border: 1px solid #F4F4F4;' id='ppshow'></iframe>";
             document.getElementById("zhezhao").style.display = "block";
         }
         function zhezhao() {
@@ -562,7 +562,7 @@
 
         function GFyh(pageindex) {
             var a=bmselect.options[bmselect.selectedIndex].value;
-            if(a=="-1"){addrow_yh_null("无数据..."); return false;};
+            if (a == "-1") { addrow_yh_null("无数据..."); InitPages(pagebox, 0, 1); return false; };
             $.ajax({
                 type: "post",
                 url: "AsyCenter.aspx",
@@ -578,6 +578,7 @@
                         json = eval("(" + data + ")");
                     } catch (e) {
                         addrow_yh_null("无数据...");
+                        InitPages(pagebox, 0, 1);
                         return false;
                     }
                     yhbox.innerHTML = "";
@@ -761,8 +762,8 @@
                             "<div class='img8'></div>"+
                             "<span class='lbspan' style='margin-left: 10px; float: left; width: 130px;'>用户名:"+uname+"</span>"+
                             "<span class='lb5' onmouseover=this.style.cursor='pointer' onclick=deleteyh('"+id+"','"+name+"')>删除</span>"+
-                            "<span class='lb3' onmouseover=this.style.cursor='pointer' onclick=javascript:photo('"+uname+"');>照相</span>"+
-                            "<span class='lb4' onmouseover=this.style.cursor='pointer' onclick='window.location.href='#''>重置密码</span>"+
+                            "<span class='lb3' onmouseover=this.style.cursor='pointer' onclick=javascript:photo('"+id+"','"+uname+"');>照相</span>"+
+                            "<span class='lb4' onmouseover=this.style.cursor='pointer' onclick=resetpassword('"+id+"','"+name+"')>重置密码</span>"+
                        " </div>";
             newobj.innerHTML = html;
             yhbox.appendChild(newobj);
@@ -815,11 +816,14 @@
                     },
                     success: function (data)
                     {
-                        if (data == "1") {
+                        var arr = data.split(":");
+                        if (arr[0] == "1") {
                             GFbm();
                             alert("已删除！");
+                        } else if (arr[0] == "no") {
+                            alert(arr[1]);
                         } else {
-                            alert("删除失败！");
+                            alert("删除失败!")
                         }
                     }
 
@@ -848,6 +852,29 @@
                     }
 
                 });
+            }
+        }
+
+        function resetpassword(id, name)
+        {
+            var c = confirm("确认要重置　" + name + " 的密码吗?");
+            if (c) {
+                $.ajax({
+                    type: "post",
+                    url: "AsyCenter.aspx",
+                    data: {
+                        type: "resetuserpasswor",
+                        id:id
+                    },
+                    success: function (data)
+                    {
+                        if (data == "1") {
+                            alert("已重置该用户密码!");
+                        } else {
+                            alert("重置失败!");
+                        }
+                    }
+                })
             }
         }
 
@@ -880,56 +907,6 @@
                 </div>
                 <div class="left2">
                     <div class="left3" id="bmbox">
-<%--                        <div class="lb">
-                            <div class="img6"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 225px;">部门1部门1部门1部门1部门1</span>
-                            <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        </div>
-                        <div class="lb">
-                            <div class="img6"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 225px;">部门1</span>
-                            <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        </div>
-                        <div class="lb">
-                            <div class="img6"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 225px;">部门1</span>
-                            <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        </div>
-                        <div class="lb">
-                            <div class="img6"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 225px;">部门1</span>
-                            <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        </div>
-                        <div class="lb">
-                            <div class="img6"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 225px;">部门1</span>
-                            <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        </div>
-                        <div class="lb">
-                            <div class="img6"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 225px;">部门1</span>
-                            <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        </div>
-                        <div class="lb">
-                            <div class="img6"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 225px;">部门1</span>
-                            <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        </div>
-                        <div class="lb">
-                            <div class="img6"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 225px;">部门1</span>
-                            <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        </div>
-                        <div class="lb">
-                            <div class="img6"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 225px;">部门1</span>
-                            <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        </div>
-                        <div class="lb">
-                            <div class="img6"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 225px;">部门1</span>
-                            <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        </div>--%>
                     </div>
 
                 </div>
@@ -962,98 +939,11 @@
                 </div>
                 <div class="right2">
                     <div class="right3">
-                     <%--   <div class="lb1">
-                            <div class="img7"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 80px;">姓名:高阳高</span>
-                            <div class="img8"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 130px;">用户名:lwgs_1001</span>
-                            <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                            <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="javascript:photo('lwgs_1001');">照相</span>
-                            <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
-                        </div>
-                        <div class="lb1">
-                            <div class="img7"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 80px;">姓名:高阳</span>
-                            <div class="img8"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 130px;">用户名:8888888</span>
-                            <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                            <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="javascript:photo('8888888');">照相</span>
-                            <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
-                        </div>
-                        <div class="lb1">
-                            <div class="img7"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 80px;">姓名:高阳</span>
-                            <div class="img8"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 130px;">用户名:8888888</span>
-                            <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                            <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="javascript:photo('8888888');">照相</span>
-                            <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
-                        </div>
-                        <div class="lb1">
-                            <div class="img7"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 80px;">姓名:高阳</span>
-                            <div class="img8"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 130px;">用户名:8888888</span>
-                            <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                            <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="javascript:photo('8888888');">照相</span>
-                            <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
-                        </div>
-                        <div class="lb1">
-                            <div class="img7"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 80px;">姓名:高阳</span>
-                            <div class="img8"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 130px;">用户名:8888888</span>
-                            <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                            <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="javascript:photo('8888888');">照相</span>
-                            <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
-                        </div>
-                        <div class="lb1">
-                            <div class="img7"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 80px;">姓名:高阳</span>
-                            <div class="img8"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 130px;">用户名:8888888</span>
-                            <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                            <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="javascript:photo('8888888');">照相</span>
-                            <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
-                        </div>
-                        <div class="lb1">
-                            <div class="img7"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 80px;">姓名:高阳</span>
-                            <div class="img8"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 130px;">用户名:8888888</span>
-                            <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                            <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="javascript:photo('8888888');">照相</span>
-                            <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
-                        </div>
-                        <div class="lb1">
-                            <div class="img7"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 80px;">姓名:高阳</span>
-                            <div class="img8"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 130px;">用户名:8888888</span>
-                            <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                            <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="javascript:photo('8888888');">照相</span>
-                            <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
-                        </div>
-                        <div class="lb1">
-                            <div class="img7"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 80px;">姓名:高阳</span>
-                            <div class="img8"></div>
-                            <span class="lbspan" style="margin-left: 10px; float: left; width: 130px;">用户名:8888888</span>
-                            <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                            <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="javascript:photo('8888888');">照相</span>
-                            <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
-                        </div>--%>
                         <div id="yhbox">
 
                         </div>
                         <div class="pagination">
                             <ul id="pagebox">
-                               <%-- <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">下一页</a></li>--%>
                             </ul>
                         </div>
                     </div>

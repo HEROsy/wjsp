@@ -52,12 +52,42 @@ public partial class AsyCenter : System.Web.UI.Page
                     GetFYYH();
                     break;
 
+                case "saveimgb64":
+                    SaveImgB64();
+                    break;
+
+                case "resetuserpasswor":
+                    ResetUserPassword();
+                    break;
+
                 default:
                     break;
             }
         }
        
 
+    }
+
+    private void ResetUserPassword()
+    {
+        String id=Request.Form["id"];
+        String newpasseord = "666666";
+        String sql = "update oa_user set u_password="+newpasseord+" where id="+id;
+        int r = SqlHelper.ExcoutSQL(sql, CommandType.Text, null);
+        Response.Write(r);
+        Response.End();
+    }
+
+    private void SaveImgB64()
+    {
+        String id = Request.Form["id"];
+        String data = Request.Form["b64"];
+        SqlParameter[] set_spr={new SqlParameter("@imgbase64",data)};
+        SqlParameter[] where_spr={new SqlParameter("@id",id)};
+        String sql = SqlHelper.GetSQLUpdate_normal("oa_user", set_spr, where_spr, "=", "");
+        int r = SqlHelper.ExcoutSQL_2Parmter(sql, CommandType.Text, set_spr, where_spr);
+        Response.Write(r);
+        Response.End();
     }
 
     private void GetFYYH()
@@ -112,10 +142,20 @@ public partial class AsyCenter : System.Web.UI.Page
     private void DeleteBM()
     {
         String id=Request.Form["id"];
+        String sql = "select id from oa_user where u_part="+id;
+        DataTable dt = SqlHelper.GetTable(sql, CommandType.Text, null);
+        if (dt!=null)
+        {
+            if (dt.Rows.Count>0)
+            {
+                Response.Write("no:该部门下存在用户信息，如果想删除该部门请先删除相关用户，删除失败!");
+                Response.End();
+            }   
+        }
         SqlParameter spr = new SqlParameter("@id", id);
-        String sql = "delete from oa_part where id=@id";
+        sql = "delete from oa_part where id=@id";
         int r = SqlHelper.ExcoutSQL(sql, CommandType.Text, spr);
-        Response.Write(r);
+        Response.Write(r+":");
         Response.End();
     }
 
