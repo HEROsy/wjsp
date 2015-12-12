@@ -54,6 +54,19 @@
           input:-ms-input-placeholder {
             color: #a1a1a1 !important; /*强制使用*/
         }
+        .ss2 {
+            font-size:35px;
+            letter-spacing:6px;
+            color:#000000;
+        }
+
+        .s1 {
+            color:#f26666;
+        }
+        .ss1 {
+            font-size:16px;
+            font-weight:bold;
+        }
     </style>
 
     <script type="text/javascript">
@@ -68,7 +81,8 @@
         <%--此行不能修改--%>
         <div class="row-fluid" style="margin-top: 10px">
             <%--此行不能修改--%>
-
+            <span class="s1 ss1">中华人民共和国</span>
+            <span class="ss2 s1 r3">中国共产党</span>
 
         </div>
     </div>

@@ -519,11 +519,11 @@
                                 <div class="imgno"></div>
                                 <span class="s1">2015年12月05号</span>
                                 <span class="s2">9:07-12:00</span>
-                                <span class="s3">迟到</span>
+                                <span class="s3">正常</span>
                             </div>
                             <div class="span4">
                                 <span class="s2">14:30-17:22</span>
-                                <span class="s3">早退</span>
+                                <span class="s3">正常</span>
                             </div>
                         </div>
                     </div>

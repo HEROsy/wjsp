@@ -89,7 +89,7 @@
         var videoObj;
         var errBack;
         window.onload = function () {
-            document.getElementById("user").innerHTML = "当前用户：" + $_GET['u_name'];
+            document.getElementById("user").innerHTML = "当前用户：" + $_GET['u_name111'];
         }
         window.addEventListener("DOMContentLoaded", function () {
             canvas = document.getElementById("canvas");
