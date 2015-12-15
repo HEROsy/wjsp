@@ -41,6 +41,7 @@ using System.Data.OleDb;
                         SqlDataAdapter sda = new SqlDataAdapter(cmd);
                         dt = new DataTable();
                         sda.Fill(dt);
+                        cmd.Parameters.Clear();
                         return dt;
                     }
                 }
@@ -81,9 +82,6 @@ using System.Data.OleDb;
             }
             catch (SqlException e)
             {
-            //    String err = "sql:" + sql + "err:" + e.Message;
-            //    Inserterr(err);
-
                 int ercode = e.Errors[0].Number;
                 return ercode;
             }

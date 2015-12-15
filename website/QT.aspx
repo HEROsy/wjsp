@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="QT.aspx.cs" Inherits="wjsp_website_QT" %>
 
 <!DOCTYPE html>
 
@@ -8,6 +8,10 @@
     <title></title>
 </head>
 <body>
-  <% Muler();%>
+    <form id="form1" runat="server">
+    <div>
+    签退
+    </div>
+    </form>
 </body>
 </html>

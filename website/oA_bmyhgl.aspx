@@ -1,17 +1,14 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="oA_bmyhgl.aspx.cs" Inherits="oA_bmyhgl" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="OA_bmyhgl.aspx.cs" Inherits="oA_bmyhgl" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <%--<script src="Script/jquery-1.8.2.min.js"></script>--%>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="Script/jquery-1.8.2.min.js"></script>
     <script src="Script/swkj.js"></script>
     <link href="Style/swkj.css" rel="stylesheet" />
     <link href="Style/swkjbt.css" rel="stylesheet" />
-    <script src="Script/selectpick.js"></script>
-    <script src="Script/jquery-1.8.3.js"></script>
-    <script src="Script/selectpick.js"></script>
     <title>部门用户管理</title>
     <style type="text/css">
         p {
@@ -19,7 +16,18 @@
             letter-spacing: 1px; /*最小间距1px，可根据需要调整，不得低于1px*/
             font-size: 14px; /*最小文字大小14px，可根据需要调整，不得低于14px*/
         }
-
+        lable {
+            font-family: "微软雅黑" !important; /*强制使用这种字体*/
+            letter-spacing: 1px; /*最小间距1px，可根据需要调整，不得低于1px*/
+            font-size: 14px; /*最小文字大小14px，可根据需要调整，不得低于14px*/
+            color:#757575 !important;
+        }
+        option {
+            font-family: "微软雅黑" !important; /*强制使用这种字体*/
+            letter-spacing: 1px; /*最小间距1px，可根据需要调整，不得低于1px*/
+            font-size: 14px; /*最小文字大小14px，可根据需要调整，不得低于14px*/
+            color:#757575 !important;
+        }
         span {
             font-family: "微软雅黑" !important; /*强制使用这种字体*/
             letter-spacing: 1px; /*最小间距1px，可根据需要调整，不得低于1px*/
@@ -58,15 +66,17 @@
         　　input:-ms-input-placeholder {
             color: #a1a1a1 !important; /*强制使用*/
         }
-        .top{
-            height:100px;
-            width:auto;
+
+        .top {
+            height: 100px;
+            width: auto;
         }
+
         .top1 {
             height: 100px;
             width: 250px;
             float: left;
-            margin-left: 400px;
+            margin-left: 391px;
         }
 
         .top2 {
@@ -88,35 +98,37 @@
             -moz-background-size: 100% 100%;
             background-size: 100% 100%;
         }
-        .left{
-            height:580px;
-            width:400px;
-            border:1px solid #0092D7;
-            float:left;
+
+        .left {
+            height: 650px;
+            width: 400px;
+            float: left;
         }
+
         .right {
-            height: 580px;
+            height: 650px;
             width: 580px;
-            border: 1px solid #0092D7;
             margin-left: 420px;
         }
-       .left1{
-           height:80px;
-           width:auto;
-           background-color:#0092D7;
-           
-       }
+
+        .left1 {
+            height: 100px;
+            width: auto;
+            background-color: #0E8613;
+        }
+
         .column {
             height: 30px;
             width: 270px;
             margin-top: 27px;
             display: inline-block;
             margin-left: 70px;
-            float:left;
+            float: left;
         }
+
         .column1 {
             height: 30px;
-            width: 250px;
+            width: 190px;
             margin-top: 3px;
             display: inline-block;
             margin-left: 30px;
@@ -132,23 +144,24 @@
             border-radius: 5px;
             background-color: #EE8D09;
         }
-        .img2{
-            height:25px;
-            width:25px;
+
+        .img2 {
+            height: 25px;
+            width: 25px;
             margin: 5px;
-            background-image:url(img/z4.png);
+            background-image: url(img/z4.png);
             background-repeat: no-repeat;
             background-position: center 0px;
             filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
             -moz-background-size: 100% 100%;
             background-size: 100% 100%;
-            
         }
+
         .img3 {
             height: 30px;
             width: 30px;
             float: left;
-            margin: 28px 0 0 10px;
+            margin: 42px 0 0 -20px;
             background-image: url(img/z3.png);
             -moz-transition: all 0.2s ease-in-out;
             -webkit-transition: all 0.2s ease-in-out;
@@ -169,11 +182,12 @@
                 -ms-transform: rotate(360deg);
                 transform: rotate(360deg);
             }
-            .img4 {
+
+        .img4 {
             height: 30px;
             width: 30px;
             float: left;
-            margin: 4px 0 0 10px;
+            margin: 2px 0 0 30px;
             background-image: url(img/z3.png);
             -moz-transition: all 0.2s ease-in-out;
             -webkit-transition: all 0.2s ease-in-out;
@@ -194,294 +208,705 @@
                 -ms-transform: rotate(360deg);
                 transform: rotate(360deg);
             }
-        .right1{
-            height:50px;
-           width:auto;
-           background-color:#0092D7;
-        }
-        .right11{
-            height:30px;
-           width:auto;
-           background-color:#0092D7;
-        }
-        .left2{
-            height:500px;
-            width:auto;
-            background-color:#f1f1f1;
-        }
-        .lb{
-            height:49px;
-            width:auto;
-            border-bottom:1px solid #B5B5B5;
 
+        .right1 {
+            height: 60px;
+            width: auto;
+            background-color: #D9272D;
         }
+
+        .right11 {
+            height: 40px;
+            width: auto;
+            background-color: #D9272D;
+        }
+
+        .left2 {
+            height: 550px;
+            width: auto;
+            background-color: #4CAF50;
+        }
+
+        .lb {
+            height: 49px;
+            width: auto;
+            border-bottom: 1px solid #65C569;
+            background-color: #4CAF50;
+        }
+
+            .lb:hover {
+                background-color: #68CA6C;
+            }
+
+        .lb1 {
+            height: 49px;
+            width: 580px;
+            border-bottom: 1px solid #F47041;
+        }
+
+            .lb1:hover {
+                background-color: #FD7B4B;
+            }
+
         .lbspan {
             display: block;
             margin-top: 16px;
             margin-left: 25px;
-            
+            color: #fff;
         }
+
         .lb2 {
             width: 62px;
             height: 30px;
             display: block;
-            background-color: #92DCE0;
+            color: #fff;
             float: left;
             line-height: 30px;
             text-align: center;
             border-radius: 6px;
-            margin: 10px 0 0 217px;
+            margin: -35px 0 0 302px;
+            background-color: #FF9800;
         }
 
             .lb2:hover {
                 color: #ffffff;
-                background-color:#0092D7;
+                background-color: #FFC107;
             }
-            .lb3 {
-            width: 62px;
+
+        .lb3 {
+            width: 55px;
             height: 30px;
             display: block;
-            background-color: #92DCE0;
             float: left;
             line-height: 30px;
+            background-color: #4CAF50;
             text-align: center;
             border-radius: 6px;
-           margin: 10px 0 0 12px;
+            margin: 10px 0 0 12px;
+            color: #ffffff;
         }
 
             .lb3:hover {
                 color: #ffffff;
-                background-color:#0092D7;
+                background-color: #35D63B;
             }
-            .lb4 {
+
+        .lb4 {
             width: 80px;
             height: 30px;
             display: block;
-            background-color: #92DCE0;
+            background-color: #0092D7;
             float: left;
             line-height: 30px;
             text-align: center;
             border-radius: 6px;
             margin: 10px;
+            color: #ffffff;
         }
 
             .lb4:hover {
                 color: #ffffff;
-                background-color:#0092D7;
+                background-color: #03A9F4;
             }
-             .lb5 {
-            width: 62px;
+
+        .lb5 {
+            width: 55px;
             height: 30px;
             display: block;
-            background-color: #92DCE0;
+            background-color: #FF9800;
             float: left;
             line-height: 30px;
             text-align: center;
             border-radius: 6px;
-            margin: 10px 0 0 141px;
+            margin: 10px 0 0 25px;
+            color: #fff;
         }
 
             .lb5:hover {
                 color: #ffffff;
-                background-color:#0092D7;
+                background-color: #FFC107;
             }
-        .sx {
-            height: 30px;
-            width: 30px;
-            margin-top: 1px;
+
+
+        #test_3 {
+            width: 273px !important;
+            background-color: #ffffff !important;
+            border: 1px solid #cccccc  !important;
+            height: 35px !important;
+            margin-top: 1px !important;
+        }
+
+        .inner {
+            height: 60px;
+            width: 20px;
+            background-color: #D9272D;
             float: left;
-            margin-left: -9px;
-            background-image: url(img/z5.png);
+        }
+
+        .right2 {
+            height: 550px;
+            width: auto;
+            background-color: #f0584b;
+        }
+
+        .pagination ul li a {
+            color: #ffffff !important;
+            background-color: #f0584b !important;
+        }
+
+        .ss {
+            height: 30px;
+            width: 220px;
+        }
+
+        .left3 {
+            width: 400px;
+            height: 480px;
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        .right3 {
+            width: 580px;
+            height: 480px;
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        .img6 {
+            height: 25px;
+            width: 25px;
+            background-image: url(img/j5.png);
             background-repeat: no-repeat;
             background-position: center 0px;
             filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
             -moz-background-size: 100% 100%;
             background-size: 100% 100%;
-        }
-
-         
-        /*从这里开始都是美化select插件css*/
-         .select {
-            height: 30px;
-            width: 150px;
-        }
-
-        .selectpick_div {
-            background-color: #FFFFFF;
-            font-size: 13px;
-            font-weight: 500;
-            border-radius: 5px;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-            border: solid 1px #CFCFCF;
-            line-height: 30px;
-            position: absolute;
-            padding-left: 5px;
-            overflow: hidden;
-            cursor: pointer;
-            overflow: hidden;
-            z-index: 9060;
-        }
-
-        .selectpick_icon {
-            float: right;
-            background: url(img/C5.png) no-repeat center;
-            margin-right: 5px;
-            height: 20px;
-            margin-top: 5px;
-            width: 20px;
-            cursor: pointer;
-        }
-
-        .selectpick_div:hover {
-            background-color: #F5F5F5;
-            border: solid 1px #ccc;
-        }
-
-        .selectpick_div:active {
-            -moz-box-shadow: 0 0 3px #0099CC;
-            -webkit-box-shadow: 0 0 3px #0099CC;
-            box-shadow: 0 0 3px #0099CC;
-            border: solid 1px #0099CC;
-        }
-
-        .selectpick_options {
-            border: solid 1px #CFCFCF;
-            border-bottom: none;
-            position: absolute;
-            z-index: 9060;
-            font-size: 13.5px;
-        }
-
-            .selectpick_options ul {
-                list-style: none;
-                height: auto;
-                margin: 0px;
-                padding: 0px;
-                z-index: 9060;
-                font-size: 13.5px;
-            }
-
-                .selectpick_options ul li {
-                    border-bottom: solid 1px #CFCFCF;
-                    padding-left: 5px;
-                    display: block;
-                    font-size: 13.5px;
-                    z-index: 9060;
-                    background-color: #fff;
-                }
-
-        .selectpick_options_selected {
-            font-size: 13.5px;
-            z-index: 9060;
-        }
-
-        .select_hide {
-            -moz-opacity: 0;
-            opacity: 0;
-            -webkit-opacity: 0;
-            filter: alpha(opacity = 0);
-            width: 150px;
-        }
-
-        .selectpick_no_select {
-            cursor: default;
-            color: #9a9898;
-            background-color: #F5F5F5;
-        }
-
-        .select_span {
+            margin: 10px 0 0 38px;
             float: left;
-            height: 30px;
-            width: 60px;
+            display: inline-block;
         }
-        .inner{
-            height:50px;
-            width:40px;
-            background-color:#0092D7;
-            float:left;
+
+        .img7 {
+            height: 25px;
+            width: 25px;
+            background-image: url(img/j10.png);
+            background-repeat: no-repeat;
+            background-position: center 0px;
+            filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+            -moz-background-size: 100% 100%;
+            background-size: 100% 100%;
+            margin: 10px 0 0 20px;
+            float: left;
+            display: inline-block;
         }
-         .right2{
-            height:500px;
-            width:auto;
-            background-color:#f1f1f1;
+
+        .img8 {
+            height: 25px;
+            width: 25px;
+            background-image: url(img/j9.png);
+            background-repeat: no-repeat;
+            background-position: center 0px;
+            filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+            -moz-background-size: 100% 100%;
+            background-size: 100% 100%;
+            margin: 10px 0 0 30px;
+            float: left;
+            display: inline-block;
         }
-</style>
+
+        .pagination {
+            margin: 35px 0 0 285px;
+        }
+        #zhezhao {
+            width: 100%;
+            height: 658px;
+            position: absolute;
+            background-color: #ffffff;
+            display:none;
+        }
+        .zzclose {
+            margin: 25px 0 0 950px;
+            width: 25px;
+            height: 25px;
+            position: absolute;
+        }
+    </style>
     <script>
-        $(function () {
-            $("#select_pick").selectpick({
-                onSelect: function (value, text) {
+        var bmbox = null;
+        var bmselect = null;
+        var yhbox = null;
+        var pagebox = null;
+
+        window.onload = function () {
+            ss();
+            ss1();
+            bmbox = document.getElementById("bmbox");
+            bmselect = document.getElementById("test_3");
+            yhbox = document.getElementById("yhbox");
+            pagebox = document.getElementById("pagebox");
+            bmselect.onchange = function () { GFyh(1); };
+            GFbm();
+        }
+
+        function ss() {
+            $('#input1').focus(function () {
+                $(this).css("background-image", "url(img/j1.png)");
+            });
+            $('#input1').blur(function () {
+                if ($('#input1').attr("value") == "") {
+                    $(this).css("background-image", "url(img/j3.png)");
                 }
             });
-            $("#test_3").selectpick({ optionColor: "#92DCE0", selectedColor: "#92DCE0" });
-            $("#test_4").selectpick({ optionColor: "#92DCE0", selectedColor: "#92DCE0" });
+        };
+        function ss1() {
+            $('#input2').focus(function () {
+                $(this).css("background-image", "url(img/j6.png)");
+            });
+            $('#input2').blur(function () {
+                if ($('#input2').attr("value") == "") {
+                    $(this).css("background-image", "url(img/j8.png)");
+                }
+            });
+        };
+        function photo(id,u_name) {
+            document.getElementById("zhezhaoshow").innerHTML = "<iframe src='plus/OA_photo.aspx?u_name=" + u_name + "&id="+id+"' style='width:990px;height:601px;border: 1px solid #F4F4F4;' id='ppshow'></iframe>";
+            document.getElementById("zhezhao").style.display = "block";
+        }
+        function zhezhao() {
+            document.getElementById("zhezhaoshow").innerHTML = "";
+            document.getElementById("zhezhao").style.display = "none";
+        }
 
-        });
+        //////////////////////////////////////
+        function addbm()
+        {
+            var bmname = document.getElementById("input1").value;
+            if (bmname.replace(/\s+/g, "") == "") { return false; }
+            $.ajax({
+                type: "post",
+                url: "AsyCenter.aspx",
+                data: {
+                    type:"addbm",
+                    bmname:bmname
+                },
+                success: function (data)
+                {
+                    if (data == "1") {
+                        //flushrow
+                        GFbm();
+                        document.getElementById("input1").value = "";
+                    } else {
+                        alert("添加失败！");
+                    }
+                }
+            })
+
+
+        }
+
+        function addyh()
+        {
+            var partid = bmselect.options[bmselect.selectedIndex].value;
+            var yhname = document.getElementById("input2").value;
+            if (partid == "-1" || yhname.replace(/\s+/g, "") == "") { return false; }
+
+            $.ajax({
+                type: "post",
+                url: "AsyCenter.aspx",
+                data: {
+                    type: "addyh",
+                    yhname: yhname,
+                    partid:partid
+                },
+                success: function (data) {
+                    if (data == "1") {
+                        //flushrow
+                        GFyh(1);
+                        document.getElementById("input2").value = "";
+                    } else {
+                        alert("添加失败！");
+                    }
+                }
+            })
+        }
+
+        function GFbm()
+        {
+            $.ajax({
+                type: "post",
+                url: "AsyCenter.aspx",
+                data: {
+                    type: "getallbm"
+                },
+                success: function (data) {
+                    var json = "";
+                    try {
+                     json = eval("("+data+")");
+                    } catch (e) {
+                        addrow_bm_null("无数据...");
+                        return false;
+                    }
+                    bmbox.innerHTML = "";
+                    bmselect.options.length = 0;
+                    bmselect.options.add(new Option("请选择部门", "-1"));
+                    yhbox.innerHTML = "";
+                    for (var i = 0; i < json.length; i++) {
+                        addrow(json[i].id, decode(json[i].part));
+                    }
+                    addrow_yh_null("请选择部门...");
+                }
+
+            })
+        }
+
+        function GFyh(pageindex) {
+            var a=bmselect.options[bmselect.selectedIndex].value;
+            if (a == "-1") { addrow_yh_null("无数据..."); InitPages(pagebox, 0, 1); return false; };
+            $.ajax({
+                type: "post",
+                url: "AsyCenter.aspx",
+                data: {
+                    type: "getfyyh",
+                    partid: a,
+                    pagesize: 9,
+                    pageindex:pageindex
+                },
+                success: function (data) {
+                    var json = "";
+                    try {
+                        json = eval("(" + data + ")");
+                    } catch (e) {
+                        addrow_yh_null("无数据...");
+                        InitPages(pagebox, 0, 1);
+                        return false;
+                    }
+                    yhbox.innerHTML = "";
+                    for (var i = 0; i < json.length; i++) {
+                        if (i == 0) {
+                            InitPages(pagebox, json[i].count, pageindex);
+                        } else {
+                        addrow_yh(json[i].id, decode(json[i].name),decode(json[i].u_name));
+                        }
+                    }
+                }
+
+            })
+        }
+
+        function InitPages(pagebox, totalcount, pageindex) {
+            pagebox.innerHTML = "";
+
+            totalpage = parseInt(totalpage);
+            pageindex = parseInt(pageindex);
+
+            var totalpage = 0;
+            var pagenum = 5;
+            var pagesize = 9;
+            if (parseInt(totalcount) < pagesize) {
+                totalpage = 1;
+            } else {
+                if (parseInt(totalcount) % pagesize > 0) {
+                    totalpage = parseInt(totalcount / pagesize) + 1;
+                } else {
+                    totalpage = parseInt(totalcount / pagesize)
+                }
+            }
+            var middleindex = parseInt(pagenum / 2) + 1;
+            var newobj = null;
+            if (pageindex == 1) {
+                newobj = Create("上页", "disabled");
+                pagebox.appendChild(newobj);
+            } else {
+                newobj = Create("上页", "");
+                pagebox.appendChild(newobj);
+            }
+
+            //if (pageindex == 1) {
+            //    newobj = Create("第一页", "disabled");
+            //    pagebox.appendChild(newobj);
+            //} else {
+            //    newobj = Create("第一页", "");
+            //    pagebox.appendChild(newobj);
+            //}
+
+            if (totalpage < pagenum) {
+                for (var i = 1; i < totalpage + 1; i++) {
+                    if (i != pageindex) {
+                        newobj = Create(i, "");
+                        pagebox.appendChild(newobj);
+                    } else {
+                        newobj = Create(i, "active");
+                        pagebox.appendChild(newobj);
+                    }
+                }
+            } else {
+                if (pageindex <= middleindex) {
+                    for (var i = 1; i < pagenum + 1; i++) {
+                        if (i != pageindex) {
+                            newobj = Create(i, "");
+                            pagebox.appendChild(newobj);
+                        } else {
+                            newobj = Create(i, "active");
+                            pagebox.appendChild(newobj);
+                        }
+                    }
+                } else {
+                    var offsetindex = middleindex - 1;
+                    var beginindex = pageindex - offsetindex;
+                    var endindex = 0;
+                    if (parseInt(pageindex) + offsetindex < totalpage) {
+                        endindex = parseInt(pageindex) + offsetindex;
+                    } else {
+                        endindex = beginindex + (totalpage - beginindex);
+                    }
+
+                    for (var i = beginindex; i < endindex + 1; i++) {
+                        if (i != pageindex) {
+                            newobj = Create(i, "");
+                            pagebox.appendChild(newobj);
+                        } else {
+                            newobj = Create(i, "active");
+                            pagebox.appendChild(newobj);
+                        }
+                    }
+                }
+            }
+
+            //if (parseInt(pageindex) >= totalpage) {
+            //    newobj = Create("最后一页", "disabled");
+            //    pagebox.appendChild(newobj);
+            //} else {
+            //    newobj = Create("最后一页", "");
+            //    pagebox.appendChild(newobj);
+            //}
+
+            if (parseInt(pageindex) >= totalpage) {
+                newobj = Create("下页", "disabled");
+                pagebox.appendChild(newobj);
+            } else {
+                newobj = Create("下页", "");
+                pagebox.appendChild(newobj);
+            }
+
+
+            function Create(inname, classtype) {
+                var obj = null;
+                var oli = document.createElement("li");
+                var oa = document.createElement("a");
+
+                if (classtype != "") { oli.className = classtype; }
+
+                oa.innerHTML = inname;
+                oa.href = "javascript:void(0)";
+                if ((inname + "").indexOf("页") < 0) {
+                    oa.style.width = 15 + "px";
+                }
+                oa.onclick = function () {
+                    pageclick(oa);
+                }
+                oli.appendChild(oa);
+
+                return oli;
+            }
+
+            function pageclick(sender) {
+                var pe = sender.parentElement.className;
+                if (pe == "disabled" || pe == "active") { return false; }
+                var _value = sender.innerHTML;
+                switch (_value) {
+                    case "上页":
+                        GFyh(pageindex-1);
+                        InitPages(pagebox, totalpage, pageindex - 1);
+                        break;
+                    case "下页":
+                        GFyh(pageindex + 1);
+                        InitPages(pagebox, totalpage, pageindex + 1);
+                        break;
+                    case "第一页":
+                        GetData(1);
+                        InitPages(pagebox, totalpage, 1);
+                        break;
+                    case "最后一页":
+                        GetData(totalpage);
+                        InitPages(pagebox, totalpage, totalpage);
+                        break;
+                    default:
+                        GFyh(_value);
+                        InitPages(pagebox, totalpage, _value);
+
+                }
+            }
+        }
+
+        function addrow(id,name)
+        {
+            var newobj = document.createElement("div");
+            var html = "<div class='lb'>"+
+                            "<div class='img6'></div>" +
+                            "<span class='lbspan' style='margin-left: 10px; float: left; width: 225px;'>"+name+"</span>"+
+                            "<span class='lb2' onmouseover=this.style.cursor='pointer' onclick=deletebm('"+id+"','"+name+"');>删除</span>"+
+                        "</div>";
+            newobj.innerHTML = html;
+            bmbox.appendChild(newobj);
+
+            bmselect.options.add(new Option(name,id));
+        }
+
+        function addrow_yh(id,name,uname)
+        {
+            var newobj = document.createElement("div");
+            var html = " <div class='lb1'>"+
+                            "<div class='img7'></div>"+
+                            "<span class='lbspan' style='margin-left: 10px; float: left; width: 80px;'>姓名:"+name+"</span>"+
+                            "<div class='img8'></div>"+
+                            "<span class='lbspan' style='margin-left: 10px; float: left; width: 130px;'>用户名:"+uname+"</span>"+
+                            "<span class='lb5' onmouseover=this.style.cursor='pointer' onclick=deleteyh('"+id+"','"+name+"')>删除</span>"+
+                            "<span class='lb3' onmouseover=this.style.cursor='pointer' onclick=javascript:photo('"+id+"','"+uname+"');>照相</span>"+
+                            "<span class='lb4' onmouseover=this.style.cursor='pointer' onclick=resetpassword('"+id+"','"+name+"')>重置密码</span>"+
+                       " </div>";
+            newobj.innerHTML = html;
+            yhbox.appendChild(newobj);
+        }
+
+        function addrow_yh_null(msg) {
+            var newobj = document.createElement("div");
+            var html = " <div class='lb1'>" +
+                           // "<div class='img7'></div>" +
+                            "<span class='lbspan' style='margin-left: 10px; float: left; width: 120px;'>"+msg+"</span>" +
+                           // "<div class='img8'></div>" +
+                            "<span class='lbspan' style='margin-left: 10px; float: left; width: 130px;'></span>" +
+                            //"<span class='lb5' onmouseover=this.style.cursor='pointer' onclick='window.location.href='#''>删除</span>" +
+                            //"<span class='lb3' onmouseover=this.style.cursor='pointer' onclick='javascript:photo('lwgs_1001');'>照相</span>" +
+                            //"<span class='lb4' onmouseover=this.style.cursor='pointer' onclick='window.location.href='#''>重置密码</span>" +
+                       " </div>";
+            yhbox.innerHTML = "";
+            newobj.innerHTML = html;
+            yhbox.appendChild(newobj);
+        }
+
+        function addrow_bm_null(msg)
+        {
+            var newobj = document.createElement("div");
+            var html = "<div class='lb'>" +
+                           // "<div class='img6'></div>" +
+                            "<span class='lbspan' style='margin-left: 10px; float: left; width: 225px;'>" + msg + "</span>" +
+                          //  "<span class='lb2' onmouseover=this.style.cursor='pointer' onclick=deletebm('" + id + "','" + name + "');>删除</span>" +
+                        "</div>";
+            bmbox.innerHTML = "";
+            newobj.innerHTML = html;
+            bmbox.appendChild(newobj);
+        }
+
+        function decode(str) {
+            str = decodeURIComponent(str.replace(/\+/g, '%20'));
+            return str;
+        }
+
+        function deletebm(id, name)
+        {
+            var r = confirm("确定要删除　" + name + " 吗?");
+            if (r) {
+                $.ajax({
+                    type: "post",
+                    url: "AsyCenter.aspx",
+                    data: {
+                        type: "deletebm",
+                        id:id
+                    },
+                    success: function (data)
+                    {
+                        var arr = data.split(":");
+                        if (arr[0] == "1") {
+                            GFbm();
+                            alert("已删除！");
+                        } else if (arr[0] == "no") {
+                            alert(arr[1]);
+                        } else {
+                            alert("删除失败!")
+                        }
+                    }
+
+                });
+            }
+        }
+
+        function deleteyh(id, name)
+        {
+            var r = confirm("确定要删除　" + name + " 吗?");
+            if (r) {
+                $.ajax({
+                    type: "post",
+                    url: "AsyCenter.aspx",
+                    data: {
+                        type: "deleteyh",
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data == "1") {
+                            GFyh(1);
+                            alert("已删除！");
+                        } else {
+                            alert("删除失败！");
+                        }
+                    }
+
+                });
+            }
+        }
+
+        function resetpassword(id, name)
+        {
+            var c = confirm("确认要重置　" + name + " 的密码吗?");
+            if (c) {
+                $.ajax({
+                    type: "post",
+                    url: "AsyCenter.aspx",
+                    data: {
+                        type: "resetuserpasswor",
+                        id:id
+                    },
+                    success: function (data)
+                    {
+                        if (data == "1") {
+                            alert("已重置该用户密码!");
+                        } else {
+                            alert("重置失败!");
+                        }
+                    }
+                })
+            }
+        }
+
     </script>
 </head>
 <body>
-    <div style="width: 1000px; height: 680px; margin: auto">
+    <div id="zhezhao">
+        <div style="width: 1000px; height: 658px; margin: auto">
+            <div style="width: 1000px; height: 10px;">
+                <img src="img/zz_close.png" class="zzclose" onmouseover="this.style.cursor='pointer'" onclick="javascript:zhezhao();"/>
+            </div>
+            <div style="width: 1000px; height: 615px;" id="zhezhaoshow">               
+            </div>
+        </div>
+    </div>
+    <div style="width: 1000px; height: 658px; margin: auto">
         <%--此行不能修改--%>
         <div class="row-fluid" style="margin-top: 10px">
             <%--此行不能修改--%>
-            <div class="top">
-                <div class="top1">
-                <div class="img1"></div>
-                <span style="font-size: 30px; margin-left: 50px; margin-top: -36px; height: 50px; display: block;">部门用户管理</span>
-                </div>
-            </div>
             <%--部门列表--%>
             <div class="left">
                 <div class="left1">
                     <div class="column">
-                        <div id="sb-search" class="sb-search sb-search-open">
-                            <form>
-                                <input class="sb-search-input" placeholder="输入部门的名称" type="text" value="" name="search" id="search"style="height:23px;float: left;margin-top: -22px;display: block;" />
-                                <div class="form1">
-                                    <div class="img2"></div>
-                                </div>
-                                <span class="sb-icon-search"></span>
-                            </form>
+                        <div class="ss">
+                            <input type="text" id="input1" style="background-image: url(img/j3.png); margin-top: 12px; margin-left: -30px;width: 215px;height: 25px;" />
                         </div>
                     </div>
-                    <div class="img3"></div>
+
+                    <div class="img3" onmouseover="this.style.cursor='pointer'" onclick="addbm();"></div>
                 </div>
                 <div class="left2">
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >部门1</span>
-                        <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                    </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >部门1</span>
-                        <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                    </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >部门1</span>
-                        <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                    </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >部门1</span>
-                        <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                    </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >部门1</span>
-                        <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                    </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >部门1</span>
-                        <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                    </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >部门1</span>
-                        <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                    </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >部门1</span>
-                        <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                    </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >部门1</span>
-                        <span class="lb2" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
+                    <div class="left3" id="bmbox">
                     </div>
 
                 </div>
@@ -490,103 +915,40 @@
                 <div class="right11"></div>
                 <div class="right1">
                     <div class="inner"></div>
-                    <div style="float: left; width: 180px;">
+                    <div style="float: left; width: 273px;">
                         <select id="test_3">
-                            <option>请选择机构</option>
-                            <option value="1">机构1</option>
-                            <option value="2">机构2</option>
-                            <option value="3">机构3</option>
-                            <option value="4">机构4</option>
-                            <option value="5">机构5</option>
-                            <option value="6">机构6</option>
-                            <option value="7">机构7</option>
-                            <option value="8">机构8</option>
-                            <option value="9">机构9</option>
+                            <option>请选择部门</option>
+                            <option value="1">部门部门部门1</option>
+                            <option value="2">部门部门部门2</option>
+                            <option value="3">部门部门部门3</option>
+                            <option value="4">部门部门部门4</option>
+                            <option value="5">部门部门部门5</option>
+                            <option value="6">部门部门部门6</option>
+                            <option value="7">部门部门部门7</option>
+                            <option value="8">部门部门部门8</option>
+                            <option value="9">部门部门部门9</option>
                         </select>
                     </div>
-                    <div class="sx"></div>
                     <div class="column1">
-                        <div  class="sb-search sb-search-open">
-                            <form>
-                                <input class="sb-search-input" placeholder="输入人员的名称" type="text" value="" name="search" style="height:22px;float: left;width: 185px;margin-top: -22px;display: block;" />
-                                <div class="form1">
-                                    <div class="img2"></div>
-                                </div>
-                                <span class="sb-icon-search"></span>
-                            </form>
+                        <div class="sss">
+                            <input class="sb-search-input" id="input2" type="text" style="height: 25px; background-image: url(img/j8.png); float: left; width: 185px; margin-top: -2px; display: block;" />
+                            <span class="sb-icon-search"></span>
                         </div>
                     </div>
-                    <div class="img4"></div>
+                    <div class="img4" onmouseover="this.style.cursor='pointer'" onclick="addyh();"></div>
                 </div>
                 <div class="right2">
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:41px;float:left;width: 50px;" >姓名</span>
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >用户名</span>
-                        <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">照相</span>
-                        <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
+                    <div class="right3">
+                        <div id="yhbox">
+
+                        </div>
+                        <div class="pagination">
+                            <ul id="pagebox">
+                            </ul>
+                        </div>
                     </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:41px;float:left;width: 50px;" >姓名</span>
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >用户名</span>
-                        <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">照相</span>
-                        <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
-                    </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:41px;float:left;width: 50px;" >姓名</span>
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >用户名</span>
-                        <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">照相</span>
-                        <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
-                    </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:41px;float:left;width: 50px;" >姓名</span>
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >用户名</span>
-                        <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">照相</span>
-                        <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
-                    </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:41px;float:left;width: 50px;" >姓名</span>
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >用户名</span>
-                        <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">照相</span>
-                        <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
-                    </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:41px;float:left;width: 50px;" >姓名</span>
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >用户名</span>
-                        <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">照相</span>
-                        <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
-                    </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:41px;float:left;width: 50px;" >姓名</span>
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >用户名</span>
-                        <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">照相</span>
-                        <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
-                    </div>
-                    <div class="lb">
-                        <span class="lbspan"style="margin-left:41px;float:left;width: 50px;" >姓名</span>
-                        <span class="lbspan"style="margin-left:53px;float:left;width: 50px;" >用户名</span>
-                        <span class="lb5" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">删除</span>
-                        <span class="lb3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">照相</span>
-                        <span class="lb4" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">重置密码</span>
-                    </div>
-                     <div class="pagination" style="margin: 24px 0 0 283px;">
-                        <ul>
-                            <li><a href="#">上一页</a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">下一页</a></li>
-                        </ul>
-                    </div>
+                </div>
             </div>
-               
         </div>
     </div>
 </body>
