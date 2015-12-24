@@ -59,6 +59,11 @@ public partial class AsyCenter : System.Web.UI.Page
                 case "resetuserpasswor":
                     ResetUserPassword();
                     break;
+              
+                case "addspl":
+                    Addspl();
+                    break;
+
 
                 default:
                     break;
@@ -257,7 +262,7 @@ public partial class AsyCenter : System.Web.UI.Page
 
     }
 
-
+    //签到
     public void QianDao()
     {
         string id = Request.Form["ID"];
@@ -286,7 +291,7 @@ public partial class AsyCenter : System.Web.UI.Page
 
 
     }
-
+    //结算
      public string JieSuan()
     {
         bool r = false;
@@ -310,7 +315,30 @@ public partial class AsyCenter : System.Web.UI.Page
        
    }
 
-  
+   
+    
+    
+    private void  Addspl ()
+     {
+       int r = 0;
+
+      string Userid = Request.Form["userid"];
+      string Contents = Request.Form["contents"];
+      string Splname = Request.Form["splname"];
+      string Contents_txt = Request.Form["contents_txt"];
+
+      r = bll.Addspll(Userid, Contents, Splname, Contents_txt);
+
+      Response.Write(r);
+      Response.End();
+
+   }
+
+
+
+
+
+      
 
     }
 

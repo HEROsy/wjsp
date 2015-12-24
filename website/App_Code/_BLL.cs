@@ -113,7 +113,7 @@ public class _BLL
                             new SqlParameter("@time", a_start_time)};
         String sql = SqlHelper.GetSQLSelect_normal("", "id,day=null", "oa_kaoqing", spr, "=,=", "and", "id asc");
 
-        dt = SqlHelper.GetTable(sql, CommandType.Text,null);
+        dt = SqlHelper.GetTable(sql, CommandType.Text,spr);
 
         return dt;
 
@@ -142,7 +142,7 @@ public class _BLL
             {
                 String sql = SqlHelper.GetSQLInsert_normal("oa_kaoqing", spr);
 
-                SqlHelper.ExcoutSQL(sql, CommandType.Text, null);
+                SqlHelper.ExcoutSQL(sql, CommandType.Text, spr);
             }
             else
             {
@@ -151,7 +151,7 @@ public class _BLL
                               
                     
 
-                SqlHelper.ExcoutSQL(sql, CommandType.Text, null);
+                SqlHelper.ExcoutSQL(sql, CommandType.Text,spr);
             }
         }
         catch (Exception)
@@ -184,7 +184,7 @@ public class _BLL
             {
                 String sql = SqlHelper.GetSQLInsert_normal("oa_kaoqing", spr);
 
-                SqlHelper.ExcoutSQL(sql, CommandType.Text, null);
+                SqlHelper.ExcoutSQL(sql, CommandType.Text,spr);
             }
             else
             {
@@ -193,7 +193,7 @@ public class _BLL
                   
                
                
-                SqlHelper.ExcoutSQL(sql, CommandType.Text, null);
+                SqlHelper.ExcoutSQL(sql, CommandType.Text, spr);
 
 
             }
@@ -282,14 +282,59 @@ public class _BLL
 
         String sql = SqlHelper.GetSQLSelect_normal("", " u_cd, u_zt", "oa_kaoqing", spr, "=,=", "and", "id asc");
 
-        dt = SqlHelper.GetTable(sql, CommandType.Text,null);
+        dt = SqlHelper.GetTable(sql, CommandType.Text,spr);
 
         return dt;
          
-     
-
-
     }
   
+    public  DataTable  Json_bm()
+    
+    
+    {
+         DataTable dt = null;
 
+         String sql = SqlHelper.GetSQLSelect_normal("*", "", "oa_part", null, "", "", "id asc");
+
+        dt = SqlHelper.GetTable(sql, CommandType.Text,null);
+
+        return dt; 
+
+     }
+
+    public  DataTable  Json_user()
+   
+    {
+        DataTable dt = null;
+
+        String sql = SqlHelper.GetSQLSelect_normal("", "id,name,u_part", "oa_user", null, "", "", "id asc");
+
+        dt = SqlHelper.GetTable(sql, CommandType.Text, null);
+
+        return dt; 
+    }
+  
+    
+    
+    
+    //在表oa_ydylc 里添加一条项目 u_id=userid ,spl_name=splname,spl_content=contents, spl_content_txt=contents_txt 返回值为 ‘受影响的行数’
+
+    public int Addspll(string userid, string contents, string splname, string contents_txt)
+   
+  {  
+
+      int r = 0;
+
+      SqlParameter[] spr ={new SqlParameter("@userid",userid),
+                         new SqlParameter("@contents",contents),
+                      new SqlParameter("@splname", splname),
+                           new SqlParameter("@contents_txt", contents_txt)};
+
+      string sql = SqlHelper.GetSQLInsert_normal("oa_ydylc", spr);
+
+      r = SqlHelper.ExcoutSQL(sql, CommandType.Text, spr);
+
+      return r;
+
+    }
 }
