@@ -56,14 +56,28 @@
         window.onload = function () {
 
         }
-    </script>
+        //点击“登录”时　发送异步请求到‘AsyCenter.aspx’
+        //参数：type:'userlogin'
+        //username:输入的用户名
+        //password:输入的密码
+
+        //返回值：
+        //　　　‘ok’　表示登录成功　成功后跳转到‘oa_default.aspx’
+
+        //    非‘ok’　表示登录失败　失败后将返回数据作为提示信息　alert给用户’
+　    </script>
 </head>
 
 <body>
     <div style="width: 1000px;height:680px; margin: auto"> <%--此行不能修改--%>
         <div class="row-fluid" style="margin-top: 10px">   <%--此行不能修改--%>
             用户登录
-
+            <div>
+                <span>用户名：</span><input type="text" id="username" placeholder="" />
+                <span>密码：</span><input type="password" id="password" placeholder="" />
+                <input type="button" id="btn" value="登录" />
+            </div>
+           
         </div>
     </div>
 </body>
