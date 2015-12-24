@@ -16,9 +16,9 @@ public class _BLL
     {
         DataTable dt=null;
 
-        SqlParameter[] spr={new SqlParameter("@name",name),
-                            new SqlParameter("@pw",password)};
-        String sql = SqlHelper.GetSQLSelect_normal("1", "id,name", "user", spr, "=,=", "and", "id asc");
+        SqlParameter[] spr={new SqlParameter("@u_name",name),
+                            new SqlParameter("@u_password",password)};
+        String sql = SqlHelper.GetSQLSelect_normal("top 1", "id,name", "oa_user", spr, "=,=", "and", "id asc");
        
         dt = SqlHelper.GetTable(sql, CommandType.Text, spr);
 

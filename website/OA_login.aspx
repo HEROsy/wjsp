@@ -53,8 +53,9 @@
     </style>
 
     <script type="text/javascript">
+        var User = "";
+        var Word = "";
         window.onload = function () {
-
         }
         //点击“登录”时　发送异步请求到‘AsyCenter.aspx’
         //参数：type:'userlogin'
@@ -63,8 +64,37 @@
 
         //返回值：
         //　　　‘ok’　表示登录成功　成功后跳转到‘oa_default.aspx’
-
         //    非‘ok’　表示登录失败　失败后将返回数据作为提示信息　alert给用户’
+
+        function btn() {
+            User = User = document.getElementById("username").value;
+            Word = Word = document.getElementById("password").value;
+            if (User.replace(/\s+/g, "") == "") {
+                alert("请输入账号和密码")
+            } else {
+                Data(User,Word);
+            }
+        }
+            
+        function Data(user,word) {
+            $.ajax({
+                type: "post",
+                url: "AsyCenter.aspx",
+                data: {
+                    type: "userlogin",
+                    username: user,
+                    password: word
+                },
+                success: function (data) {
+                    if (data == "ok") {
+                        window.location.href = "oa_default.aspx";
+                    }
+                    else {
+                        alert(data);
+                    }
+                }
+            })
+        }
 　    </script>
 </head>
 
@@ -75,7 +105,7 @@
             <div>
                 <span>用户名：</span><input type="text" id="username" placeholder="" />
                 <span>密码：</span><input type="password" id="password" placeholder="" />
-                <input type="button" id="btn" value="登录" />
+                <input type="button" id="btn" value="登录" onclick="btn()"/>
             </div>
            
         </div>
