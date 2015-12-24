@@ -20,7 +20,7 @@ public partial class AsyCenter : System.Web.UI.Page
         {
             switch (tag)
             {
-                case "lg":
+                case "userlogin":
                     UserLogin();
                     break;
 
@@ -236,7 +236,7 @@ public partial class AsyCenter : System.Web.UI.Page
     public void UserLogin()
     {
         String r = "用户名或密码错误！";
-        String UserName = Request.Form["name"];
+        String UserName = Request.Form["username"];
         String Password=Request.Form["password"];
         if (String.IsNullOrEmpty(UserName)||String.IsNullOrEmpty(Password))
         {
