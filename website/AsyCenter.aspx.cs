@@ -64,15 +64,15 @@ public partial class AsyCenter : System.Web.UI.Page
                     break;
             }
         }
-       
+
 
     }
 
     private void ResetUserPassword()
     {
-        String id=Request.Form["id"];
+        String id = Request.Form["id"];
         String newpasseord = "666666";
-        String sql = "update oa_user set u_password="+newpasseord+" where id="+id;
+        String sql = "update oa_user set u_password=" + newpasseord + " where id=" + id;
         int r = SqlHelper.ExcoutSQL(sql, CommandType.Text, null);
         Response.Write(r);
         Response.End();
@@ -82,8 +82,8 @@ public partial class AsyCenter : System.Web.UI.Page
     {
         String id = Request.Form["id"];
         String data = Request.Form["b64"];
-        SqlParameter[] set_spr={new SqlParameter("@imgbase64",data)};
-        SqlParameter[] where_spr={new SqlParameter("@id",id)};
+        SqlParameter[] set_spr = { new SqlParameter("@imgbase64", data) };
+        SqlParameter[] where_spr = { new SqlParameter("@id", id) };
         String sql = SqlHelper.GetSQLUpdate_normal("oa_user", set_spr, where_spr, "=", "");
         int r = SqlHelper.ExcoutSQL_2Parmter(sql, CommandType.Text, set_spr, where_spr);
         Response.Write(r);
@@ -94,7 +94,7 @@ public partial class AsyCenter : System.Web.UI.Page
     {
         String partid = Request.Form["partid"];
         String pagesize = Request.Form["pagesize"];
-        String pageindex=Request.Form["pageindex"];
+        String pageindex = Request.Form["pageindex"];
 
         int startindex = 0;
         int endindex = 0;
@@ -130,9 +130,9 @@ public partial class AsyCenter : System.Web.UI.Page
 
     private void AddYH()
     {
-        String name=Request.Form["yhname"];
-        String partid=Request.Form["partid"];
-        SqlParameter[] spr={new SqlParameter("@name",name),new SqlParameter("@u_part",partid)};
+        String name = Request.Form["yhname"];
+        String partid = Request.Form["partid"];
+        SqlParameter[] spr = { new SqlParameter("@name", name), new SqlParameter("@u_part", partid) };
         String sql = SqlHelper.GetSQLInsert_normal("oa_user", spr);
         int r = SqlHelper.ExcoutSQL(sql, CommandType.Text, spr);
         Response.Write(r);
@@ -141,21 +141,21 @@ public partial class AsyCenter : System.Web.UI.Page
 
     private void DeleteBM()
     {
-        String id=Request.Form["id"];
-        String sql = "select id from oa_user where u_part="+id;
+        String id = Request.Form["id"];
+        String sql = "select id from oa_user where u_part=" + id;
         DataTable dt = SqlHelper.GetTable(sql, CommandType.Text, null);
-        if (dt!=null)
+        if (dt != null)
         {
-            if (dt.Rows.Count>0)
+            if (dt.Rows.Count > 0)
             {
                 Response.Write("no:该部门下存在用户信息，如果想删除该部门请先删除相关用户，删除失败!");
                 Response.End();
-            }   
+            }
         }
         SqlParameter spr = new SqlParameter("@id", id);
         sql = "delete from oa_part where id=@id";
         int r = SqlHelper.ExcoutSQL(sql, CommandType.Text, spr);
-        Response.Write(r+":");
+        Response.Write(r + ":");
         Response.End();
     }
 
@@ -180,9 +180,9 @@ public partial class AsyCenter : System.Web.UI.Page
 
     private void AddM()
     {
-        String bmname=Request.Form["bmname"];
+        String bmname = Request.Form["bmname"];
 
-        SqlParameter[] spr={new SqlParameter("@part",bmname)};
+        SqlParameter[] spr = { new SqlParameter("@part", bmname) };
         String sql = SqlHelper.GetSQLInsert_normal("oa_part", spr);
         int r = SqlHelper.ExcoutSQL(sql, CommandType.Text, spr);
         Response.Write(r);
@@ -192,9 +192,9 @@ public partial class AsyCenter : System.Web.UI.Page
     private void KaoQingPage()
     {
         String year = Request.Form["year"];
-        String moth=Request.Form["month"];
+        String moth = Request.Form["month"];
         String pagesize = Request.Form["pagesize"];
-        String pageindex=Request.Form["pageindex"];
+        String pageindex = Request.Form["pageindex"];
 
         DateTime stime = Convert.ToDateTime(year + "-" + moth + "-01");
         DateTime etime = stime.AddMonths(1);
@@ -223,10 +223,10 @@ public partial class AsyCenter : System.Web.UI.Page
         int count = dt.Rows.Count;
         sql = "SELECT top (@end) w1.id,w1.a_state,w1.p_state,w1.day FROM oa_kaoqing w1, ( SELECT TOP (@end) row_number() OVER (ORDER BY ID asc ) n, ID FROM oa_kaoqing) w2 WHERE w1.ID = w2.ID AND w2.n > @start and   @stime<=day and day<@etime  ORDER BY w2.n ASC ";
         dt = SqlHelper.GetTable(sql, CommandType.Text, spr);
-        String r = Tools.BiuldJson("",dt);
+        String r = Tools.BiuldJson("", dt);
         if (!String.IsNullOrEmpty(r))
-	    {
-            r = r.Insert(1, "{'"+HttpUtility.UrlEncode("count")+"':'" + count + "'},");
+        {
+            r = r.Insert(1, "{'" + HttpUtility.UrlEncode("count") + "':'" + count + "'},");
         }
         Response.Write(r);
         Response.End();
@@ -237,8 +237,8 @@ public partial class AsyCenter : System.Web.UI.Page
     {
         String r = "用户名或密码错误！";
         String UserName = Request.Form["name"];
-        String Password=Request.Form["password"];
-        if (String.IsNullOrEmpty(UserName)||String.IsNullOrEmpty(Password))
+        String Password = Request.Form["password"];
+        if (String.IsNullOrEmpty(UserName) || String.IsNullOrEmpty(Password))
         {
             Response.Write(r);
             Response.End();
@@ -254,6 +254,66 @@ public partial class AsyCenter : System.Web.UI.Page
             Response.Write(r);
             Response.End();
         }
-      
+
     }
-}
+
+
+    public void QianDao()
+    {
+        string id = Request.Form["ID"];
+
+        DateTime t;
+        t = DateTime.Now;
+        string p = t.ToString();
+
+        DataTable dt = null;
+        SqlParameter[] spr = { new SqlParameter("@id", id) };
+        String sql = SqlHelper.GetSQLSelect_normal("", "day=null,p_start_time=null", "oa_kaoqing", spr, "=", "", "id asc");
+        dt = SqlHelper.GetTable(sql, CommandType.Text, null);
+
+
+        if (dt.Rows.Count > 0)
+        {
+
+            bll.RegisterA(id, p, null, null);
+
+        }
+
+        else if (dt.Rows.Count <= 0)
+        {
+            bll.RegisterP(id, p, null, null);
+        }
+
+
+    }
+
+     public string JieSuan()
+    {
+        bool r = false;
+        DataTable dt = null;
+        string jason = "";
+
+         string id = Request.Form["ID"];
+         string day = Request.Form ["Day"];
+
+           r =bll.JieSuan(id, day);
+          
+         if (r==true)
+         {
+             dt = bll.JieSuant(id, day);
+
+            jason = Tools.BiuldJson("", dt);
+             
+         }
+            
+         return jason;
+       
+   }
+
+  
+
+    }
+
+
+    
+

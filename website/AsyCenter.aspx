@@ -36,7 +36,7 @@
 <body>
     <form id="form1" runat="server">
     <div>
-    <input type ="button" value ="nishi" />
+  
     </div>
     </form>
 </body>
