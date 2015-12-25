@@ -75,7 +75,7 @@
         //概述：用户通过下拉框选择不同部门　userbox这个div根据用户的选择显示对应的用户
         //　　　双击某个用户　让它出现在左边的lcbox框　（显示成这样：姜凯源->石晓楠）
         //　　　点‘添加’时　发送异步请求到服务器保存用户的选择
-        //step:
+        //step: 
         // 1.json_bm　为部门信息josn字符串　包括字段：id　part
         //  解析它的数据绑定到下拉框中（下拉框id="bm" 每条选项的文本显示part内容　value为id）
 
@@ -155,7 +155,6 @@
                     document.getElementById("lcbox").appendChild(newobj);
                 }
             }
-            alert(c_txt);
         }
 
         function yes() {
@@ -177,7 +176,7 @@
                     type: "addspl",
                     userid: "1",
                     contents: c_id,
-                    contents: c_txt,
+                    contents_txt: c_txt,
                     splname: splname
                 },
                 success: function (data) {
