@@ -63,6 +63,7 @@
         var html = "";
         var jishu = 0;
         var c_id = "";
+        var c_txt = "";
         var arr = new Array();
 
         window.onload = function () {
@@ -88,15 +89,21 @@
         //userid:'1'
         //contents:选中的每一个人的ＩＤ用逗号隔开
         //splname:splname.value  //流程名称.value
+        //contents_txt:选中的每一个人的名字用逗号隔开
         //最后提示添加成功或失败
 
         //请求返回结果‘1’表示成功  否则失败
+
+        function decode(str) {
+            str = decodeURIComponent(str.replace(/\+/g, '%20'));
+            return str;
+        }
 
         function addspl() {
             var data = eval("(" + json_bm + ")");
             html = "";
             for (var i = 0; i < data.length; i++) {
-                html = html + "<option value='" + data[i].id + "'>" + data[i].part + "</option>";
+                html = html + "<option value='" + decode(data[i].id) + "'>" + decode(data[i].part) + "</option>";
             }
             document.getElementById("bm").innerHTML = html;
             var a = document.getElementById("bm").value;
@@ -112,7 +119,7 @@
             for (var i = 0; i < data.length; i++) {
                 if (data[i].u_part == _id) {
                     newobj = document.createElement("div");
-                    newobj.innerHTML = "<span id='" + data[i].id + "'>" + data[i].name + "</span>";
+                    newobj.innerHTML = "<span id='" + decode(data[i].id) + "'>" + decode(data[i].name) + "</span>";
                     newobj.ondblclick = function (){    click(this)  };
                     document.getElementById("userbox").appendChild(newobj);
                 }
@@ -135,6 +142,11 @@
                 } else {
                     c_id = c_id + "," + q_id;
                 }
+                if (jishu==1) {
+                    c_txt = c_txt + s_name;
+                } else {
+                    c_txt = c_txt + "," + s_name;
+                }
                 if (jishu == 1) {
                     newobj.innerHTML = "" + s_name + "";
                     document.getElementById("lcbox").appendChild(newobj);
@@ -143,6 +155,7 @@
                     document.getElementById("lcbox").appendChild(newobj);
                 }
             }
+            alert(c_txt);
         }
 
         function yes() {
@@ -164,6 +177,7 @@
                     type: "addspl",
                     userid: "1",
                     contents: c_id,
+                    contents: c_txt,
                     splname: splname
                 },
                 success: function (data) {
