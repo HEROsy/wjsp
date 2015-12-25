@@ -58,7 +58,10 @@
 
     <script type="text/javascript">
         window.onload = function () {
-
+            document.getElementById("a").ondblclick = function ()
+            {
+                alert("a");
+            }
         }
 
         //概述：用户通过下拉框选择不同部门　userbox这个div根据用户的选择显示对应的用户
@@ -98,7 +101,7 @@
                         <select id="bm"></select>
                     </div>
                     <div style="width:217px;height:300px;border:1px solid #cdcdcd"　id="userbox">
-                        <div><span>name</span></div>
+                        <div id="a" ><span>name</span></div>
                     </div>
                 </div>
 
