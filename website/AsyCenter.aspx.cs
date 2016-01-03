@@ -241,7 +241,6 @@ public partial class AsyCenter : System.Web.UI.Page
         Response.Write(r);
         Response.End();
     }
-
     //
     public void UserLogin()
     {
