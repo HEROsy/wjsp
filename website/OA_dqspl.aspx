@@ -57,6 +57,12 @@
     </style>
 
     <script type="text/javascript">
+        /*json_lc 包括字段：id,titles  解析并绑定到table中 注意：js操作table时 要用innerhtml 并且每次要将整个table一起重建
+          编号栏＝ID   标题栏＝titles  查看详细的超链接地址先不管
+
+          搜索功能： 取搜索框里的文字  和 json_lc 的titles 字段对比（相似的就可以 ） 将结果绑定到table 当搜索框的值为空时 点搜索则绑定全部
+        */
+
         window.onload = function () {
 
         }
@@ -64,11 +70,36 @@
 </head>
 
 <body>
-    <div style="width: 1000px;height:680px; margin: auto">
+    <div style="width: 100%;height:675px; margin: auto">
         <%--此行不能修改--%>
         <div class="row-fluid" style="margin-top: 10px">
             <%--此行不能修改--%>
-            当前审批流
+            <div>
+                <div ><h1>当前审批流</h1></div>
+                <div>
+                    <div>
+                        <input type="text" id="srtxt" />
+                        <input type="button" id="serch" value="搜索" />
+                    </div>
+                    <div>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>文件编号</th>
+                                    <th>标题</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>标题一</td><td><a href="javascript:void(0)">查看详细</a></td></tr>
+                                <tr><td>2</td><td>标题二</td><td><a href="javascript:void(0)">查看详细</a></td></tr>
+                                <tr><td>3</td><td>标题三</td><td><a href="javascript:void(0)">查看详细</a></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
 
         </div>
     </div>
