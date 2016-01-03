@@ -57,9 +57,9 @@
     </style>
 
     <script type="text/javascript">
-        window.onload = function () {
+        window.onload = function () { }
 
-        }
+        
 
         //概述：用户通过下拉框选择不同部门　userbox这个div根据用户的选择显示对应的用户
         //　　　双击某个用户　让它出现在左边的lcbox框　（显示成这样：姜凯源,石晓楠）
@@ -80,6 +80,10 @@
         //splname:splname.value
 
         //请求返回结果‘1’表示成功  否则失败
+
+       
+
+
 
     </script>
 </head>

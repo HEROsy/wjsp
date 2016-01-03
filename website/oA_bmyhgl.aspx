@@ -805,7 +805,7 @@
 
         function deletebm(id, name)
         {
-            var r = confirm("确定要删除　" + name + " 吗?");
+            var r = confirm("确定要删除" + name + " 吗?");
             if (r) {
                 $.ajax({
                     type: "post",
