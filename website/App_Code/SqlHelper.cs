@@ -180,11 +180,11 @@ using System.Data.OleDb;
                 {
                     if (i + 1 > andorlenth)
                     {
-                        str = str + spr[i].ParameterName.Substring(1) + compars[i] + spr[i].ParameterName;
+                        str = str + spr[i].ParameterName.Substring(1) + " " + compars[i] + " " + spr[i].ParameterName;
                     }
                     else
                     {
-                        str = str + spr[i].ParameterName.Substring(1) + compars[i] + spr[i].ParameterName + " " + andors[i] + " ";
+                        str = str + spr[i].ParameterName.Substring(1) + " " + compars[i] + " " + spr[i].ParameterName + " " + andors[i] + " ";
                     }
                 }
             }

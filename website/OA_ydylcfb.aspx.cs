@@ -41,19 +41,19 @@ public partial class OA_ydylcfb : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         b = new _BLL();
-        json_lc = jsonlc("1");      
-           
+        json_lc = jsonlc("1");
+        
     }
 
 
-    private  string jsonlc(String uid)
+    private string jsonlc(String u_id)
     
     
     {
        
         string jason = "";
 
-        DataTable dt = b.Jsonlcc(uid);
+        DataTable dt = b.Jsonlcc(u_id);
         jason = Tools.BiuldJson("", dt);
         return jason;
 

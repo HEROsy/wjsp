@@ -287,6 +287,13 @@ public class _BLL
         return dt;
          
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+
+
+
   
     public  DataTable  Json_bm()
     
@@ -353,14 +360,33 @@ public class _BLL
         SqlParameter[] spr = { new SqlParameter("@u_id", u_id) };
 
         String sql = SqlHelper.GetSQLSelect_normal("","id,spl_name,spl_content_txt", "oa_ydylc", spr, "=", "","id desc");
-       
-        dt = SqlHelper.GetTable(sql, CommandType.Text, null);
+
+        dt = SqlHelper.GetTable(sql, CommandType.Text, spr);
 
         return dt;
     }
 
-
+    //json_lc  返回字段id,titles  表oa_dq_spl  where sender_id=1 or splc_datas包含1   id desc
    
+    public DataTable Jsonllc(string sender_id,string splc_datas )
+    {
+
+
+        DataTable dt = null;
+
+
+        SqlParameter[] spr = { 
+                                 new SqlParameter("@sender_id", sender_id),
+                                new SqlParameter("@splc_datas", splc_datas)
+                            
+                             };
+
+       String sql = SqlHelper.GetSQLSelect_normal("", "id,titles", "oa_dq_spl", spr, "=,like", "or", "id desc");
+      
+       dt = SqlHelper.GetTable(sql, CommandType.Text, spr);
+
+        return dt;
+    }
     
 
 }
