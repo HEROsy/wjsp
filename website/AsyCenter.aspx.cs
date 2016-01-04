@@ -67,7 +67,9 @@ public partial class AsyCenter : System.Web.UI.Page
                     Addspl();
                     break;
 
-              
+                case "newstream":
+                    Newstream();
+                    break;
               
 
                 default:
@@ -267,57 +269,57 @@ public partial class AsyCenter : System.Web.UI.Page
     }
 
     //签到
-    public void QianDao()
-    {
-        string id = Request.Form["ID"];
+   // public void QianDao()
+   // {
+   //     string id = Request.Form["ID"];
 
-        DateTime t;
-        t = DateTime.Now;
-        string p = t.ToString();
+   //     DateTime t;
+   //     t = DateTime.Now;
+   //     string p = t.ToString();
 
-        DataTable dt = null;
-        SqlParameter[] spr = { new SqlParameter("@id", id) };
-        String sql = SqlHelper.GetSQLSelect_normal("", "day=null,p_start_time=null", "oa_kaoqing", spr, "=", "", "id asc");
-        dt = SqlHelper.GetTable(sql, CommandType.Text, null);
-
-
-        if (dt.Rows.Count > 0)
-        {
-
-            bll.RegisterA(id, p, null, null);
-
-        }
-
-        else if (dt.Rows.Count <= 0)
-        {
-            bll.RegisterP(id, p, null, null);
-        }
+   //     DataTable dt = null;
+   //     SqlParameter[] spr = { new SqlParameter("@id", id) };
+   //     String sql = SqlHelper.GetSQLSelect_normal("", "day=null,p_start_time=null", "oa_kaoqing", spr, "=", "", "id asc");
+   //     dt = SqlHelper.GetTable(sql, CommandType.Text, null);
 
 
-    }
-    //结算
-     public string JieSuan()
-    {
-        bool r = false;
-        DataTable dt = null;
-        string jason = "";
+   //     if (dt.Rows.Count > 0)
+   //     {
 
-         string id = Request.Form["ID"];
-         string day = Request.Form ["Day"];
+   //         bll.RegisterA(id, p, null, null);
 
-           r =bll.JieSuan(id, day);
+   //     }
+
+   //     else if (dt.Rows.Count <= 0)
+   //     {
+   //         bll.RegisterP(id, p, null, null);
+   //     }
+
+
+   // }
+   // //结算
+   //  public string JieSuan()
+   // {
+   //     bool r = false;
+   //     DataTable dt = null;
+   //     string jason = "";
+
+   //      string id = Request.Form["ID"];
+   //      string day = Request.Form ["Day"];
+
+   //        r =bll.JieSuan(id, day);
           
-         if (r==true)
-         {
-             dt = bll.JieSuant(id, day);
+   //      if (r==true)
+   //      {
+   //          dt = bll.JieSuant(id, day);
 
-            jason = Tools.BiuldJson("", dt);
+   //         jason = Tools.BiuldJson("", dt);
              
-         }
+   //      }
             
-         return jason;
+   //      return jason;
        
-   }
+   //}
 
    
     
@@ -338,8 +340,80 @@ public partial class AsyCenter : System.Web.UI.Page
 
    }
 
+    /*asycenter 添加对“newstream”的处理  
+     *                         (前台发过来的数据)
+                               userid:
+                               lcid:
+                               title:
+                               contents:
+                               sfhz:
+                               jjcd：
+                               fjpath:
+     * 
+     * 通过lcid 查询 表oa_ydylc 的spl_content值
+     * 
+     * 向表oa_dq_spl插入一条数据
+     * userid=sender_id
+     * lcid=splc_id
+     * title=titles
+     * contents=contents
+     * sfhz=spl_huizhi
+     * jjcd=stars
+     * fjpath=fj_url
+     * 
+     * 通过lcid 查询 表oa_ydylc 的spl_content值=splc_datas
+     * 
+     * 当前时间=sender_times
+     * 
+     * 
+     */
+   
+       public  void Newstream()
+    {
+        int i = 0;
+       
+        string sender_id = Request.Form["userid"];
+        string splc_id = Request.Form["lcid"];
+        string titles = Request.Form["title"];
+        string contents = Request.Form["contents"];
+        string spl_huizhi = Request.Form["sfhz"];
+        string stars = Request.Form["jjcd"];
+        string fj_url = Request.Form["fjpath"];
+        DateTime sender_times = DateTime.Now;
+       
+        SqlParameter[] spr = { new SqlParameter("@splc_id", splc_id) };
+        string sql = SqlHelper.GetSQLSelect_normal("top 1", "spl_content", "oa_ydylc", spr, "=", "", "id asc");
+       string spl_content = SqlHelper.ExecuteScalar(sql, CommandType.Text, spr).ToString();
 
        
+           try
+        {
+            SqlParameter[] sprr ={new SqlParameter("@sender_id",sender_id),
+                         new SqlParameter("@splc_id",splc_id),
+                         new SqlParameter("@titles", titles ),
+                         new SqlParameter("@contents",contents),
+                         new SqlParameter("@spl_huizhi", spl_huizhi),                        
+                          new SqlParameter("@stars",  stars),
+                           new SqlParameter("@fj_url", fj_url),
+                            new SqlParameter("@sender_times",sender_times),
+                           new SqlParameter("@spl_content",spl_content)
+                                 };
+
+            string sqll = SqlHelper.GetSQLInsert_normal("oa_dq_spl", sprr);
+             i = SqlHelper.ExcoutSQL(sqll, CommandType.Text, null);
+
+
+        }
+        catch (Exception)
+        {
+             throw;
+        }
+        
+
+           Response.Write(i);
+           Response.End();
+    }
+
 
     }
 

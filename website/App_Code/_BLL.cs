@@ -337,4 +337,30 @@ public class _BLL
       return r;
 
     }
+   
+    
+    
+    
+    //json_lc   表 oa_ydylc  返回值 id,spl_name,spl_content_txt   where  u_id=1   id desc
+
+    public DataTable Jsonlcc(String u_id)
+    {
+        
+
+        DataTable dt = null;
+
+
+        SqlParameter[] spr = { new SqlParameter("@u_id", u_id) };
+
+        String sql = SqlHelper.GetSQLSelect_normal("","id,spl_name,spl_content_txt", "oa_ydylc", spr, "=", "","id desc");
+       
+        dt = SqlHelper.GetTable(sql, CommandType.Text, null);
+
+        return dt;
+    }
+
+
+   
+    
+
 }
