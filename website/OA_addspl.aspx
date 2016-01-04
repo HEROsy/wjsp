@@ -57,15 +57,12 @@
     </style>
 
     <script type="text/javascript">
-        window.onload = function () {
-            document.getElementById("a").ondblclick = function ()
-            {
-                alert("a");
-            }
-        }
+        window.onload = function () { }
+
+        
 
         //概述：用户通过下拉框选择不同部门　userbox这个div根据用户的选择显示对应的用户
-        //　　　双击某个用户　让它出现在左边的lcbox框　（显示成这样：姜凯源—>石晓楠）
+        //　　　双击某个用户　让它出现在左边的lcbox框　（显示成这样：姜凯源,石晓楠）
         //　　　点‘添加’时　发送异步请求到服务器保存用户的选择
         //step:
       　 // 1.json_bm　为部门信息josn字符串　包括字段：id　part
@@ -80,10 +77,13 @@
         //type:'addspl'
         //userid:'1'
         //contents:选中的每一个人的ＩＤ用逗号隔开
-        //contents_txt:选中的每一个人的名字用逗号隔开
         //splname:splname.value
 
         //请求返回结果‘1’表示成功  否则失败
+
+       
+
+
 
     </script>
 </head>
@@ -101,7 +101,7 @@
                         <select id="bm"></select>
                     </div>
                     <div style="width:217px;height:300px;border:1px solid #cdcdcd"　id="userbox">
-                        <div id="a" ><span>name</span></div>
+                        <div><span>name</span></div>
                     </div>
                 </div>
 
@@ -119,5 +119,7 @@
 
         </div>
     </div>
+
+   
 </body>
 </html>
