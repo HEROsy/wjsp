@@ -63,13 +63,74 @@
           搜索功能： 取搜索框里的文字  和 json_lc 的titles 字段对比（相似的就可以 ） 将结果绑定到table 当搜索框的值为空时 点搜索则绑定全部
         */
 
-        window.onload = function () {
+        var json_lc = "";
 
+        window.onload = function () {
+            spl();
+            json_lc = document.getElementById("j_lc").value;
+        }
+
+        function decode(str) {
+            str = decodeURIComponent(str.replace(/\+/g, '%20'));
+            return str;
+        }
+
+        function spl() {
+            var data = "";
+            var html = "";
+            try {
+                data = eval("(" + json_lc + ")");
+                html=html+"<table class='table table-hover'>"
+                    +"<thead>"
+                    +"<tr>"
+                    +"<th>文件编号</th><th>标题</th><th>操作</th>"
+                    +"</tr>"
+                    +"</thead>"
+                    +"<tbody>"
+                for (var i = 0; i < data.length; i++) {
+                    html = html + "<tr><td>" + decode(data[i].id) + "</td><td>" + decode(data[i].title) + "</td><td><a href='javascript:void(0)'>查看详细</a></td></tr>";
+                }
+                html = html + "</tbody></table>";
+                document.getElementById("tb").innerHTML = html;
+            } catch (e) {
+                document.getElementById("tb").innerHTML = "<span>当前审批流为空请发布审批流。</span>";
+            }
+        }
+
+        function selesql() {
+            var suoso = document.getElementById("srtxt").value;
+            var data = "";
+            var html = "";
+            try {
+                data = eval("(" + json_lc + ")");
+                html = html + "<table class='table table-hover'>"
+                    + "<thead>"
+                    + "<tr>"
+                    + "<th>文件编号</th><th>标题</th><th>操作</th>"
+                    + "</tr>"
+                    + "</thead>"
+                    + "<tbody>"
+                for (var i = 0; i < data.length; i++) {
+                    var y = null;
+                    y = data[i].title.indexOf(suoso);
+                    if (y!=-1) {
+                        html = html + "<tr><td>" + decode(data[i].id) + "</td><td>" + decode(data[i].title) + "</td><td><a href='javascript:void(0)'>查看详细</a></td></tr>";
+                    }
+                    if (suoso == "") {
+                        spl();
+                    }
+                }
+                html = html + "</tbody></table>";
+                document.getElementById("tb").innerHTML = html;
+            } catch (e) {
+                alert("无数据")
+            }
         }
     </script>
 </head>
 
 <body>
+    <input type="hidden" id="j_lc" value='<%=json_lc %>' />
     <div style="width: 100%;height:675px; margin: auto">
         <%--此行不能修改--%>
         <div class="row-fluid" style="margin-top: 10px">
@@ -79,9 +140,9 @@
                 <div>
                     <div>
                         <input type="text" id="srtxt" />
-                        <input type="button" id="serch" value="搜索" />
+                        <input type="button" id="serch" value="搜索"  onclick="selesql()"/>
                     </div>
-                    <div>
+                    <div  id="tb">
                         <table class="table table-hover">
                             <thead>
                                 <tr>

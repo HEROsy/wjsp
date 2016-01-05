@@ -77,19 +77,27 @@
                                fjpath:记录的filepath值
                                }
                                成功返回 1 
-                             
-        *
-        *
-        *
         */
+        var json_le = "";
+        var filepath = "";
+        var upok = true;
+        var jinji = null;
+        var sfhz = false;
 
         window.onload = function () {
             bindupchange();
+            process();
+            json_le = document.getElementById("lc").value;
         }
 
-        var upok = true;
+        function decode(str) {
+            str = decodeURIComponent(str.replace(/\+/g, '%20'));
+            return str;
+        }
+
         function bindupchange() {
             var uf = document.getElementById("upfile");
+            var js = 0;
             uf.onchange = function () {
                 if (!upok) { alert('正在上传...'); return false; }
                 upok = false;
@@ -112,10 +120,20 @@
                             upok = true;
                             return false;
                         } else if (r.state == "ok") {
-                            //1. 把r.filename添加到st_fj里
-                            //2.把r.filepath记录起来 
-
-                            alert(r.filename+r.filepath);
+                            if (js==0) {
+                                document.getElementById("st_fj").innerHTML = "";
+                            }
+                            var newobj = null;
+                            newobj = document.createElement("option");
+                            newobj.innerHTML = "" + r.filename + "";
+                            document.getElementById("st_fj").appendChild(newobj);
+                            js = js + 1;
+                            if (filepath == "") {
+                                filepath = filepath + r.filename + "," + r.filepath;
+                            } else {
+                                filepath = filepath + "|" + r.filename + "," + r.filepath;
+                            }
+                            alert(filepath)
                             upok = true;
                             return true;
                         }
@@ -125,10 +143,88 @@
                 })
             }
         }
+
+        function process() {
+            document.getElementById("st_lc").innerHTML = "";
+            var data = "";
+            var html = "";
+            try {
+                data = eval("(" + json_le + ")");
+                for (var i = 0; i < data.length; i++) {
+                    html = html + "<option value='" + decode(data[i].id) + "'>" + decode(data[i].spl_name) + "</option>";
+                }
+                document.getElementById("st_lc").innerHTML = html;
+                var a = document.getElementById("st_lc").value;
+            } catch (e) {
+                alert("流程数据出错，请检查数据")
+            }
+            process_1(a);
+        }
+
+        function process_1(id) {
+            var data = "";
+            try {
+                data = eval("(" + json_le + ")");
+                for (var i = 1; i <= data.length; i++) {
+                    if (i == id) {
+                        document.getElementById("st_lc1").innerHTML = decode(data[i-1].spl_name);
+                        document.getElementById("st_lc2").innerHTML = decode(data[i-1].spl_content_txt);
+                    }
+                }
+            } catch (s) {
+
+            }
+        }
+
+        function ck(myck) {
+            jinji = myck.getElementsByTagName("input")[0].value;
+            for (var i = 1; i < 5; i++) {
+                document.getElementsByTagName("img")[i].setAttribute("src", "img/d2.png");
+            }
+            for (var i = 0; i < jinji; i++) {
+                document.getElementsByTagName("img")[i].setAttribute("src", "img/h3.png");
+            }
+        }
+
+        function huizhi() {
+            if (sfhz==true) {
+                sfhz = false;
+            } else {
+                sfhz = true;
+            }
+        }
+
+        function GetData() {
+            var tit = document.getElementById("titile").value;
+            var conten = document.getElementById("contents").value;
+            var lcid = document.getElementById("st_lc").value;
+            $.ajax({
+                type: "post",
+                url: "AsyCenter.aspx",
+                data: {
+                    type: "newstream",
+                    userid: "1",
+                    lcid: lcid,
+                    title: tit,
+                    contents: conten,
+                    sfhz: sfhz,
+                    jjcd: jinji,
+                    fjpath: filepath
+                },
+                success: function (data) {
+                    if (data == 1) {
+                        alert("流程发布成功！");
+                    } else {
+                        alert("流程发布失败，请重新发布！")
+                    }
+                }
+            })
+        }
     </script>
 </head>
 
 <body>
+    <input type="hidden" id="lc" value='<%=json_lc %>' />
     <div style="width: 1000px;height:680px; margin: auto">
         <%--此行不能修改--%>
         <div class="row-fluid" style="margin-top: 10px">
@@ -138,9 +234,9 @@
             <div>
                  <div>
                      <span>流程：</span>
-                     <select id="st_lc"><option value="-1">请选择</option></select>
-                     <span>流程名</span>
-                     <span>A->B->C...</span>
+                     <select id="st_lc" onchange="process_1(value)"><option value="-1">请选择</option></select>
+                     <span id="st_lc1">流程名</span>
+                     <span id="st_lc2">A->B->C...</span>
                  </div>
                  <div>
                      <span>标题：</span>
@@ -151,18 +247,18 @@
                       <textarea id="contents" style="width:80%;height:300px;resize:none;overflow-y:auto"></textarea>
                  </div>
                  <div>
-                     <span style="display:block;float:left">紧急程度：</span>
-                     <ul style="list-style:none;float:left;">
-                         <li style="float:left;width:60px"><a href="javascript:void(0);"><img src="img/d2.png" /></a><input type="hidden" value="1" /></li>
-                         <li style="float:left;width:60px"><a href="javascript:void(0);"><img src="img/d2.png" /></a><input type="hidden" value="1" /></li>
-                         <li style="float:left;width:60px"><a href="javascript:void(0);"><img src="img/d2.png" /></a><input type="hidden" value="1" /></li>
-                         <li style="float:left;width:60px"><a href="javascript:void(0);"><img src="img/d2.png" /></a><input type="hidden" value="1" /></li>
-                         <li style="float:left;width:60px"><a href="javascript:void(0);"><img src="img/d2.png" /></a><input type="hidden" value="1" /></li>
+                     <span style="display:block;float:left" >紧急程度：</span>
+                     <ul style="list-style:none;float:left;" >
+                         <li onclick="ck(this);" style="float:left;width:60px;"><img src="img/d2.png" /><input type="hidden" value="1" /></li>
+                         <li onclick="ck(this);" style="float:left;width:60px" ><img src="img/d2.png" /><input type="hidden" value="2" /></li>
+                         <li onclick="ck(this);" style="float:left;width:60px" ><img src="img/d2.png" /><input type="hidden" value="3" /></li>
+                         <li onclick="ck(this);" style="float:left;width:60px" ><img src="img/d2.png" /><input type="hidden" value="4" /></li>
+                         <li onclick="ck(this);" style="float:left;width:60px" ><img src="img/d2.png" /><input type="hidden" value="5" /></li>
                      </ul>
                  </div>
                  <div style="clear:both;">
                      <span style="display:block;float:left;">是否回执</span>
-                     <input type="checkbox" id="huizhi" style="display:block;float:left;margin:0 10px;" />
+                     <input type="checkbox" id="huizhi" onclick="huizhi()" style="display:block;float:left;margin:0 10px;" />
 
                      <form method="post" id="ufrm" style="width: 126px; height: 30px; display: block; overflow: hidden; position: relative;float:left;margin:0 10px;">
                          <input type="button" value="添加附件" id="upbtn" class="btn" style="width: 126px; height: 30px;" />
@@ -175,7 +271,7 @@
                      </select>
                  </div>
                  <div style="clear:both;">
-                     <input type="button" id="send" value="确认发布"/>
+                     <input type="button" id="send" value="确认发布" onclick="GetData()"/>
                  </div>
             </div>
             
