@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -7,7 +8,7 @@ using System.Web.UI.WebControls;
 
 public partial class OA_ydylcfb : System.Web.UI.Page
 {
-
+    _BLL b = null;
     //json_lc   表 oa_ydylc  返回值 id,spl_name,spl_content_txt   where  u_id=1   id desc
 
 
@@ -35,10 +36,30 @@ public partial class OA_ydylcfb : System.Web.UI.Page
      * 
      * 
      */
-
+    public string json_lc = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        b = new _BLL();
+        json_lc = jsonlc("1");      
+           
+    }
+
+
+    private  string jsonlc(String uid)
+    
+    
+    {
+       
+        string jason = "";
+
+        DataTable dt = b.Jsonlcc(uid);
+        jason = Tools.BiuldJson("", dt);
+        return jason;
+
 
     }
+
+
+
 }

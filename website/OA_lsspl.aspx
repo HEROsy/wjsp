@@ -57,6 +57,9 @@
     </style>
 
     <script type="text/javascript">
+
+        /*和 “当前审批流” 页面需求一样
+       */
         window.onload = function () {
 
         }
@@ -68,8 +71,31 @@
         <%--此行不能修改--%>
         <div class="row-fluid" style="margin-top: 10px">
             <%--此行不能修改--%>
-
-            历史审批流
+ <div>
+                <div ><h1>历史审批流</h1></div>
+                <div>
+                    <div>
+                        <input type="text" id="srtxt" />
+                        <input type="button" id="serch" value="搜索" />
+                    </div>
+                    <div>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>文件编号</th>
+                                    <th>标题</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>标题一</td><td><a href="javascript:void(0)">查看详细</a></td></tr>
+                                <tr><td>2</td><td>标题二</td><td><a href="javascript:void(0)">查看详细</a></td></tr>
+                                <tr><td>3</td><td>标题三</td><td><a href="javascript:void(0)">查看详细</a></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
