@@ -91,7 +91,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td>1</td><td>标题一</td><td><a href="javascript:void(0)">查看详细</a></td></tr>
+                                <tr><td>1</td><td>标题一</td><td><a href="oa_splxq.aspx">查看详细</a></td></tr>
                                 <tr><td>2</td><td>标题二</td><td><a href="javascript:void(0)">查看详细</a></td></tr>
                                 <tr><td>3</td><td>标题三</td><td><a href="javascript:void(0)">查看详细</a></td></tr>
                             </tbody>
