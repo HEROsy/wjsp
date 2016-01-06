@@ -133,7 +133,6 @@
                             } else {
                                 filepath = filepath + "|" + r.filename + "," + r.filepath;
                             }
-                            alert(filepath)
                             upok = true;
                             return true;
                         }
@@ -165,10 +164,10 @@
             var data = "";
             try {
                 data = eval("(" + json_le + ")");
-                for (var i = 1; i <= data.length; i++) {
-                    if (i == id) {
-                        document.getElementById("st_lc1").innerHTML = decode(data[i-1].spl_name);
-                        document.getElementById("st_lc2").innerHTML = decode(data[i-1].spl_content_txt);
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].id == id) {
+                        document.getElementById("st_lc1").innerHTML = decode(data[i].spl_name);
+                        document.getElementById("st_lc2").innerHTML = decode(data[i].spl_content_txt);
                     }
                 }
             } catch (s) {
