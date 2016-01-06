@@ -58,16 +58,48 @@
     </style>
 
     <script type="text/javascript">
+        /*
+
+        编号：bh
+        标题：title
+        发布时间：biuldtime
+        文件内容：contents
+        是否回执：ishz   
+
+        json_lc_datas 包含流程中的所有人名和用户ID  字段名：name,id  解析并以界面格式显示 框里显示人名 框这间用箭头隔开
+
+        json_fj  包含流程中的附件信息 字段名:filename,filepath  解析并在附件列表中显示 
+
+        json_yj  包含与此流程相关所有审批意见  字段名：id,yj,times   
+        事件：
+
+           点击流程中的人名框后  1  框变色  2 在意见框 显示此人的审批意见 json_lc_datas 中的id  和 json_yj 中的id 对应
+
+           点击附件列表中的某一项 此项要变色（选定效果） 并记录当前选中项的filepath  
+
+           点显示  如果当前附件列表有选中项则调 用showdoc（filepath） 否则  提示用户先选中
+        */
+
         var mfapp = null;
         var onepath = "http://192.168.1.85:94/UpFile/2016010302353814.doc";
+        var data = "";
+        var html = "";
+        var filepath = "";
+        var json_lc_datas = "";
+        var json_fj = "";
+        var json_yj = "";
         window.onload = function () {
             mfapp = document.all.WebOffice1;
             mfapp.HideMenuItem(0x01 + 0x02 + 0x04 + 0x10 + 0x1000 + 0x4000);
+            json_lc_datas = document.getElementById("j_lc").value;
+            json_fj = document.getElementById("j_fj").value;
+            json_yj = document.getElementById("j_yj").value;
+            lcxs();
+            fjzs();
         }
 
         function showdoc(docpath)
         {
-            alert(docpath);
             newDocAtServer_doc(docpath);
         }
 
@@ -82,72 +114,125 @@
              hideAll('hideall', '', '', '')
         }
 
+        function decode(str) {
+            str = decodeURIComponent(str.replace(/\+/g, '%20'));
+            return str;
+        }
 
+        function lcxs() {
+            data = "";
+            html = "";
+            var js = 0;
+            try {
+                data = eval("(" + json_lc_datas + ")");
+                for (var i = 0; i < data.length; i++) {
+                    if (js==0) {
+                        html = html + "<div style='background-color:aqua;width:50px;height:50px;border-radius:10px;float:left' onclick='spyj(this)' >" + decode(data[i].name) + ""
+                                             +"<input type='hidden' value=" + decode(data[i].id) + " /></div>";
+                        js = js + 1;
+                    } else {
+                        html = html + "<span style='display:block;float:left;line-height:50px;margin:0 5px;'>--></span>"
+                                        + "<div style='background-color:aqua;width:50px;height:50px;border-radius:10px;float:left' onclick='spyj(this)'>" + decode(data[i].name) + ""
+                                                 +"<input type='hidden' value=" + decode(data[i].id) + " /> </div>";
+                    }
+                }
+                document.getElementById("lcxm").innerHTML = html;
+            } catch (e) {
+                alert("流程数据解析失败。")
+            }
+        }
 
-        /*
-        编号：bh
-        标题：title
-        发布时间：biuldtime
-        文件内容：contents
-        是否回执：ishz   
+        function fjzs() {
+            data = "";
+            html = "";
+            try {
+                data = eval("(" + json_fj + ")");
+                for (var i = 0; i < data.length; i++) {
+                    html = html + "<li onclick='spfj(this)'><span>" + decode(data[i].filename) + "</span><input type='hidden' value=" + decode(data[i].filepath) + " /></li>";
+                }
+                document.getElementById("fjzs").innerHTML = html;
+            } catch (e) {
+                alert("附件数据解析失败");
+            }
+        }
 
-        json_lc_datas 包含流程中的所有人名和用户ID  字段名：name,id  解析并以界面格式显示 框里显示人名 框这间用箭头隔开
+        function spyj(mydiv) {
+            var div3 = document.getElementById("lcxm").getElementsByTagName("div");
+            var len = div3.length;
+            for (var i = 0; i < len; i++) {
+                div3[i].style.backgroundColor = "aqua";
+            }
+            mydiv.style.backgroundColor = "red";
+            data = "";
+            html = "";
+            data = eval("(" + json_yj + ")");
+            var a = mydiv.getElementsByTagName("input")[0].value;
+            for (var i = 1; i <= data.length; i++) {
+                if (i==a) {
+                    html = html + data[i - 1].yj;
+                }
+            }
+            document.getElementById("yj").innerHTML = html;
+        }
 
-        json_fj  包含流程中的附件信息 字段名:filename,filepath  解析并在附件列表中显示 
+        function spfj(myli) {
+            var li3 = document.getElementById("fjzs").getElementsByTagName("li");
+            var len = li3.length;
+            for (var i = 0; i < len; i++) {
+                li3[i].style.color = "black";
+            }
+            myli.style.color = "red";
+            filepath = myli.getElementsByTagName("input")[0].value;
+        }
 
-        json_yj  包含与此流程相关所有审批意见  字段名：id,yj,times   
-        事件：
-          点击流程中的人名框后  1  框变色  2 在意见框 显示此人的审批意见 json_lc_datas 中的id  和 json_yj 中的id 对应
+        function xianshi() {
+            if (filepath!="") {
+                showdoc(filepath);
+            } else {
+                alert("你未选中附件");
+            }
+        }
 
-           点击附件列表中的某一项 此项要变色（选定效果） 并记录当前选中项的filepath  
-
-           点显示  如果当前附件列表有选中项则调 用showdoc（filepath） 否则  提示用户先选中
-        */
     </script>
 </head>
 
 <body>
+    <input type="hidden" id="j_lc" value='<%=json_lc_datas %>' />
+    <input type="hidden" id="j_fj" value='<%=json_fj %>' />
+    <input type="hidden" id="j_yj" value='<%=json_yj %>' />
     <div style="width: 1000px;height:680px; margin: auto">
         <%--此行不能修改--%>
         <div class="row-fluid" style="margin-top: 10px">
             <%--此行不能修改--%>
-
             
             <div>
                 <div>
                     <h1>文件审批流详情</h1>
                 </div>
                 <div style="height:80px;margin-top:10px;">
-                    <div style="float:left;width:300px;"><span>编号:</span><span></span>       </div>
-                    <div style="float:left;width:300px;"><span>标题：</span><span></span>      </div>
-                    <div style="float:left;width:300px;"><span>发布时间：</span><span></span>  </div>
+                    <div style="float:left;width:300px;"><span><%=bh %></span><span></span>       </div>
+                    <div style="float:left;width:300px;"><span><%=title %></span><span></span>      </div>
+                    <div style="float:left;width:300px;"><span><%=biuldtime %></span><span></span>  </div>
                 </div>
-                <div style="min-height:50px;">
+                <div style="min-height:50px;" id="lcxm">
                     <div style="background-color:aqua;width:50px;height:50px;border-radius:10px;float:left"></div>
+                    <input type="hidden" value="a" />
                     <span style="display:block;float:left;line-height:50px;margin:0 5px;">--></span>
                     <div style="background-color:aqua;width:50px;height:50px;border-radius:10px;float:left"></div>
                 </div>
                 <div style="clear: both; width: 800px; margin: 10px auto;">
                     <div style="height: 200px;">
                         <div style="float: left; width: 550px; height: 200px; border: 1px solid #cdcdcd">
-                            文件内容
+                            <%=contents %>
                         </div>
                         <div style="float: left; width: 150px; height: 200px; border: 1px solid #cdcdcd; border-left: none;">
                             <div style="height: 35px;">
-                                <input type="button" value="显示" onclick="showdoc(onepath);" style="float: left; margin: 4px 10px 0 37px;" />
+                                <input type="button" value="显示" onclick="xianshi();" style="float: left; margin: 4px 10px 0 37px;" />
                                 <input type="button" value="下载" style="float: left; margin-top: 4px" />
                             </div>
                             <div style="height: 165px; overflow-y: scroll;">
-                                <ul style="list-style: none">
+                                <ul style="list-style: none" id="fjzs">
                                     <li><span>文件名一</span><input type="hidden" value="x.doc" /></li>
-                                    <li>2</li> 
-                                    <li>3</li>
-                                    <li>4</li>
-                                    <li>5</li>
-                                    <li>6</li>
-                                    <li>7</li>
-                                    <li>8</li>
-                                    <li>9</li>
                                 </ul>
                             </div>
 
@@ -157,11 +242,11 @@
                         <script src="WebOffice/loadweboffice.js"></script>
                     </div>
                     <div style="width: 700px; height: 80px; border: 1px solid #cdcdcd; margin-top: 10px;">
-                        <div style="float:left;">
+                        <div style="float:left;" id="yj">
                             审批意见！审批意见！审批意见！审批意见！
                         </div>
                         <div style="float:right;">
-                            是否回执:是/否
+                            是否回执:<%=ishz %>
                         </div>
                     </div>
                 </div>
