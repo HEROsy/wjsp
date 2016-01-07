@@ -57,6 +57,10 @@
     </style>
 
     <script type="text/javascript">
+        /*json_bm  字段：
+
+        */
+
         window.onload = function () {
 
         }
@@ -69,7 +73,47 @@
         <div class="row-fluid" style="margin-top: 10px">
             <%--此行不能修改--%>
             定向发布
-
+              <div>
+                <div>
+                    <div style="float:left;">
+                            <select id="st_bm">
+                            </select>
+                        <div style="border:1px solid #cdcdcd;width:217px;height:250px;"></div>
+                    </div>
+                    <div style="float:left;width:425px;height:290px;border:1px solid #cdcdcd;margin-left:10px;"></div>
+                </div>
+                <div style="clear:both">
+                    <span>标题：</span><input type="text" />
+                </div>
+                <div>
+                    <span>内容：</span><input type="text" />
+                </div>
+                <div>
+                     <span style="display:block;float:left" >紧急程度：</span>
+                     <ul style="list-style:none;float:left;" >
+                         <li onclick="ck(this);" style="float:left;width:60px;"><img src="img/d2.png" /><input type="hidden" value="1" /></li>
+                         <li onclick="ck(this);" style="float:left;width:60px" ><img src="img/d2.png" /><input type="hidden" value="2" /></li>
+                         <li onclick="ck(this);" style="float:left;width:60px" ><img src="img/d2.png" /><input type="hidden" value="3" /></li>
+                         <li onclick="ck(this);" style="float:left;width:60px" ><img src="img/d2.png" /><input type="hidden" value="4" /></li>
+                         <li onclick="ck(this);" style="float:left;width:60px" ><img src="img/d2.png" /><input type="hidden" value="5" /></li>
+                     </ul>
+                </div>
+                <div style="clear:both">
+                    <span style="display:block;float:left;">是否回执</span>
+                    <input type="checkbox"  style="float:left;"/>
+                    <form method="post" id="ufrm" style="width: 126px; height: 30px; display: block; overflow: hidden; position: relative;float:left;margin:0 10px;">
+                         <input type="button" value="添加附件" id="upbtn" class="btn" style="width: 126px; height: 30px;" />
+                         <input type="file" name="upfile" id="upfile" style="width: 126px; height: 30px; position: absolute; top: 0; left: 0; opacity: 0; filter: alpha(opacity=0);" />
+                         <input type="hidden" id="ufname" value="" />
+                     </form>
+                     <select id="st_fj" style="display:block;float:left;margin:0 10px;">
+                         <option>无附件</option>
+                     </select>
+                </div>
+                  <div style="clear:both;">
+                      <input type="button" value="确认添加" />
+                  </div>
+            </div>
         </div>
     </div>
 </body>
