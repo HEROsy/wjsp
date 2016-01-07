@@ -73,7 +73,7 @@ public partial class AsyCenter : System.Web.UI.Page
 
 
                 case "newstream_dx":
-                    Newstream();
+                    Newstreamdx();
                     break;
               
 
@@ -420,7 +420,46 @@ public partial class AsyCenter : System.Web.UI.Page
     }
 
 
+       public void Newstreamdx()
+       {
+           int i = 0;
 
+           string sender_id = Request.Form["userid"];
+           string splc_datas = Request.Form["lc_datas"];
+           string titles = Request.Form["title"];
+           string contents = Request.Form["contents"];
+           string spl_huizhi = Request.Form["sfhz"];
+           string stars = Request.Form["jjcd"];
+           string fj_url = Request.Form["fjpath"];
+           DateTime sender_times = DateTime.Now;
+
+        
+           try
+           {
+               SqlParameter[] sprr ={new SqlParameter("@sender_id",sender_id),                      
+                                    new SqlParameter("@titles", titles),
+                                    new SqlParameter("@contents",contents),
+                                    new SqlParameter("@spl_huizhi", spl_huizhi),                        
+                                    new SqlParameter("@stars",  stars),
+                                    new SqlParameter("@fj_url", fj_url),
+                                    new SqlParameter("@sender_times",sender_times),
+                                    new SqlParameter("@splc_datas", splc_datas)
+                                 };
+
+               string sqll = SqlHelper.GetSQLInsert_normal("oa_dq_spl", sprr);
+               i = SqlHelper.ExcoutSQL(sqll, CommandType.Text, sprr);
+
+
+           }
+           catch (Exception)
+           {
+               throw;
+           }
+
+
+           Response.Write(i);
+           Response.End();
+       }
    
 
     }
