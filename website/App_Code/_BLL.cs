@@ -443,7 +443,35 @@ public class _BLL
 
     }
 
+    public  DataTable  Oapart()
+    
+    {
 
-   
+        DataTable dt = null;
+
+        String sql = SqlHelper.GetSQLSelect_normal("", "id,part", "oa_part", null, "", "", "id asc");
+
+        dt = SqlHelper.GetTable(sql, CommandType.Text, null);
+
+        return dt;
+
+    }
+     
+    
+    
+      public DataTable Oauser()
+    
+      {
+
+
+        DataTable dt = null;
+
+        String sql = SqlHelper.GetSQLSelect_normal("", "id,name,u_part", "oa_user", null, "", "", "id asc");
+
+        dt = SqlHelper.GetTable(sql, CommandType.Text, null);
+
+        return dt;
+
+    }
 
 }

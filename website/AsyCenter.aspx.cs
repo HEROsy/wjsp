@@ -70,6 +70,11 @@ public partial class AsyCenter : System.Web.UI.Page
                 case "newstream":
                     Newstream();
                     break;
+
+
+                case "newstream_dx":
+                    Newstream();
+                    break;
               
 
                 default:
