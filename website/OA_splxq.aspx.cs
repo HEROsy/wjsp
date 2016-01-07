@@ -26,15 +26,15 @@ public partial class OA_splxq : System.Web.UI.Page
 
         json_yj= spyj_id_contents_times  (25,意见内容,2015-01-01|26,意见内容,2015-01-03)  包含与此流程相关所有审批意见 json 字段名：id,yj,times   
      */
-      string  json_lc_datas ="";
-      string  json_fj  = "";
-      string  json_yj="";
-     
-      string  bh = "";
-      string  title = "";
-      string  biuldtime = "";
-      string  contents = "";
-      string  ishz = "";
+     public string json_lc_datas ="";
+     public string json_fj = "";
+     public string json_yj = "";
+
+     public string bh = "";
+     public string title = "";
+     public string biuldtime = "";
+     public string contents = "";
+     public string ishz = "";
 
     protected void Page_Load(object sender, EventArgs e)
       {

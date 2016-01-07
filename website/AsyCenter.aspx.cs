@@ -396,11 +396,11 @@ public partial class AsyCenter : System.Web.UI.Page
                           new SqlParameter("@stars",  stars),
                            new SqlParameter("@fj_url", fj_url),
                             new SqlParameter("@sender_times",sender_times),
-                           new SqlParameter("@spl_content",spl_content)
+                           new SqlParameter("@splc_datas",spl_content)
                                  };
 
             string sqll = SqlHelper.GetSQLInsert_normal("oa_dq_spl", sprr);
-             i = SqlHelper.ExcoutSQL(sqll, CommandType.Text, null);
+            i = SqlHelper.ExcoutSQL(sqll, CommandType.Text, sprr);
 
 
         }

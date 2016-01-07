@@ -14,7 +14,7 @@ public partial class OA_dqspl : System.Web.UI.Page
      * 
      */
 
-    string json_lc = "";
+   public string json_lc = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
