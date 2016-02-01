@@ -216,60 +216,60 @@ public class _BLL
     /// <param name="day"></param>
     /// <returns></returns>
 
-    public bool JieSuan(string userId,  string day )
-    {
-        DateTime aas = new DateTime(2015, 1, 1, 9, 0, 0);
-        DateTime ad = new DateTime(2015, 1, 1, 12, 0, 0);
-        DateTime ps = new DateTime(2015, 1, 1, 14, 0, 0);
-        DateTime pd = new DateTime(2015, 1, 1, 18, 0, 0);
+    //public bool JieSuan(string userId,  string day )
+    //{
+    //    DateTime aas = new DateTime(2015, 1, 1, 9, 0, 0);
+    //    DateTime ad = new DateTime(2015, 1, 1, 12, 0, 0);
+    //    DateTime ps = new DateTime(2015, 1, 1, 14, 0, 0);
+    //    DateTime pd = new DateTime(2015, 1, 1, 18, 0, 0);
 
 
-        try
-        {
-            SqlParameter[] spr ={new SqlParameter("@id",userId),
-                            new SqlParameter("@day",day)};
+    //    try
+    //    {
+    //        SqlParameter[] spr ={new SqlParameter("@id",userId),
+    //                        new SqlParameter("@day",day)};
 
-            string sqlaa = SqlHelper.GetSQLSelect_normal("", "a_start_time", "oa_kaoqing", spr, "=,=", "and", "");
-            string sqlad = SqlHelper.GetSQLSelect_normal("", "a_end_time", "oa_kaoqing", spr, "=,=", "and", "");
-            string sqlps = SqlHelper.GetSQLSelect_normal("", "p_start_time", "oa_kaoqing", spr, "=,=", "and", "");
-            string sqlpd = SqlHelper.GetSQLSelect_normal("", "p_end_time", "oa_kaoqing", spr, "=,=", "and", "");
+    //        string sqlaa = SqlHelper.GetSQLSelect_normal("", "a_start_time", "oa_kaoqing", spr, "=,=", "and", "");
+    //        string sqlad = SqlHelper.GetSQLSelect_normal("", "a_end_time", "oa_kaoqing", spr, "=,=", "and", "");
+    //        string sqlps = SqlHelper.GetSQLSelect_normal("", "p_start_time", "oa_kaoqing", spr, "=,=", "and", "");
+    //        string sqlpd = SqlHelper.GetSQLSelect_normal("", "p_end_time", "oa_kaoqing", spr, "=,=", "and", "");
 
-            DateTime a_starttime = (DateTime)SqlHelper.ExecuteScalar(sqlaa, CommandType.Text);
-            DateTime p_starttime = (DateTime)SqlHelper.ExecuteScalar(sqlps, CommandType.Text);
-            DateTime a_endtime = (DateTime)SqlHelper.ExecuteScalar(sqlad, CommandType.Text);
-            DateTime p_endtime = (DateTime)SqlHelper.ExecuteScalar(sqlpd, CommandType.Text);
+    //        DateTime a_starttime = (DateTime)SqlHelper.ExecuteScalar(sqlaa, CommandType.Text);
+    //        DateTime p_starttime = (DateTime)SqlHelper.ExecuteScalar(sqlps, CommandType.Text);
+    //        DateTime a_endtime = (DateTime)SqlHelper.ExecuteScalar(sqlad, CommandType.Text);
+    //        DateTime p_endtime = (DateTime)SqlHelper.ExecuteScalar(sqlpd, CommandType.Text);
 
-            TimeSpan cspan = a_starttime - aas;
-            TimeSpan cspan1 = p_starttime - ps;
-            TimeSpan zspan = a_endtime - ad;
-            TimeSpan zspan1 = p_endtime - pd;
+    //        TimeSpan cspan = a_starttime - aas;
+    //        TimeSpan cspan1 = p_starttime - ps;
+    //        TimeSpan zspan = a_endtime - ad;
+    //        TimeSpan zspan1 = p_endtime - pd;
 
-            if (cspan.Hours <= 0 || cspan1.Hours <= 0)
-            {
-                string sql = "update oakaoqing set u_cd = u_cd+1 where u_id = @id and day =@day";
-                SqlHelper.ExcoutSQL(sql, CommandType.Text, spr);
+    //        if (cspan.Hours <= 0 || cspan1.Hours <= 0)
+    //        {
+    //            string sql = "update oakaoqing set u_cd = u_cd+1 where u_id = @id and day =@day";
+    //            SqlHelper.ExcoutSQL(sql, CommandType.Text, spr);
 
-            }
+    //        }
 
 
 
-            else if (zspan.Hours > 0 || zspan1.Hours > 0)
-            {
-                string sql = "update oakaoqing set u_zt = u_zt+1 where u_id = @id and day =@day";
-                SqlHelper.ExcoutSQL(sql, CommandType.Text, spr);
-            }
-            return true;
+    //        else if (zspan.Hours > 0 || zspan1.Hours > 0)
+    //        {
+    //            string sql = "update oakaoqing set u_zt = u_zt+1 where u_id = @id and day =@day";
+    //            SqlHelper.ExcoutSQL(sql, CommandType.Text, spr);
+    //        }
+    //        return true;
 
-        }
-        catch (Exception)
-        {
+    //    }
+    //    catch (Exception)
+    //    {
             
-           return false;
-        }
+    //       return false;
+    //    }
        
        
      
-    }
+    //}
 
      public DataTable JieSuant (string userId,  string day )
     

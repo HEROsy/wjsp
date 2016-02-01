@@ -251,7 +251,7 @@ using System.Data.OleDb;
             return sql;
         }
 
-        public static object ExecuteScalar(string sql,CommandType type, params SqlParameter[] parameters)
+        public static object ExecuteScalar(string sql, params SqlParameter[] parameters)
         {
 
             using (SqlConnection conn = new SqlConnection(ConnStr))
