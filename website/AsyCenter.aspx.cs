@@ -76,13 +76,79 @@ public partial class AsyCenter : System.Web.UI.Page
                     Newstreamdx();
                     break;
               
+                case "onekaoqingdata":
+                    OneKaoqingData();
+                    break;
 
+                case "allkaoqingdata":
+                    AllKaoqingData();
+                    break;
                 default:
                     break;
             }
         }
 
 
+    }
+
+    private void AllKaoqingData()
+    {
+        String _year = Request.Form["year"];
+        String _moth = Request.Form["month"];
+        String userid = Request.Form["uid"];
+        String result = "";
+
+        //查询oa_kaoqing  u_id=userid的用户在这个年份和月份的考勤数据  
+        //返回字段
+        // [id]
+        //[a_start_time]
+        //[a_end_time]
+        //[p_start_time]
+        //[p_end_time]
+        //[a_state]
+        //[p_state]
+        //[u_cd]
+        //[u_zt]
+        //[qj_a]
+        //[qj_p]
+        //[day]
+
+
+        result = "";//结果包装成json
+
+
+        Response.Write(result);
+        Response.End();
+    }
+
+    private void OneKaoqingData()
+    {
+        String _year=Request.Form["year"];
+        String _moth=Request.Form["month"];
+        String userid = Session["user"].ToString().Split('|')[0];
+        String result = "";
+
+        //查询oa_kaoqing当前用户在这个年份和月份的考勤数据  
+        //返回字段
+          // [id]
+          //[a_start_time]
+          //[a_end_time]
+          //[p_start_time]
+          //[p_end_time]
+          //[a_state]
+          //[p_state]
+          //[u_cd]
+          //[u_zt]
+          //[qj_a]
+          //[qj_p]
+          //[day]
+
+
+        result = "";//结果包装成json
+
+
+        Response.Write(result);
+        Response.End();
     }
 
     private void ResetUserPassword()

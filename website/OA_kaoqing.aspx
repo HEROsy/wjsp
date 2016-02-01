@@ -395,6 +395,10 @@
             nian();
             yue();
             yesno();
+
+            BindYears();
+            BindMonth();
+            
         }
         function tongji() {
             n = document.getElementById("test_3").value;
@@ -471,9 +475,47 @@
             document.getElementById("zhezhaoshow").innerHTML = "";
             document.getElementById("zhezhao").style.visibility = "hidden";
         }
+
+        //
+        
+        function BindYears()
+        {
+            var years = document.getElementById("years").value;
+            //用 ‘,’ 分割years 绑定到年份下拉框
+        }
+
+        function BindMonth()
+        {
+            //绑定1－12月
+        }
+
+        function GetDataAndTonji()
+        {
+            $.ajax({
+                type: "post",
+                url: "AsyCenter.aspx",
+                data: {
+                    type: "onekaoqingdata",
+                    year:"",//选中的年份
+                    month:""//月份
+                },
+                success: function (data)
+                {
+                    //1解析data 绑定列表(解析不成功 显示无数据)
+
+                    //2调用原有的统计函数
+                    tongji();
+
+                    //3计算迟到，早退，等时间 显示到相应地方
+
+                }
+            })
+        }
+
 </script>
 </head>
 <body>
+    <input type="hidden" id="years" value="<%=years %>" />
     <div id="zhezhao">
         <div style="width: 1000px; height: 658px; margin: auto">
             <div style="width: 1000px; height: 10px;">
@@ -502,7 +544,7 @@
                                     <option value="none">正在获取月份...</option>
                                 </select>
                             </div>
-                            <div class="img2" onmouseover="this.style.cursor='pointer'" onclick="javascript:tongji();"></div>
+                            <div class="img2" onmouseover="this.style.cursor='pointer'" onclick="javascript:GetDataAndTonji();"></div>
                             <div style="width: 470px;height: 80px;float: left;margin-left:96px;">
                                 <div><span id="xzsj">当前统计时间段为：请在左侧选择时间</span></div>
                                 <%--下面的时间如果是分钟就转为分钟数显示，如果是天数就转为天数显示，分钟精度为1分钟，天数精度为0.5天，请勿更改格式--%>
