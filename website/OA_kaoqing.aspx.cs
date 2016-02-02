@@ -89,8 +89,7 @@ public partial class OA_kaoqing : System.Web.UI.Page
         }
         catch (Exception)
         {
-            Response.Write("时间格式有误");
-            Response.End();
+            year="时间格式有误";
         }
        
     }

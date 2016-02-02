@@ -16,9 +16,9 @@ public partial class OA_kaoqing_all : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         InitYears();
-       // InitUsers();
+        InitUsers();
 
-        Response.Write(years);
+      
     }
 
     private void InitUsers()
