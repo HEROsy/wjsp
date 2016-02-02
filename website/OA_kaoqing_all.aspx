@@ -416,7 +416,9 @@
             yue();
             yesno();
 
-
+            BindYears();
+            BindMonth();
+            BindUser();
         }
         function tongji() {
             n = document.getElementById("test_3").value;
@@ -496,42 +498,227 @@
             document.getElementById("zhezhao").style.visibility = "hidden";
         }
 
+        function decode(str) {
+            str = decodeURIComponent(str.replace(/\+/g, '%20'));
+            return str;
+        }
+
 
         //
-        function BindYears()
-        {
+        function BindYears() {
             var years = document.getElementById("years").value;
+            var arr1 = years.split(",");
+            var html = "";
+            try {
+                for (var i = 0; i < arr1.length; i++) {
+                    html = html + "<option value='" + arr1[i] + "'>" + arr1[i] + "</option>";
+                }
+                document.getElementById("test_3").innerHTML = html;
+
+            } catch (e) {
+                document.getElementById("test_3").innerHTML = "<optiom>无数据</option>";
+                return false;
+            }
             //用 ‘,’ 分割years 绑定到年份下拉框
         }
 
         function BindMonth() {
+            var html = "";
+            for (var i = 1; i <= 12; i++) {
+                html = html + "<option value='" + i + "'>" + i + "月</option>";
+            }
+            document.getElementById("test_4").innerHTML = html;
             //绑定1－12月
         }
 
         function BindUser()
         {
             var users = document.getElementById("users").value;
+            var html = "";
+            var data = "";
+            try {
+                data = eval("(" + users + ")");
+            } catch (e) {
+                document.getElementById("test_5").innerHTML = "<option>无数据</optiom>";
+                return false;
+            }
+            for (var i = 0; i < data.length; i++) {
+                html = html + "<option value='" + decode(data[i].id) + "'>" + decode(data[i].name) + "</option>";
+            }
+            document.getElementById("test_5").innerHTML = html;
             //解析这个json 绑定到 用户下拉框 值为id 名称为name
         }
 
         function GetDataAndTonji()
         {
+            var years = document.getElementById("test_3").value;
+            var months = document.getElementById("test_4").value;
+            var uid = document.getElementById("test_5").value;
             $.ajax({
                 type: "post",
                 url: "AsyCenter.aspx",
                 data: {
                     type: "allkaoqingdata",
-                    year: "",//选中的年份
-                    month: "",//月份
-                    uid:""//选中的用户的id
+                    year: years,//选中的年份
+                    month: months,//月份
+                    uid: uid//选中的用户的id
                 },
                 success: function (data) {
+                    var json_kq = "";
+                    var html = "";
+                    var a_start = "";
+                    var p_start = "";
+
+                    try {
+                        json_kq = eval("(" + data + ")");
+
+                    } catch (e) {
+                        document.getElementById("bm").innerHTML = "<span>无数据</span>"
+                    }
+                    for (var i = 0; i < json_kq.length; i++) {
+
+                        if (json_kq[i].a_start == "0") {
+                            a_start = "正常";
+                        } else if (json_kq[i].a_start == "1") {
+                            a_start = "迟到";
+                        } else if (json_kq[i].a_start == "2") {
+                            a_start = "早退";
+                        } else if (json_kq[i].a_start == "3") {
+                            a_start = "迟到、早退";
+                        } else if (json_kq[i].a_start == "4") {
+                            a_start = "旷工";
+                        } else {
+                            a_start = "未获取";
+                        }
+
+                        if (json_kq[i].p_start == "0") {
+                            p_start = "正常";
+                        } else if (json_kq[i].p_start == "1") {
+                            p_start = "迟到";
+                        } else if (json_kq[i].p_start == "2") {
+                            p_start = "早退";
+                        } else if (json_kq[i].p_start == "3") {
+                            p_start = "迟到、早退";
+                        } else if (json_kq[i].p_start == "4") {
+                            p_start = "旷工";
+                        } else {
+                            p_start = "未获取";
+                        }
+                        html = html + "<div class='bm1'>"
+                                    + "<div class='row-fluid'>"
+                                        + "<div class='span8'>"
+                                            + "<div class='imgno'>"
+                                                + "</div>"
+                                                    + "<span class='s1'>" + decode(json_kq[i].day) + "</span>"
+                                                    + "<span class='s2'>" + json_kq[i].a_start_time + "-" + json_kq[i].a_end_time + "</span>"
+                                                    + "<span class='s3'>" + decode(a_start) + "</span>"
+                                                + "</div>"
+                                        + "<div class='span4'>"
+                                            + "<span class='s2'>" + json_kq[i].p_start_time + "-" + json_kq[i].p_end_time + "</span>"
+                                            + "<span class='s3'>" + decode(p_start) + "</span>"
+                                        + "</div>"
+                                    + "</div>"
+                                + "</div>";
+                    }
+                    document.getElementById("bm").innerHTML = html;
                     //1解析data 绑定列表(解析不成功 显示无数据)
 
                     //2调用原有的统计函数
                     tongji();
 
-                    //3计算迟到，早退，等时间 显示到相应地方
+                    var cd = 0;
+                    var zt = 0;
+                    var bj = 0;
+                    var sj = 0;
+                    var kg = 0;
+                    var zc = 0;
+                    var gj = 0;
+                    var js = 0;
+                    var js_1 = 0;
+                    var qd = 0;
+                    var qt = 0;
+                    var qj_a_str = "";
+                    var qj_a_end = "";
+                    var qj_p_str = "";
+                    var qj_p_end = "";
+
+                    bj = parseFloat(bj);
+                    sj = parseFloat(sj);
+                    kg = parseFloat(kg);
+                    zc = parseFloat(zc);
+                    gj = parseFloat(gj);
+
+                    for (var i = 0; i < json_kq.length; i++) {
+                        if (json_kq[i].qj_a == "" && json_kq[i].qj_p == "") {
+                            cd = cd + parseInt(json_kq[i].u_cd);
+                            zt = zt + parseInt(json_kq[i].u_zt);
+                        } else if (json_kq[i].qj_a == "") {
+                            js = 0;
+                            js_1 = 0;
+                            qd = "";
+                            qt = "";
+                            qj_a_str = json_kq[i].a_start_time.split(":");
+                            qj_a_end = json_kq[i].a_end_time.split(":");
+                            js = parseInt(9 * 60);
+                            js_1 = parseInt(12 * 60);
+                            qd = parseInt(qj_a_str[0] * 60) + parseInt(qj_a_str[1]);
+                            qt = parseInt(qj_a_end[0] * 60) + parseInt(qj_a_end[1]);
+                            if (js_1 - qt > 0) {
+                                zt = zt + (js_1 - qt);
+                            }
+                            if (qd - js > 0) {
+                                cd = cd + (qd - js);
+                            }
+                        } else if (json_kq[i].qj_p == "") {
+                            js = 0;
+                            js_1 = 0;
+                            qd = "";
+                            qt = "";
+                            qj_p_str = json_kq[i].p_start_time.split(":");
+                            qj_p_end = json_kq[i].p_end_time.split(":");
+                            js = parseInt(14 * 60);
+                            js_1 = parseInt(18 * 60);
+                            qd = parseInt(qj_p_str[0] * 60) + parseInt(qj_p_str[1]);
+                            qt = parseInt(qj_p_end[0] * 60) + parseInt(qj_p_end[1]);
+
+                            if (js_1 - qt > 0) {
+                                zt = zt + (js_1 - qt);
+                            }
+                            if (qd - js > 0) {
+                                cd = cd + (qd - js);
+                            }
+                        }
+                        if (json_kq[i].a_start == "0") {
+                            zc += 0.5;
+                        } else if (json_kq[i].a_start == "4") {
+                            kg += 0.5;
+                        } else if (json_kq[i].qj_a == "2") {
+                            bj += 0.5;
+                        } else if (json_kq[i].qj_a == "3") {
+                            sj += 0.5;
+                        } else if (json_kq[i].qj_a == "4") {
+                            gj += 0.5;
+                        }
+
+                        if (json_kq[i].p_start == "0") {
+                            zc += 0.5;
+                        } else if (json_kq[i].p_start == "4") {
+                            kg += 0.5;
+                        } else if (json_kq[i].qj_p == "2") {
+                            bj += 0.5;
+                        } else if (json_kq[i].qj_p == "3") {
+                            sj += 0.5;
+                        } else if (json_kq[i].qj_p == "4") {
+                            gj += 0.5;
+                        }
+                        document.getElementById("t1").innerHTML = "迟到<span>" + cd + "</span>分钟";
+                        document.getElementById("t2").innerHTML = "早退<span>" + zt + "</span>分钟";
+                        document.getElementById("t3").innerHTML = "病假<span>" + bj + "</span>天";
+                        document.getElementById("t4").innerHTML = "事假<span>" + sj + "</span>天";
+                        document.getElementById("t5").innerHTML = "旷工<span>" + kg + "</span>天";
+                        document.getElementById("t6").innerHTML = "正常<span>" + zc + "</span>天";
+                    }
+                    //            3计算迟到，早退，等时间 显示到相应地方
 
                 }
             })
@@ -584,8 +771,16 @@
                             <div style="width: 470px; height: 80px; float: left; margin-left: 70px;">
                                 <div><span id="xzsj">当前统计时间段为：请在左侧选择时间</span></div>
                                 <%--下面的时间如果是分钟就转为分钟数显示，如果是天数就转为天数显示，分钟精度为1分钟，天数精度为0.5天，请勿更改格式--%>
-                                <div><span class="sb bs1"></span><span class="tongji">迟到：<span id="t1">130</span>分钟</span><span class="sb bs2"></span><span class="tongji">早退：<span id="t2">500</span>分钟</span><span class="sb bs3"></span><span class="tongji">病假：<span id="t3">2</span>天</span></div>
-                                <div><span class="sb bs4"></span><span class="tongji">事假：<span id="t4">3.5</span>天</span><span class="sb bs5"></span><span class="tongji">旷工：<span id="t5">5.5</span>天</span><span class="sb bs6"></span><span class="tongji">正常：<span id="t6">18</span>天</span></div>
+                                <div>
+                                    <span class="sb bs1"></span><span class="tongji" id="t1">迟到：</span>
+                                    <span class="sb bs2"></span><span class="tongji" id="t2">早退：</span>
+                                    <span class="sb bs3"></span><span class="tongji" id="t3">病假：</span>
+                                </div>
+                                <div>
+                                    <span class="sb bs4"></span><span class="tongji" id="t4">事假：</span>
+                                    <span class="sb bs5"></span><span class="tongji" id="t5">旷工：</span>
+                                    <span class="sb bs6"></span><span class="tongji" id="t6">正常：</span>
+                                </div>
                             </div>
                         </div>
                     </div>
