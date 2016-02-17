@@ -41,6 +41,7 @@ using System.Data.OleDb;
                         SqlDataAdapter sda = new SqlDataAdapter(cmd);
                         dt = new DataTable();
                         sda.Fill(dt);
+                        cmd.Parameters.Clear();
                         return dt;
                     }
                 }
@@ -74,16 +75,15 @@ using System.Data.OleDb;
                             cmd.Parameters.AddRange(spr);
                         }
                        r= cmd.ExecuteNonQuery();
+                       cmd.Parameters.Clear();
                     }
                     con.Close();
+                   
                 }
                 return r;
             }
             catch (SqlException e)
             {
-            //    String err = "sql:" + sql + "err:" + e.Message;
-            //    Inserterr(err);
-
                 int ercode = e.Errors[0].Number;
                 return ercode;
             }
@@ -129,30 +129,6 @@ using System.Data.OleDb;
             }
         }
 
-        public static void ExcoutSQLX(String sql, CommandType type, params SqlParameter[] spr)
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(ConnStr))
-                {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, con))
-                    {
-                        cmd.CommandType = type;
-                        if (spr != null)
-                        {
-                            cmd.Parameters.AddRange(spr);
-                        }
-                        cmd.ExecuteNonQuery();
-                    }
-                    con.Close();
-                }
-            }
-            catch (SqlException e)
-            {
-               
-            }
-        }
         /// <summary>
         /// 插入
         /// </summary>
@@ -206,11 +182,11 @@ using System.Data.OleDb;
                 {
                     if (i + 1 > andorlenth)
                     {
-                        str = str + spr[i].ParameterName.Substring(1) + compars[i] + spr[i].ParameterName;
+                        str = str + spr[i].ParameterName.Substring(1) + " " + compars[i] + " " + spr[i].ParameterName;
                     }
                     else
                     {
-                        str = str + spr[i].ParameterName.Substring(1) + compars[i] + spr[i].ParameterName + " " + andors[i] + " ";
+                        str = str + spr[i].ParameterName.Substring(1) + " " + compars[i] + " " + spr[i].ParameterName + " " + andors[i] + " ";
                     }
                 }
             }
@@ -276,5 +252,21 @@ using System.Data.OleDb;
             String sql = String.Format("update {0} set {1} where {2}",TableName,SetStr,WhereStr);
             return sql;
         }
+
+        public static object ExecuteScalar(string sql,CommandType type, params SqlParameter[] parameters)
+        {
+
+            using (SqlConnection conn = new SqlConnection(ConnStr))
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = sql;
+                    cmd.Parameters.AddRange(parameters);
+                    return cmd.ExecuteScalar();
+                }
+            }
+        }
+
     }
 
