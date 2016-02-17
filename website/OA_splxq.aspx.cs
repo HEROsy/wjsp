@@ -63,7 +63,7 @@ public partial class OA_splxq : System.Web.UI.Page
           {             
               title = dt.Rows[i]["titles"].ToString();
               biuldtime = dt.Rows[i]["sender_times"].ToString();
-              contents = dt.Rows[i]["contents"].ToString();
+              contents = dt.Rows[i]["contents"].ToString().Replace("\n","</br>");
               ishz = dt.Rows[i]["spl_huizhi"].ToString();
               splcdatas = dt.Rows[i]["splc_datas"].ToString();
               fjurl = dt.Rows[i]["fj_url"].ToString();

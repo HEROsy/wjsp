@@ -203,7 +203,7 @@
                 url: "AsyCenter.aspx",
                 data: {
                     type: "addspl",
-                    userid: "1",
+                    userid: document.getElementById("userid").value,
                     contents: c_id,
                     contents_txt: c_txt,
                     splname: splname
@@ -224,6 +224,7 @@
 <body>
     <input type="hidden" id="j_bm" value='<%=json_bm %>' />
     <input type="hidden" id="j_user" value='<%=json_user %>'/>
+    <input type="hidden" id="userid" value="<%=userid %>"
     <div style="width: 1000px; height: 660px; margin: auto">
         <%--此行不能修改--%>
         <div class="row-fluid" style="margin-top: 10px">

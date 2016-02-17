@@ -114,11 +114,37 @@ public partial class AsyCenter : System.Web.UI.Page
                 case "dau":
                     dadata();
                     break;
+
+                case "bulkkaoqing":
+                    BulkKaoQing();
+                    break;
+
+                case "deletelc":
+                    DeleteLC();
+                    break;
                 default:
                     break;
             }
         }
 
+    }
+
+    private void DeleteLC()
+    {
+        String lcid=Request.Form["lcid"];
+
+        //删除表oa_ydylc  [id]=lcid 的行 返回受影响行数  出问题返回-1
+    }
+
+    private void BulkKaoQing()
+    {
+        String dates=Request.Form["dates"];
+        //dates 格式 2016-12-01,1/2/3｜2016-12-02，1/2/3｜...
+        //｜分隔多组数据
+        //，左边是日期对应数据据字段day 右边是1 则更改qj_a为4 是2更改qj_p为4  是3两个字段都改成4
+        //出错返回-1 否则返回受影响行数
+
+       
     }
 
     private void GetName()

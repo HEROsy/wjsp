@@ -177,10 +177,10 @@
             }
         }
 
-
         window.onload = function () {
 
         }
+
         window.addEventListener("DOMContentLoaded", function () {
             canvas = document.getElementById("canvas");
             context = canvas.getContext("2d");
@@ -216,11 +216,11 @@
         function btn() {
             User = User = document.getElementById("username").value;
             Word = Word = document.getElementById("password").value;
-            if (Word.replace(/\s+/g, "") == "" || User.replace(/\s+/g, "") == "") {
-                alert("请输入账号或密码")
-            } else {
+            //if (Word.replace(/\s+/g, "") == "" || User.replace(/\s+/g, "") == "") {
+            //    alert("请输入账号或密码")
+            //} else {
                 Data(User, Word);
-            }
+            //}
         }
 
         function Data(user, word) {
@@ -242,7 +242,6 @@
                 }
             })
         }
-
 
         function tj() {
             var imgbase64;
@@ -267,6 +266,7 @@
             var param = JSON.stringify(param_json);
             senddata(param);
         }
+
         function senddata(param) {
             $.ajax({
                 type: "post",
@@ -324,7 +324,7 @@
             </div>
             <span class="show1">雅安劳务公司自动化办公OA平台用户登录</span>
             <div class="show2">
-                <input id="username" readonly="true" style="background-color:#ffffff;" />
+                <input id="username" <%--readonly="true"--%> style="background-color:#ffffff;" />
                 <input id="password" type="password" />
                 <span class="submits" onmouseover="this.style.cursor='pointer'" onclick="btn();"></span>
                 <span id="snap" onmouseover="this.style.cursor='pointer'"></span>

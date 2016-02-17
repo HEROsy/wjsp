@@ -41,7 +41,17 @@ public partial class OA_ydylcfb : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         b = new _BLL();
-        json_lc = jsonlc("1");
+        String uid = "";
+        try
+        {
+             uid = Session["user"].ToString().Split('|')[0];
+        }
+        catch (Exception)
+        {
+            Response.Redirect("OA_login.aspx");
+        }
+        
+        json_lc = jsonlc(uid);
         
     }
 

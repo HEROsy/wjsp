@@ -357,25 +357,27 @@
         //('lwgs_' + CONVERT([varchar](4), (1000) + [id], 0))
         function hl(id, aop)
         {
-            $.ajax({
-                type: "post",
-                url: "AsyCenter.aspx",
-                data: {
-                    type: "hl",
-                    kqid: id,
-                    aop:aop
-                },
-                success: function (data)
-                {
-                    if (data == "1") {
-                         document.getElementById("kq" + id + aop).style.display = "none";
-                    } else {
-                        alert("无法忽略此条记录");
-                    }
-                }
-            })
+            if (confirm("确定要忽略此条数据吗？")) {
 
-           
+
+                $.ajax({
+                    type: "post",
+                    url: "AsyCenter.aspx",
+                    data: {
+                        type: "hl",
+                        kqid: id,
+                        aop: aop
+                    },
+                    success: function (data) {
+                        if (data == "1") {
+                            document.getElementById("kq" + id + aop).style.display = "none";
+                        } else {
+                            alert("无法忽略此条记录");
+                        }
+                    }
+                })
+
+            }
         }
 
         function bindSPL()

@@ -37,7 +37,7 @@ public partial class OA_center : System.Web.UI.Page
     {
         String userid = Session["user"].ToString().Split('|')[0];
         SqlParameter[] spr = {new SqlParameter("@u_id",userid) };
-        String sql = "select id,day,a_state,p_state,qj_a,qj_p,ar_qj_a,ar_qj_p,hl_a,hl_p from oa_kaoqing where u_id=@u_id and a_state is not null and((a_state<>0 and isnull(qj_a,'')='') or (p_state<>0 and isnull(qj_p,'')='')) order by id";
+        String sql = "select id,day,a_state,p_state,qj_a,qj_p,ar_qj_a,ar_qj_p,hl_a,hl_p from oa_kaoqing where u_id=@u_id and a_state is not null and((a_state<>0 and isnull(qj_a,'')='') or (p_state<>0 and isnull(qj_p,'')='')) order by id desc";
         DataTable dt = SqlHelper.GetTable(sql, CommandType.Text, spr);
         json_yckq = Tools.BiuldJson("", dt);
     }

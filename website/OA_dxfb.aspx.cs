@@ -34,7 +34,7 @@ public partial class OA_dxfb : System.Web.UI.Page
         return jason;
     }
 
-    public string jsonuser()
+    public string jsonuser()//返回自己以外的所有用户
     {
         string jason ="";
 

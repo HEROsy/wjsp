@@ -179,6 +179,9 @@
         }
 
         function process() {
+            if (json_le=="") {
+                return;
+            }
             document.getElementById("st_lc").innerHTML = "";
             var data = "";
             var html = "<select id='st_lc' onchange='process_1(value)'>";
@@ -300,7 +303,7 @@
                         <span style="color: #ffffff">请选择流程：</span>
                         <div id="st_box" style="margin-top: 20px;">
                             <select id="st_lc" onchange="process_1(value)">
-                                <option value="-1">请选择</option>
+                                <option value="-1">无数据</option>
                             </select>
                         </div>
 
