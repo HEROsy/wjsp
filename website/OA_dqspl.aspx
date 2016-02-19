@@ -82,18 +82,18 @@
             var isnew = "";
             try {
                 data = eval("(" + json_lc + ")");
-                html=html+"<table class='table table-hover'>"
-                    +"<thead>"
-                    +"<tr>"
-                    +"<th>文件编号</th><th>标题</th><th>操作</th><th></th>"
-                    +"</tr>"
-                    +"</thead>"
-                    +"<tbody>"
+                html = html + "<table class='table table-hover'>"
+                    + "<thead>"
+                    + "<tr>"
+                    + "<th>文件编号</th><th>标题</th><th>操作</th><th></th>"
+                    + "</tr>"
+                    + "</thead>"
+                    + "<tbody>"
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].next_id.indexOf(userid) == -1) {
                         isnew = "";
-                    } else { isnew = "<span style='color:red'>新！</span>";}
-                    html = html + "<tr><td>" + decode(data[i].id) + "</td><td>" + decode(data[i].titles) + "</td><td><a href=oa_splxq.aspx?lcid="+data[i].id+"&type=ing>查看详细</a></td><td>"+isnew+"</td></tr>";
+                    } else { isnew = "<span style='color:red'>新！</span>"; }
+                    html = html + "<tr><td>" + decode(data[i].id) + "</td><td>" + decode(data[i].titles) + "</td><td><a href=oa_splxq.aspx?lcid=" + data[i].id + "&type=ing>查看详细</a></td><td>" + isnew + "</td></tr>";
                 }
                 html = html + "</tbody></table>";
                 document.getElementById("tb").innerHTML = html;
@@ -118,7 +118,7 @@
                 for (var i = 0; i < data.length; i++) {
                     var y = null;
                     y = decode(data[i].titles).indexOf(suoso);
-                    if (y!=-1) {
+                    if (y != -1) {
                         html = html + "<tr><td>" + decode(data[i].id) + "</td><td>" + decode(data[i].titles) + "</td><td><a href=oa_splxq.aspx?lcid=" + data[i].id + "&type=ing>查看详细</a></td></tr>";
                     }
                     if (suoso == "") {

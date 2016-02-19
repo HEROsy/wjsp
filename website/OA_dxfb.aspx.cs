@@ -13,14 +13,22 @@ public partial class OA_dxfb : System.Web.UI.Page
     
     public String json_bm= "";         //返回id,part
     public String json_user="";             //返回id name u_part
-
+    public String userid = "";
 
 
     protected void Page_Load(object sender, EventArgs e)
     {
         b = new _BLL();
+        try
+        {
+            userid = Session["user"].ToString().Split('|')[0];
+        }
+        catch (Exception)
+        {
+            Response.Redirect("OA_login.aspx");
+        }
          json_bm = jsonbm ();
-         json_user = jsonuser();
+         json_user = jsonuser(userid);
         
     }
 
@@ -34,11 +42,11 @@ public partial class OA_dxfb : System.Web.UI.Page
         return jason;
     }
 
-    public string jsonuser()//返回自己以外的所有用户
+    public string jsonuser(string userid )//返回自己以外的所有用户
     {
         string jason ="";
 
-        DataTable dt = b.Oauser();
+        DataTable dt = b.Oauser(userid);
         jason = Tools.BiuldJson("",dt);
         return jason;
     }

@@ -122,6 +122,14 @@ public partial class AsyCenter : System.Web.UI.Page
                 case "deletelc":
                     DeleteLC();
                     break;
+
+                case "pagedq":
+                    Pagedq();
+                    break;
+
+                case "pagels":
+                    Pagels();
+                    break;
                 default:
                     break;
             }
@@ -132,18 +140,79 @@ public partial class AsyCenter : System.Web.UI.Page
     private void DeleteLC()
     {
         String lcid=Request.Form["lcid"];
-
+        int r = 0;
         //删除表oa_ydylc  [id]=lcid 的行 返回受影响行数  出问题返回-1
+        SqlParameter[] spr = { new SqlParameter("@id", lcid) };
+        string sql = "delete from  oa_ydylc where id = @id ";
+        r = SqlHelper.ExcoutSQL(sql, CommandType.Text, spr);
+        Response.Write(r);
+        Response.End();
+
     }
 
-    private void BulkKaoQing()
+   private void BulkKaoQing()
     {
         String dates=Request.Form["dates"];
         //dates 格式 2016-12-01,1/2/3｜2016-12-02，1/2/3｜...
         //｜分隔多组数据
         //，左边是日期对应数据据字段day 右边是1 则更改qj_a为4 是2更改qj_p为4  是3两个字段都改成4
         //出错返回-1 否则返回受影响行数
+     // string dates = "2016-02-0255345341｜2016-02-05，2sfdsgdfghfh";
+        int r1 = 0;
+        int r2=0;
+        int r3=0;
+        int r =0;
+        
+        string [] date = null;
+        string [] datei=null;
+        string day =  "";
+        string qj="";
 
+        string sql1 = "update oa_kaoqing set qj_a=4 where day=@day";
+        string sql2 = "update oa_kaoqing set qj_p=4 where day=@day";
+        string sql3 = "update oa_kaoqing set qj_a=4, qj_p=4 where day=@day";
+
+        date = dates.Split(new char[2]{'｜','|'});
+        try
+       
+        {
+            for (int i = 0; i < date.Length; i++)
+            {
+                datei = date[i].Split(new char[2] { ',', '，' });
+                day = datei[0];
+                qj = datei[1];
+
+                if (qj == "1")
+                {
+                    SqlParameter[] spr = { new SqlParameter("@day", day) };
+                    r1 += SqlHelper.ExcoutSQL(sql1, CommandType.Text, spr);
+                }
+
+                else if (qj == "2")
+                {
+                    SqlParameter[] spr = { new SqlParameter("@day", day) };
+                    r2+= SqlHelper.ExcoutSQL(sql2, CommandType.Text, spr);
+                }
+
+                else if (qj == "3")
+                {
+                    SqlParameter[] spr = { new SqlParameter("@day", day) };
+                    r3 += SqlHelper.ExcoutSQL(sql3, CommandType.Text, spr);
+                }
+
+
+            }
+
+              r = r1 + r2 + r3;
+              Response.Write(r);
+            HttpContext.Current.ApplicationInstance.CompleteRequest();
+        }
+        catch (Exception)
+        {
+            Response.Write(-1);
+            HttpContext.Current.ApplicationInstance.CompleteRequest();
+           
+        }  
        
     }
 
@@ -1276,11 +1345,114 @@ public partial class AsyCenter : System.Web.UI.Page
         catch (Exception)
         {
             Response.Write("0");
-            Response.End();
+            HttpContext.Current.ApplicationInstance.CompleteRequest();
         }
         Response.Write("1");
         Response.End();
     }
+
+
+     private  void Pagedq()
+    
+ {
+
+     string pagesize = Request.Form["pagesize"];
+     string index = Request.Form["pageindex"];
+     String userid = "";
+     try
+     {
+         userid = Session["user"].ToString().Split('|')[0];
+     }
+     catch (Exception)
+     {
+         Response.Write("err");
+         Response.End();
+     }
+        
+     //string pagesize ="4" ;
+     //string index = "1";
+     //String userid = "1";
+
+        string json = "";
+        DataTable dt = null;
+        string sql = "";
+        int r = 0;
+      
+        //SqlParameter[] spr = { 
+        //                           new  SqlParameter("@pagesize",pagesize),
+        //                           new  SqlParameter("@index ",index),
+        //                           new  SqlParameter("@sender_id",userid)
+        //                     };
+
+        r = Convert.ToInt32(pagesize) * (Convert.ToInt32(index) - 1);
+
+        if (r == 0)
+        {
+            sql = "select top " + @pagesize + " * from oa_dq_spl where sender_id=" + userid + " or splc_datas like '%" + userid + "%'" + " order by id desc";
+        }
+        else
+        {
+            sql = "select top " + @pagesize + " * from oa_dq_spl where id not in (select top " + @r + " id from oa_dq_spl where sender_id=" + userid + " or splc_datas like '%" + userid + "%'" + " order by id desc) and sender_id=" + userid + " or splc_datas like '%" + userid + "%' order by id desc";
+           
+        }
+        //id,sender_id,sender_times,titles,contents,stars,fj_url,splc_id,splc_datas 
+
+
+        dt = SqlHelper.GetTable(sql, CommandType.Text,null);
+        json = Tools.BiuldJson("",dt);
+        Response.Write(json);
+        Response.End();
+      
+    }
+
+
+    private void Pagels()
+
+      {
+
+          string pagesize = Request.Form["pagesize"];
+          string index = Request.Form["pageindex"];
+          String userid = "";
+          try
+          {
+              userid = Session["user"].ToString().Split('|')[0];
+          }
+          catch (Exception)
+          {
+              Response.Write("err");
+              Response.End();
+          }
+          string json = "";
+          DataTable dt = null;
+          string sql = "";
+          int r = 0;
+
+
+          //SqlParameter[] spr = { 
+          //                         new  SqlParameter("@pagesize",pagesize),
+          //                         new  SqlParameter("@index ",index),
+          //                         new  SqlParameter("@sender_id",userid)
+          //                   };
+
+          r = Convert.ToInt32(pagesize) * (Convert.ToInt32(index) - 1);
+
+          if (r == 0)
+          {
+              sql = "select top " + @pagesize + " * from oa_ls_spl where sender_id="+userid+" or splc_datas like '%" + userid + "%'" + " order by id desc";
+          }
+          else
+          {
+              sql = "select top " + @pagesize + " * from oa_ls_spl where id not in (select top " + @r + " id from oa_ls_spl where sender_id=" + userid + " or splc_datas like '%" + userid + "%'" + " order by id desc) and sender_id=" + userid + " or splc_datas like '%" + userid + "%' order by id desc";
+          }
+          // and sender_id=@sender_id or splc_datas like '%" + userid + "%'
+          dt = SqlHelper.GetTable(sql, CommandType.Text, null);
+          json = Tools.BiuldJson("", dt);
+          Response.Write(json);
+          Response.End();
+
+      }
+   
+
 }
 
 

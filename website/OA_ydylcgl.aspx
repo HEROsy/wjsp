@@ -62,8 +62,7 @@
 
         }
 
-        function deletelc(id,title)
-        {
+        function deletelc(id, title) {
             if (confirm("确定要删除 " + title + " 吗？")) {
 
                 $.ajax({
@@ -71,7 +70,7 @@
                     url: "AsyCenter.aspx",
                     data: {
                         type: "s",
-                        lcid:id
+                        lcid: id
                     },
                     success: function (data) {
                         if (data != "1") {
@@ -95,7 +94,7 @@
             <%--此行不能修改--%>
 
             预定义流程管理
-            <input type="button" value="添加流程" id="addbtn" onclick="document.location.href='OA_addspl.aspx'" />
+            <input type="button" value="添加流程" id="addbtn" onclick="document.location.href = 'OA_addspl.aspx'" />
             <div>
                 <table class="table table-hover table-striped">
 				<thead>
