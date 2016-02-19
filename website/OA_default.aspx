@@ -102,7 +102,7 @@
     <uc1:OA_head runat="server" ID="OA_head" />
     <div style="width: 1000px;height:685px; margin: auto">
         <div class="row-fluid" style="margin-top: 10px">
-            <iframe id="center" src="OA_center.aspx" style="width: 100%;height:685px; border: none;"></iframe>
+            <iframe id="center" name="center" src="OA_center.aspx" style="width: 100%;height:685px; border: none;"></iframe>
         </div>
     </div>
 </body>

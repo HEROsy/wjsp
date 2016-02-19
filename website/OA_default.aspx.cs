@@ -14,7 +14,7 @@ public partial class OA_default : System.Web.UI.Page
         object oun=Session["user"];
         if (oun == null)
         {
-            Response.Redirect("oa_login.aspx");
+            Response.Write("<script>window.parent.location.href = 'oa_login.aspx';</script>");
             Response.End();
         }
         else {

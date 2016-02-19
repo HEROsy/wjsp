@@ -219,7 +219,10 @@ public static class StreamManage
             {
                 newid = splcdata.Split(',')[1];
             }
-            newid = newid.Substring(0, newid.LastIndexOf(","));
+            if (newid.Contains(','))
+            {
+                newid = newid.Substring(0, newid.LastIndexOf(","));
+            }
 
             //update id
             SqlParameter[] spr1 = { new SqlParameter("@next_id", newid) };

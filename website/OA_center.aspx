@@ -493,13 +493,12 @@
         </div>
 
 <%--        <div style="width:1000px; height:40px; background-color:#C23810;"></div>--%>
-
         <div class="row-fluid" style="height:550px; background-color:#0563A0">
             <div class="box" style="width: 315px; height:402px; overflow:hidden; overflow-y:auto;">
 
                 <span style="width: 300px; height:50px; line-height:50px; display:block;text-align:center;border-bottom:1px solid #2774A6;color:#ffffff; font-weight:bold; letter-spacing:3px !important;">异常上班时间</span>
                 <div id="kqbox" style="width:300px;height:269px;overflow-y:auto;color:#ffffff">
-
+                    
                 </div>
 
             </div>

@@ -184,7 +184,27 @@
     </style>
 
     <script type="text/javascript">
-
+        function check(tag)
+        {
+            $.ajax({
+                type: "post",
+                url: "AsyCenter.aspx",
+                data: {
+                    type: "checkuser"
+                },
+                success: function (data) {
+                    if (data == "ok") {
+                        if (tag=="user") {
+                            document.getElementById('center').src='OA_bmyhgl.aspx';
+                        } else if (tag=="bulk") {
+                            document.getElementById('center').src = 'OA_bulkkaoqing.aspx';
+                        }
+                    } else {
+                        alert('无权限！');
+                    }
+                }
+            })
+        }
     </script>
 <%--     onmouseover="this.style.cursor='pointer'" onclick="window.location.href='Default.aspx'"--%>
 </head>
@@ -226,8 +246,8 @@
                         <div class="span2 top_back xtsz" onmouseover="this.style.cursor='pointer'">
                             <span class="top_title">系统设置</span>
                             <div class="xtszxl">
-                            <div class="xiala1" style="margin-left:-84px;" onclick="document.getElementById('center').src='OA_bmyhgl.aspx'"><span>部门员工管理</span><span class="jiantou1">●</span></div>
-                            <div class="xiala1" style="margin-left:-84px;margin-top:39px;" onclick="document.getElementById('center').src='OA_bulkkaoqing.aspx'"><span>异常批量处理</span><span class="jiantou1">●</span></div>
+                            <div class="xiala1" style="margin-left:-84px;" onclick=check('user');<%--document.getElementById('center').src='OA_bmyhgl.aspx--%>><span>部门员工管理</span><span class="jiantou1">●</span></div>
+                            <div class="xiala1" style="margin-left:-84px;margin-top:39px;" onclick=check('bulk');<%--document.getElementById('center').src='OA_bulkkaoqing.aspx'--%>><span>异常批量处理</span><span class="jiantou1">●</span></div>
 <%--                            <div class="xiala2" style="border-bottom: 1px solid #f1efef;margin-left:-84px;" onclick="document.getElementById('center').src='OA_mb_manage.aspx'"><span>常用模板管理</span><span class="jiantou1">●</span></div>--%>
                             </div>
                         </div>

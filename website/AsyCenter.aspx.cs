@@ -122,11 +122,81 @@ public partial class AsyCenter : System.Web.UI.Page
                 case "deletelc":
                     DeleteLC();
                     break;
+
+                case "checkuser":
+                    CheckUser();
+                    break;
+
+                case "cpw":
+                    CPW();
+                    break;
                 default:
                     break;
             }
         }
 
+    }
+
+    private void CPW()
+    {
+        String old=Request.Form["old"];
+        String newpw=Request.Form["newpw"];
+
+        String uid = "";
+        try
+        {
+            uid = Session["user"].ToString().Split('|')[0];
+        }
+        catch (Exception)
+        {
+            Response.Write("<script>window.parent.location.href = 'oa_login.aspx';</script>");
+            Response.End();
+        }
+
+        String syspw = "";
+        SqlParameter[] spr={new SqlParameter("@id",uid)};
+        String sql = SqlHelper.GetSQLSelect_normal("top 1", "u_password", "oa_user", spr, "=", "", "id");
+        syspw = SqlHelper.GetTable(sql, CommandType.Text, spr).Rows[0][0].ToString();
+
+        if (!old.Equals(syspw))
+        {
+            Response.Write("no");
+            Response.End();
+        }
+        else
+        {
+            SqlParameter[] sspr = {new SqlParameter("@u_password",newpw) };
+            sql=SqlHelper.GetSQLUpdate_normal("oa_user", sspr, spr, "=", "");
+            Response.Write(SqlHelper.ExcoutSQL_2Parmter(sql, CommandType.Text, sspr, spr));
+            Response.End();
+        }
+    }
+
+    private void CheckUser()
+    {
+        String uid = "";
+        try
+        {
+            uid = Session["user"].ToString().Split('|')[0];
+        }
+        catch (Exception)
+        {
+            Response.Write("no");
+            Response.End();
+        }
+        SqlParameter[] spr={new SqlParameter("@id",uid)};
+        String sql = SqlHelper.GetSQLSelect_normal("top 1", "u_quanxian", "oa_user", spr, "=", "", "id");
+        String qx = SqlHelper.GetTable(sql, CommandType.Text, spr).Rows[0]["u_quanxian"].ToString();
+        if (qx.Trim().Equals("1"))
+        {
+            Response.Write("ok");
+            Response.End();
+        }
+        else
+        {
+            Response.Write("no");
+            Response.End();
+        }
     }
 
     private void DeleteLC()

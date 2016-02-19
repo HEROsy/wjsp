@@ -17,6 +17,16 @@ public partial class OA_center : System.Web.UI.Page
     _BLL bll = null;
     protected void Page_Load(object sender, EventArgs e)
     {
+        try
+        {
+            userid = Session["user"].ToString().Split('|')[0];
+        }
+        catch (Exception)
+        {
+            Response.Write("<script>alert('登录超时，请重新登录');window.parent.location.href = 'oa_login.aspx';</script>");
+            Response.End();
+        }
+
         bll = new _BLL();
         InitNameTitle();
 
@@ -28,14 +38,12 @@ public partial class OA_center : System.Web.UI.Page
 
     private void Initspl()
     {
-       userid=Session["user"].ToString().Split('|')[0];
        DataTable dt=bll.Json_spl(userid, "ing");
        json_spl = Tools.BiuldJson("", dt);
     }
 
     private void InitYCKQ()
     {
-        String userid = Session["user"].ToString().Split('|')[0];
         SqlParameter[] spr = {new SqlParameter("@u_id",userid) };
         String sql = "select id,day,a_state,p_state,qj_a,qj_p,ar_qj_a,ar_qj_p,hl_a,hl_p from oa_kaoqing where u_id=@u_id and a_state is not null and((a_state<>0 and isnull(qj_a,'')='') or (p_state<>0 and isnull(qj_p,'')='')) order by id desc";
         DataTable dt = SqlHelper.GetTable(sql, CommandType.Text, spr);
@@ -57,6 +65,6 @@ public partial class OA_center : System.Web.UI.Page
             sx = "下午好";
         }
 
-        NameTitle = Session["user"].ToString().Split('|')[1] + "," + sx;
+        NameTitle = "<a href='OA_Changepw.aspx' target='center'>"+Session["user"].ToString().Split('|')[1]+"</a>" + "," + sx;
     }
 }
