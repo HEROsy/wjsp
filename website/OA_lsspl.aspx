@@ -58,12 +58,17 @@
 
     <script type="text/javascript">
 
-        
-        var json_lc = "";
 
+        var json_lc = "";
+        var pagebox;
+        var pageindex;
         window.onload = function () {
             json_lc = document.getElementById("j_lc").value;
-            spl();
+            //spl();
+            pagebox = document.getElementById("pagebox");
+            totol();
+            GetData(1);
+
         }
 
         function decode(str) {
@@ -122,10 +127,194 @@
                 alert("无数据")
             }
         }
+
+        function InitPages(pagebox, totalpage, pageindex) {
+            pagebox.innerHTML = "";
+
+            totalpage = parseInt(totalpage);
+            pageindex = parseInt(pageindex);
+
+            var pagenum = 10;
+            var middleindex = parseInt(pagenum / 2) + 1;
+            var newobj = null;
+            if (pageindex == 1) {
+                newobj = Create("上页", "disabled");
+                pagebox.appendChild(newobj);
+            } else {
+                newobj = Create("上页", "");
+                pagebox.appendChild(newobj);
+            }
+
+            //if (pageindex == 1) {
+            //    newobj = Create("第一页", "disabled");
+            //    pagebox.appendChild(newobj);
+            //} else {
+            //    newobj = Create("第一页", "");
+            //    pagebox.appendChild(newobj);
+            //}
+
+            if (totalpage < pagenum) {
+                for (var i = 1; i < totalpage + 1; i++) {
+                    if (i != pageindex) {
+                        newobj = Create(i, "");
+                        pagebox.appendChild(newobj);
+                    } else {
+                        newobj = Create(i, "active");
+                        pagebox.appendChild(newobj);
+                    }
+                }
+            } else {
+                if (pageindex <= middleindex) {
+                    for (var i = 1; i < pagenum + 1; i++) {
+                        if (i != pageindex) {
+                            newobj = Create(i, "");
+                            pagebox.appendChild(newobj);
+                        } else {
+                            newobj = Create(i, "active");
+                            pagebox.appendChild(newobj);
+                        }
+                    }
+                } else {
+                    var offsetindex = middleindex - 1;
+                    var beginindex = pageindex - offsetindex;
+                    var endindex = 0;
+                    if (parseInt(pageindex) + offsetindex < totalpage) {
+                        endindex = parseInt(pageindex) + offsetindex;
+                    } else {
+                        endindex = beginindex + (totalpage - beginindex);
+                    }
+
+                    for (var i = beginindex; i < endindex + 1; i++) {
+                        if (i != pageindex) {
+                            newobj = Create(i, "");
+                            pagebox.appendChild(newobj);
+                        } else {
+                            newobj = Create(i, "active");
+                            pagebox.appendChild(newobj);
+                        }
+                    }
+                }
+            }
+
+            //if (parseInt(pageindex) >= totalpage) {
+            //    newobj = Create("最后一页", "disabled");
+            //    pagebox.appendChild(newobj);
+            //} else {
+            //    newobj = Create("最后一页", "");  
+            //    pagebox.appendChild(newobj);
+            //}
+
+            if (parseInt(pageindex) >= totalpage) {
+                newobj = Create("下页", "disabled");
+                pagebox.appendChild(newobj);
+            } else {
+                newobj = Create("下页", "");
+                pagebox.appendChild(newobj);
+            }
+
+
+            function Create(inname, classtype) {
+                var obj = null;
+                var oli = document.createElement("li");
+                var oa = document.createElement("a");
+
+                if (classtype != "") { oli.className = classtype; }
+
+                oa.innerHTML = inname;
+                oa.href = "javascript:void(0)";
+                if ((inname + "").indexOf("页") < 0) {
+                    oa.style.width = 15 + "px";
+                }
+                oa.onclick = function () {
+                    pageclick(oa);
+                }
+                oli.appendChild(oa);
+
+                return oli;
+            }
+
+            function pageclick(sender) {
+                var pe = sender.parentElement.className;
+                if (pe == "disabled" || pe == "active") { return false; }
+                var _value = sender.innerHTML;
+                switch (_value) {
+                    case "上页":
+                        GetData(pageindex - 1);
+                        InitPages(pagebox, totalpage, pageindex - 1);
+                        break;
+                    case "下页":
+                        GetData(pageindex + 1);
+                        InitPages(pagebox, totalpage, pageindex + 1);
+                        break;
+                        //case "第一页":
+                        //    GetData(1);
+                        //    InitPages(pagebox, totalpage, 1);
+                        //    break;
+                        //case "最后一页":
+                        //    GetData(totalpage);
+                        //    InitPages(pagebox, totalpage, totalpage);
+                        //    break;
+                    default:
+                        GetData(_value);
+                        InitPages(pagebox, totalpage, _value);
+
+                }
+            }
+        }
+
+        function GetData(pageindex) {
+            $.ajax({
+                type: "post",
+                url: "AsyCenter.aspx",
+                data: {
+                    type: "pagels",
+                    pageindex: pageindex,
+                    pagesize: "10"
+                },
+                success: function (data) {
+                    var json_tv = "";
+                    var html = "";
+                    try {
+                        json_tv = eval("(" + data + ")");
+                        html = html + "<table class='table table-hover'>"
+                            + "<thead>"
+                            + "<tr>"
+                            + "<th>文件编号</th><th>标题</th><th>操作</th>"
+                            + "</tr>"
+                            + "</thead>"
+                            + "<tbody>"
+                        for (var i = 0; i < json_tv.length; i++) {
+                            html = html + "<tr><td>" + decode(json_tv[i].id) + "</td><td>" + decode(json_tv[i].titles) + "</td><td><a href=oa_splxq.aspx?lcid=" + json_tv[i].id + "&type=ed>查看详细</a></td></tr>";
+                        }
+                        html = html + "</tbody></table>";
+                        document.getElementById("tb").innerHTML = html;
+                    } catch (e) {
+                        document.getElementById("tb").innerHTML = "<span>当前审批流为空请发布审批流。</span>";
+                    }
+
+                },
+                error: function (data) {
+
+                }
+            })
+        }
+
+        function totol() {
+            var page = document.getElementById("tol").value;
+            var yu = page % 10;
+            if (yu == 0) {
+                page = page / 10;
+            } else {
+                page = (page / 10) + 1;
+            }
+            InitPages(pagebox, page, 1);
+        }
+
     </script>
 </head>
 
 <body>
+    <input type="hidden" id="tol" value='<%=totalnum %>' />
    <input type="hidden" id="j_lc" value='<%=json_lc %>' />
     <div style="width: 100%;height:675px; margin: auto">
         <%--此行不能修改--%>
@@ -154,6 +343,25 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="container-fluid">
+                        <div class="pagination">
+                            <ul id="pagebox">
+                                <li>
+                                    <a href="#">上一页</a>
+                                </li>
+                                <li>
+                                    <a href="#">1</a>
+                                </li>
+                                <li>
+                                    <a href="#">2</a>
+                                </li>
+                                <li>
+                                    <a href="#">下一页</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             
