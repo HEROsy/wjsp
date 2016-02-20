@@ -32,7 +32,7 @@
         {
             document.getElementById("btn").onclick = function () { send(); };
             $('.form_datetime').datetimepicker().on('changeDate', function (ev) {
-                var rq = document.getElementById("time_1").value; alert(rq);
+                var rq = document.getElementById("time_1").value; 
                 settime(rq);
             });
            
@@ -58,6 +58,7 @@
                         alert("处理时出现异常");
                     } else {
                         alert("处理完成");
+                        document.getElementById("time_2").innerHTML = "";
                     }
                 }
             })
