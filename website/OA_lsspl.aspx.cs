@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -12,7 +14,7 @@ public partial class OA_lsspl : System.Web.UI.Page
      * 
      */
     public String json_lc = "";
-
+    public int totalnum = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
         String userid = "";
@@ -26,5 +28,19 @@ public partial class OA_lsspl : System.Web.UI.Page
         }
 
         json_lc =Tools.BiuldJson("",new _BLL().Json_spl(userid, "ed"));
+        totalnum = TotalN(userid);
+    }
+
+
+    private int TotalN(string userid)
+    {
+        int r = 0;
+        DataTable dt = null;
+        SqlParameter[] spr = { new SqlParameter("@sender_id", userid) };
+        String sql = "select id from oa_ls_spl where sender_id=@sender_id or splc_datas like '%" + userid + "%'";
+        dt = SqlHelper.GetTable(sql, CommandType.Text,spr);
+        r = dt.Rows.Count;
+        return r;
+
     }
 }

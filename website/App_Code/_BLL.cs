@@ -297,13 +297,17 @@ public class _BLL
 
     }
 
-    public DataTable Json_user()
+    public DataTable Json_user(string userid)
     {
+
+
         DataTable dt = null;
-
-        String sql = SqlHelper.GetSQLSelect_normal("", "id,name,u_part", "oa_user", null, "", "", "id asc");
-
-        dt = SqlHelper.GetTable(sql, CommandType.Text, null);
+        SqlParameter[] spr = { new SqlParameter("@id", userid) };
+        String sql = "select id,name,u_part from oa_user where id !=@id order by id asc";
+        
+        //String sql = SqlHelper.GetSQLSelect_normal("", "id,name,u_part", "oa_user", spr, "", "", "id asc");
+        
+        dt = SqlHelper.GetTable(sql, CommandType.Text, spr);
 
         return dt;
     }
@@ -450,19 +454,23 @@ public class _BLL
 
     }
      
-    public DataTable Oauser()
+    public DataTable Oauser(string userid)
     
       {
 
 
         DataTable dt = null;
 
-        String sql = SqlHelper.GetSQLSelect_normal("", "id,name,u_part", "oa_user", null, "", "", "id asc");
+        SqlParameter[] spr = { new SqlParameter("@id", userid) };
+        String sql = "select id,name,u_part from oa_user where id !=@id order by id asc";
+        //String sql = SqlHelper.GetSQLSelect_normal("", "id,name,u_part", "oa_user", null, "", "", "id asc");
 
-        dt = SqlHelper.GetTable(sql, CommandType.Text, null);
+        dt = SqlHelper.GetTable(sql, CommandType.Text,spr);
 
         return dt;
 
     }
+
+   
 
 }

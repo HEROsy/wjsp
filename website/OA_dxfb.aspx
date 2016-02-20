@@ -256,7 +256,7 @@
                 url: "AsyCenter.aspx",
                 data: {
                     type: "newstream",
-                    userid: "1",
+                    userid: document.getElementById("userid").value,
                     title: tit,
                     contents: conten,
                     sfhz: sfhz,
@@ -296,6 +296,7 @@
 </head>
 
 <body>
+    <input type="hidden" id="userid" value='<%=userid %>' />
     <input type="hidden" id="j_bm" value='<%=json_bm %>' />
     <input type="hidden" id="j_user" value='<%=json_user %>' />
     <div style="width: 1000px;height:660px; margin: auto">

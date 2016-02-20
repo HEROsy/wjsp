@@ -31,7 +31,8 @@ public partial class OA_addspl : System.Web.UI.Page
         }
         b = new _BLL();
         json_bm = jason_b();
-        json_user = jason_u();
+        json_user = jason_u(userid);
+       
     }
 
   
@@ -47,16 +48,16 @@ public partial class OA_addspl : System.Web.UI.Page
     }
 
    
-    public  string  jason_u()//选择自己以外的所有用户
+    public  string  jason_u(string userid)//选择自己以外的所有用户
     {
 
-        string jason = "";
+        string json = "";
 
-        DataTable dt = b.Json_user();
+        DataTable dt = b.Json_user(userid);
 
-        jason = Tools.BiuldJson("", dt);
+        json = Tools.BiuldJson("", dt);
        
-        return jason;
+        return json;
     }
 
   
