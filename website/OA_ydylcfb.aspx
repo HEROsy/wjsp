@@ -268,7 +268,7 @@
                 url: "AsyCenter.aspx",
                 data: {
                     type: "newstream",
-                    userid: "1",
+                    userid: document.getElementById("uid").value,
                     lcid: lcid,
                     title: tit,
                     contents: conten,
@@ -291,7 +291,9 @@
 
 <body>
     <input type="hidden" id="lc" value='<%=json_lc%>' />
-    <input type="hidden" id="uid" value="<%=u_id %>"
+
+    <input type="hidden" id="uid" value="<%=uid %>" />
+
     <div style="width:1000px;height:650px; margin: auto">
         <%--此行不能修改--%>
         <div class="row-fluid">

@@ -139,10 +139,105 @@ public partial class AsyCenter : System.Web.UI.Page
                     Pagels();
 
                     break;
+
+                case "onekaoqingdata":
+                    OneKaoqingData();
+                    break;
+
+                case "allkaoqingdata":
+                    AllKaoqingData();
+                    break;
                 default:
                     break;
             }
         }
+
+    }
+
+    private void AllKaoqingData()
+    {
+        String _year = Request.Form["year"];
+        String _moth = Request.Form["month"];
+        String userid = Request.Form["uid"];
+        String result = "";
+        string date = "";
+        //查询oa_kaoqing  u_id=userid的用户在这个年份和月份的考勤数据  
+        //返回字段
+        // [id]
+        //[a_start_time]
+        //[a_end_time]
+        //[p_start_time]
+        //[p_end_time]
+        //[a_state]
+        //[p_state]
+        //[u_cd]
+        //[u_zt]
+        //[qj_a]
+        //[qj_p]
+        //[day]
+
+        if (_moth.Length == 1)
+        {
+            _moth = "0" + _moth;
+
+        }
+
+        date = "'" + _year + "-" + _moth + "-" + "%'";
+        DataTable dt = null;
+
+        SqlParameter[] spr ={ 
+                                new SqlParameter("@u_id",userid)
+                            };
+        string sql = "select id, a_start_time, a_end_time, p_start_time, p_end_time, a_state, p_state,u_cd, u_zt, qj_a, qj_p, day from oa_kaoqing where u_id=@u_id and day like" + @date;
+        dt = SqlHelper.GetTable(sql, CommandType.Text, spr);
+        result = Tools.BiuldJson("", dt);//结果包装成json
+        Response.Write(result);
+        Response.End();
+
+    }
+
+    private void OneKaoqingData()
+    {
+        String _year = Request.Form["year"];
+        String _moth = Request.Form["month"];
+        String userid = Session["user"].ToString().Split('|')[0];
+        String result = "";
+        string serchdate = "";
+        //查询oa_kaoqing当前用户在这个年份和月份的考勤数据  
+        //返回字段
+        // [id]
+        //[a_start_time]
+        //[a_end_time]
+        //[p_start_time]
+        //[p_end_time]
+        //[a_state]
+        //[p_state]
+        //[u_cd]
+        //[u_zt]
+        //[qj_a]
+        //[qj_p]
+        //[day]
+
+
+        if (_moth.Length == 1)
+        {
+            _moth = "0" + _moth;
+
+        }
+
+        serchdate = " '" + _year + "-" + _moth + "-" + "%'";
+        DataTable dt = null;
+
+        SqlParameter[] spr ={ 
+                                new SqlParameter("@u_id",userid)
+                            };
+        string sql = "select id, a_start_time, a_end_time, p_start_time, p_end_time, a_state, p_state,u_cd, u_zt, qj_a, qj_p, day from oa_kaoqing where u_id=@u_id and a_state<>'' and day like " + serchdate;
+        dt = SqlHelper.GetTable(sql, CommandType.Text, spr);
+        result = Tools.BiuldJson("", dt);//结果包装成json
+        Response.Write(result);
+        Response.End();
+
+
 
     }
 
@@ -1449,25 +1544,13 @@ public partial class AsyCenter : System.Web.UI.Page
         string sql = "";
         int r = 0;
       
-        //SqlParameter[] spr = { 
-        //                           new  SqlParameter("@pagesize",pagesize),
-        //                           new  SqlParameter("@index ",index),
-        //                           new  SqlParameter("@sender_id",userid)
-        //                     };
-
-        r = Convert.ToInt32(pagesize) * (Convert.ToInt32(index) - 1);
-
-        if (r == 0)
-        {
-            sql = "select top " + @pagesize + " * from oa_dq_spl where sender_id=" + userid + " or splc_datas like '%" + userid + "%'" + " order by id desc";
-        }
-        else
-        {
-            sql = "select top " + @pagesize + " * from oa_dq_spl where id not in (select top " + @r + " id from oa_dq_spl where sender_id=" + userid + " or splc_datas like '%" + userid + "%'" + " order by id desc) and sender_id=" + userid + " or splc_datas like '%" + userid + "%' order by id desc";
-           
-        }
-        //id,sender_id,sender_times,titles,contents,stars,fj_url,splc_id,splc_datas 
-
+      
+        r = Convert.ToInt32(pagesize) * Convert.ToInt32(index);
+        string s = r.ToString();
+        string i = (r - Convert.ToInt32(pagesize)).ToString();
+      
+        sql = "SELECT * FROM oa_dq_spl w1, ( SELECT TOP "+ s + " row_number() OVER (ORDER BY ID desc ) n, id FROM oa_dq_spl where sender_id=" + userid + " or splc_datas like '%" + userid + "%'" + " ) w2  WHERE w1.id = w2.id AND w2.n > " + i + " ORDER BY w2.n ASC ";
+       
 
         dt = SqlHelper.GetTable(sql, CommandType.Text,null);
         json = Tools.BiuldJson("",dt);
@@ -1505,16 +1588,12 @@ public partial class AsyCenter : System.Web.UI.Page
           //                         new  SqlParameter("@sender_id",userid)
           //                   };
 
-          r = Convert.ToInt32(pagesize) * (Convert.ToInt32(index) - 1);
+          r = Convert.ToInt32(pagesize) * Convert.ToInt32(index);
+          string s = r.ToString();
+          string i = (r - Convert.ToInt32(pagesize)).ToString();
 
-          if (r == 0)
-          {
-              sql = "select top " + @pagesize + " * from oa_ls_spl where sender_id="+userid+" or splc_datas like '%" + userid + "%'" + " order by id desc";
-          }
-          else
-          {
-              sql = "select top " + @pagesize + " * from oa_ls_spl where id not in (select top " + @r + " id from oa_ls_spl where sender_id=" + userid + " or splc_datas like '%" + userid + "%'" + " order by id desc) and sender_id=" + userid + " or splc_datas like '%" + userid + "%' order by id desc";
-          }
+          sql = "SELECT * FROM oa_ls_spl w1, ( SELECT TOP " + s + " row_number() OVER (ORDER BY ID desc ) n, id FROM oa_ls_spl where sender_id=" + userid + " or splc_datas like '%" + userid + "%'" + " ) w2  WHERE w1.id = w2.id AND w2.n > " + i + " ORDER BY w2.n ASC ";
+
           // and sender_id=@sender_id or splc_datas like '%" + userid + "%'
           dt = SqlHelper.GetTable(sql, CommandType.Text, null);
           json = Tools.BiuldJson("", dt);

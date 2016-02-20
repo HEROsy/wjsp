@@ -13,6 +13,7 @@
     <script src="Scripts/bootstrap-datetimepicker.zh-CN.js"></script>
     <link href="Style/bootstrap-datetimepicker.css" rel="stylesheet" />
     <link href="Style/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="Scripts/bootstrap-datetimepicker.zh-CN.js" charset="utf-8"></script>
     <style type="text/css">
         .item{width:100%;height:30px;}
         .date{display:inline-block;float:left;}
@@ -20,8 +21,6 @@
         .ass{width:109px;float:left;}
         .asst{display:block;float:left;width:38px;}
         .asss{float:left;}
-
-
     </style>
 
     <script type="text/javascript">
@@ -34,12 +33,11 @@
         {
             document.getElementById("btn").onclick = function () { send(); };
 
-
             $('.form_datetime').datetimepicker().on('changeDate', function (ev) {
-                var rq = document.getElementById("time_1").value;
+                var rq = document.getElementById("time_1").value; 
                 settime(rq);
             });
-
+           
         }
         var sj = new Array();
         var js = 0;
@@ -62,6 +60,7 @@
                         alert("处理时出现异常");
                     } else {
                         alert("处理完成");
+                        document.getElementById("time_2").innerHTML = "";
                     }
                 }
             })
@@ -169,14 +168,15 @@
 </head>
 <body>
         <div style="width:300px;height:210px;margin-bottom:30px;border:1px solid #cdcdcd"  >
-            <div class="input-append date form_datetime">
+            <div class="form_datetime">
                 <input type="hidden" value="" id="time_1"  />
                 <script type="text/javascript">
 
                     $(".form_datetime").datetimepicker({
                         language: 'zh-CN',
-                        format: "yyyy-mm-dd",
-                        minView: "month",
+                        linkFormat: 'yyyy-mm-dd',
+                        minView: 'month',
+                        linkField: 'time_1'
                     });
                 </script>
             </div>
