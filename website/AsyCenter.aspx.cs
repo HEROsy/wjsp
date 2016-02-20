@@ -593,9 +593,10 @@ public partial class AsyCenter : System.Web.UI.Page
         String spuserid=Request.Form["spuserid"];
         String spusername=Request.Form["spusername"];
         String senderid=Session["user"].ToString().Split('|')[0];
+        String sendername = Session["user"].ToString().Split('|')[1];
         String aop=Request.Form["aop"];
         DateTime sendtime=DateTime.Now;
-        String title = ""; if (qjtype.Equals("2")) { title = "病假"; } else if (qjtype.Equals("3")) { title = "事假"; } else if (qjtype.Equals("4")) { title = "公假"; }
+        String title = ""; if (qjtype.Equals("2")) { title = "病假(" + sendername + ")"; } else if (qjtype.Equals("3")) { title = "事假(" + sendername + ")"; } else if (qjtype.Equals("4")) { title = "公假("+ sendername + ")"; }
 
         //update kaoqing
         SqlParameter[] ar_spr = null;
@@ -1566,7 +1567,9 @@ public partial class AsyCenter : System.Web.UI.Page
 
           string pagesize = Request.Form["pagesize"];
           string index = Request.Form["pageindex"];
-          String userid = "";
+          string key = Request.Form["key"];
+          
+         String userid = "";
           try
           {
               userid = Session["user"].ToString().Split('|')[0];
@@ -1581,8 +1584,7 @@ public partial class AsyCenter : System.Web.UI.Page
           string sql = "";
           int r = 0;
 
-
-          //SqlParameter[] spr = { 
+         //SqlParameter[] spr = { 
           //                         new  SqlParameter("@pagesize",pagesize),
           //                         new  SqlParameter("@index ",index),
           //                         new  SqlParameter("@sender_id",userid)
@@ -1591,16 +1593,40 @@ public partial class AsyCenter : System.Web.UI.Page
           r = Convert.ToInt32(pagesize) * Convert.ToInt32(index);
           string s = r.ToString();
           string i = (r - Convert.ToInt32(pagesize)).ToString();
+          if (String.IsNullOrEmpty(key))
+          {
 
-          sql = "SELECT * FROM oa_ls_spl w1, ( SELECT TOP " + s + " row_number() OVER (ORDER BY ID desc ) n, id FROM oa_ls_spl where sender_id=" + userid + " or splc_datas like '%" + userid + "%'" + " ) w2  WHERE w1.id = w2.id AND w2.n > " + i + " ORDER BY w2.n ASC ";
+              String sqll = "select id from oa_ls_spl where sender_id=" +userid+" or splc_datas like '%" + userid + "%'";
+              DataTable dtk = SqlHelper.GetTable(sqll, CommandType.Text, null);
+              string tkn = dtk.Rows.Count.ToString();
+             
+             sql = "SELECT * FROM oa_ls_spl w1, ( SELECT TOP " + s + " row_number() OVER (ORDER BY ID desc ) n, id FROM oa_ls_spl where sender_id=" + userid + " or splc_datas like '%" + userid + "%'" + " ) w2  WHERE w1.id = w2.id AND w2.n > " + i + " ORDER BY w2.n ASC ";  
+              dt = SqlHelper.GetTable(sql, CommandType.Text, null);
+              json = Tools.BiuldJson("", dt);
+              json = tkn + "|" + json; 
+              Response.Write(json);
+              Response.End();
+          }
+          else
+          {
+              string  sqll = "select id from oa_ls_spl where sender_times like '%" + key + "%'" + " or titles like '%" + key + "%'";
+              DataTable dtk = SqlHelper.GetTable(sqll, CommandType.Text, null);
+              string tkn = dtk.Rows.Count.ToString();
 
-          // and sender_id=@sender_id or splc_datas like '%" + userid + "%'
-          dt = SqlHelper.GetTable(sql, CommandType.Text, null);
-          json = Tools.BiuldJson("", dt);
-          Response.Write(json);
-          Response.End();
+              sql = "SELECT * FROM oa_ls_spl w1, ( SELECT TOP " + s + " row_number() OVER (ORDER BY ID desc ) n, id FROM oa_ls_spl where sender_times like '%" + key + "%'" + " or titles like '%" + key + "%'" + " ) w2  WHERE w1.id = w2.id AND w2.n > " + i + " ORDER BY w2.n ASC ";
+              dt = SqlHelper.GetTable(sql, CommandType.Text, null);
+              json = Tools.BiuldJson("", dt);
+              json = tkn+"|"+json ; 
+              Response.Write(json);
+              Response.End();
+          } 
+        
+      
 
       }
+
+
+
    
 
 }

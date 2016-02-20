@@ -313,7 +313,7 @@
 </head>
 
 <body>
-    <input type="hidden" id="tol" value='<%=totalnum %>' />
+    <input type="hidden" id="tol" value='<% %>' />
    <input type="hidden" id="j_lc" value='<%=json_lc %>' />
     <div style="width: 100%;height:675px; margin: auto">
         <%--此行不能修改--%>
