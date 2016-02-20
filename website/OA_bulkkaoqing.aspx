@@ -12,6 +12,7 @@
     <script src="Scripts/bootstrap-datetimepicker.fr.js"></script>
     <link href="Style/bootstrap-datetimepicker.css" rel="stylesheet" />
     <link href="Style/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="Scripts/bootstrap-datetimepicker.zh-CN.js" charset="utf-8"></script>
     <style type="text/css">
         .item{width:100%;height:30px;}
         .date{display:inline-block;float:left;}
@@ -19,8 +20,6 @@
         .ass{width:109px;float:left;}
         .asst{display:block;float:left;width:38px;}
         .asss{float:left;}
-
-
     </style>
 
     <script type="text/javascript">
@@ -32,18 +31,11 @@
         window.onload = function ()
         {
             document.getElementById("btn").onclick = function () { send(); };
-
-
-            $(".form_datetime").datetimepicker({
-                format: "yyyy-mm-dd",
-            });
-
-
             $('.form_datetime').datetimepicker().on('changeDate', function (ev) {
-                var rq = document.getElementById("time_1").value;
+                var rq = document.getElementById("time_1").value; alert(rq);
                 settime(rq);
             });
-
+           
         }
         var sj = new Array();
         var js = 0;
@@ -173,11 +165,16 @@
 </head>
 <body>
         <div style="width:300px;height:210px;margin-bottom:30px;border:1px solid #cdcdcd"  >
-            <div class="input-append date form_datetime">
+            <div class="form_datetime">
                 <input type="hidden" value="" id="time_1"  />
-                <span class="add-on"><i class="icon-remove"></i></span>
-                <span class="add-on"><i class="icon-th"></i></span>
-                日期控件
+                <script type="text/javascript">
+                    $(".form_datetime").datetimepicker({
+                        language: 'zh-CN',
+                        linkFormat: 'yyyy-mm-dd',
+                        minView: 'month',
+                        linkField: 'time_1'
+                    });
+                </script>
             </div>
         </div>
     <div style="width:500px;height:400px;border:1px solid #cdcdcd;" id="time_2">

@@ -36,12 +36,12 @@ public partial class OA_ydylcfb : System.Web.UI.Page
      * 
      * 
      */
-    public string json_lc = "";
+    public String json_lc = "";
+    public String uid = ""; 
 
     protected void Page_Load(object sender, EventArgs e)
     {
         b = new _BLL();
-        String uid = "";
         try
         {
              uid = Session["user"].ToString().Split('|')[0];
