@@ -10,6 +10,7 @@
     <script src="Scripts/bootstrap-datetimepicker.js"></script>
     <script src="Scripts/bootstrap-datetimepicker.min.js"></script>
     <script src="Scripts/bootstrap-datetimepicker.fr.js"></script>
+    <script src="Scripts/bootstrap-datetimepicker.zh-CN.js"></script>
     <link href="Style/bootstrap-datetimepicker.css" rel="stylesheet" />
     <link href="Style/bootstrap-datetimepicker.min.css" rel="stylesheet" />
     <script src="Scripts/bootstrap-datetimepicker.zh-CN.js" charset="utf-8"></script>
@@ -31,6 +32,7 @@
         window.onload = function ()
         {
             document.getElementById("btn").onclick = function () { send(); };
+
             $('.form_datetime').datetimepicker().on('changeDate', function (ev) {
                 var rq = document.getElementById("time_1").value; 
                 settime(rq);
@@ -169,6 +171,7 @@
             <div class="form_datetime">
                 <input type="hidden" value="" id="time_1"  />
                 <script type="text/javascript">
+
                     $(".form_datetime").datetimepicker({
                         language: 'zh-CN',
                         linkFormat: 'yyyy-mm-dd',
