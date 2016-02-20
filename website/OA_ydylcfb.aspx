@@ -291,6 +291,7 @@
 
 <body>
     <input type="hidden" id="lc" value='<%=json_lc%>' />
+    <input type="hidden" id="uid" value="<%=u_id %>"
     <div style="width:1000px;height:650px; margin: auto">
         <%--此行不能修改--%>
         <div class="row-fluid">
