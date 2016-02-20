@@ -1449,25 +1449,13 @@ public partial class AsyCenter : System.Web.UI.Page
         string sql = "";
         int r = 0;
       
-        //SqlParameter[] spr = { 
-        //                           new  SqlParameter("@pagesize",pagesize),
-        //                           new  SqlParameter("@index ",index),
-        //                           new  SqlParameter("@sender_id",userid)
-        //                     };
-
-        r = Convert.ToInt32(pagesize) * (Convert.ToInt32(index) - 1);
-
-        if (r == 0)
-        {
-            sql = "select top " + @pagesize + " * from oa_dq_spl where sender_id=" + userid + " or splc_datas like '%" + userid + "%'" + " order by id desc";
-        }
-        else
-        {
-            sql = "select top " + @pagesize + " * from oa_dq_spl where id not in (select top " + @r + " id from oa_dq_spl where sender_id=" + userid + " or splc_datas like '%" + userid + "%'" + " order by id desc) and sender_id=" + userid + " or splc_datas like '%" + userid + "%' order by id desc";
-           
-        }
-        //id,sender_id,sender_times,titles,contents,stars,fj_url,splc_id,splc_datas 
-
+      
+        r = Convert.ToInt32(pagesize) * Convert.ToInt32(index);
+        string s = r.ToString();
+        string i = (r - Convert.ToInt32(pagesize)).ToString();
+      
+        sql = "SELECT * FROM oa_dq_spl w1, ( SELECT TOP "+ s + " row_number() OVER (ORDER BY ID desc ) n, id FROM oa_dq_spl where sender_id=" + userid + " or splc_datas like '%" + userid + "%'" + " ) w2  WHERE w1.id = w2.id AND w2.n > " + i + " ORDER BY w2.n ASC ";
+       
 
         dt = SqlHelper.GetTable(sql, CommandType.Text,null);
         json = Tools.BiuldJson("",dt);
@@ -1505,16 +1493,12 @@ public partial class AsyCenter : System.Web.UI.Page
           //                         new  SqlParameter("@sender_id",userid)
           //                   };
 
-          r = Convert.ToInt32(pagesize) * (Convert.ToInt32(index) - 1);
+          r = Convert.ToInt32(pagesize) * Convert.ToInt32(index);
+          string s = r.ToString();
+          string i = (r - Convert.ToInt32(pagesize)).ToString();
 
-          if (r == 0)
-          {
-              sql = "select top " + @pagesize + " * from oa_ls_spl where sender_id="+userid+" or splc_datas like '%" + userid + "%'" + " order by id desc";
-          }
-          else
-          {
-              sql = "select top " + @pagesize + " * from oa_ls_spl where id not in (select top " + @r + " id from oa_ls_spl where sender_id=" + userid + " or splc_datas like '%" + userid + "%'" + " order by id desc) and sender_id=" + userid + " or splc_datas like '%" + userid + "%' order by id desc";
-          }
+          sql = "SELECT * FROM oa_ls_spl w1, ( SELECT TOP " + s + " row_number() OVER (ORDER BY ID desc ) n, id FROM oa_ls_spl where sender_id=" + userid + " or splc_datas like '%" + userid + "%'" + " ) w2  WHERE w1.id = w2.id AND w2.n > " + i + " ORDER BY w2.n ASC ";
+
           // and sender_id=@sender_id or splc_datas like '%" + userid + "%'
           dt = SqlHelper.GetTable(sql, CommandType.Text, null);
           json = Tools.BiuldJson("", dt);
