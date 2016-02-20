@@ -139,10 +139,105 @@ public partial class AsyCenter : System.Web.UI.Page
                     Pagels();
 
                     break;
+
+                case "onekaoqingdata":
+                    OneKaoqingData();
+                    break;
+
+                case "allkaoqingdata":
+                    AllKaoqingData();
+                    break;
                 default:
                     break;
             }
         }
+
+    }
+
+    private void AllKaoqingData()
+    {
+        String _year = Request.Form["year"];
+        String _moth = Request.Form["month"];
+        String userid = Request.Form["uid"];
+        String result = "";
+        string date = "";
+        //查询oa_kaoqing  u_id=userid的用户在这个年份和月份的考勤数据  
+        //返回字段
+        // [id]
+        //[a_start_time]
+        //[a_end_time]
+        //[p_start_time]
+        //[p_end_time]
+        //[a_state]
+        //[p_state]
+        //[u_cd]
+        //[u_zt]
+        //[qj_a]
+        //[qj_p]
+        //[day]
+
+        if (_moth.Length == 1)
+        {
+            _moth = "0" + _moth;
+
+        }
+
+        date = "'" + _year + "-" + _moth + "-" + "%'";
+        DataTable dt = null;
+
+        SqlParameter[] spr ={ 
+                                new SqlParameter("@u_id",userid)
+                            };
+        string sql = "select id, a_start_time, a_end_time, p_start_time, p_end_time, a_state, p_state,u_cd, u_zt, qj_a, qj_p, day from oa_kaoqing where u_id=@u_id and day like" + @date;
+        dt = SqlHelper.GetTable(sql, CommandType.Text, spr);
+        result = Tools.BiuldJson("", dt);//结果包装成json
+        Response.Write(result);
+        Response.End();
+
+    }
+
+    private void OneKaoqingData()
+    {
+        String _year = Request.Form["year"];
+        String _moth = Request.Form["month"];
+        String userid = Session["user"].ToString().Split('|')[0];
+        String result = "";
+        string serchdate = "";
+        //查询oa_kaoqing当前用户在这个年份和月份的考勤数据  
+        //返回字段
+        // [id]
+        //[a_start_time]
+        //[a_end_time]
+        //[p_start_time]
+        //[p_end_time]
+        //[a_state]
+        //[p_state]
+        //[u_cd]
+        //[u_zt]
+        //[qj_a]
+        //[qj_p]
+        //[day]
+
+
+        if (_moth.Length == 1)
+        {
+            _moth = "0" + _moth;
+
+        }
+
+        serchdate = " '" + _year + "-" + _moth + "-" + "%'";
+        DataTable dt = null;
+
+        SqlParameter[] spr ={ 
+                                new SqlParameter("@u_id",userid)
+                            };
+        string sql = "select id, a_start_time, a_end_time, p_start_time, p_end_time, a_state, p_state,u_cd, u_zt, qj_a, qj_p, day from oa_kaoqing where u_id=@u_id and a_state<>'' and day like " + serchdate;
+        dt = SqlHelper.GetTable(sql, CommandType.Text, spr);
+        result = Tools.BiuldJson("", dt);//结果包装成json
+        Response.Write(result);
+        Response.End();
+
+
 
     }
 

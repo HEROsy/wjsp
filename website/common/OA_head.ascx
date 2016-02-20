@@ -198,6 +198,10 @@
                             document.getElementById('center').src='OA_bmyhgl.aspx';
                         } else if (tag=="bulk") {
                             document.getElementById('center').src = 'OA_bulkkaoqing.aspx';
+                        } else if (tag="allkq") {
+                            document.getElementById('center').src = 'OA_kaoqing_all.aspx';
+                        } {
+
                         }
                     } else {
                         alert('无权限！');
@@ -240,7 +244,7 @@
                             <span class="top_title">考勤管理</span>
                             <div class="kaoqingxl">
                             <div class="xiala1" onclick="document.getElementById('center').src='OA_kaoqing.aspx'"><span>我的所有考勤</span><span class="jiantou1">●</span></div>
-                            <div class="xiala2" style="border-bottom: 1px solid #f1efef;" onclick="document.getElementById('center').src='OA_kaoqing_all.aspx'"><span>所有员工考勤</span><span class="jiantou1">●</span></div>
+                            <div class="xiala2" style="border-bottom: 1px solid #f1efef;" onclick=check('allkq');<%--"document.getElementById('center').src='OA_kaoqing_all.aspx'"--%>><span>所有员工考勤</span><span class="jiantou1">●</span></div>
                             </div>
                         </div>
                         <div class="span2 top_back xtsz" onmouseover="this.style.cursor='pointer'">
