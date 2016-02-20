@@ -61,11 +61,12 @@
         var json_lc = "";
         var pagebox;
         var pageindex;
+        var val = "";
         window.onload = function () {
             json_lc = document.getElementById("j_lc").value;
             //spl();
             pagebox = document.getElementById("pagebox");
-            totol();
+            //totol();
             GetData(1);
 
         }
@@ -98,33 +99,54 @@
         }
 
         function selesql() {
-            var suoso = document.getElementById("srtxt").value;
-            var data = "";
-            var html = "";
-            try {
-                data = eval("(" + json_lc + ")");
-                html = html + "<table class='table table-hover'>"
-                    + "<thead>"
-                    + "<tr>"
-                    + "<th>文件编号</th><th>标题</th><th>操作</th>"
-                    + "</tr>"
-                    + "</thead>"
-                    + "<tbody>"
-                for (var i = 0; i < data.length; i++) {
-                    var y = null;
-                    y = decode(data[i].titles).indexOf(suoso);
-                    if (y != -1) {
-                        html = html + "<tr><td>" + decode(data[i].id) + "</td><td>" + decode(data[i].titles) + "</td><td><a href=oa_splxq.aspx?lcid=" + data[i].id + "&type=ing>查看详细</a></td></tr>";
-                    }
-                    if (suoso == "") {
-                        spl();
-                    }
-                }
-                html = html + "</tbody></table>";
-                document.getElementById("tb").innerHTML = html;
-            } catch (e) {
-                alert("无数据")
+            val = document.getElementById("srtxt").value;
+            if (val.replace(/\s+/g, "") == "")
+            {
+                val = "";
             }
+            $.ajax({
+                type: "post",
+                url: "AsyCenter.aspx",
+                data: {
+                    type: "pagels",
+                    key: val,
+                    pageindex: '1',
+                    pagesize: "10"
+                },
+                success: function (data) {
+                    var json_tv = "";
+                    var html = "";
+                    var totalcount = "";
+                    try {
+                        totalcount = data.split("|")[0];
+                        var json_data = data.split("|")[1];
+                        alert(totalcount);
+                        json_tv = eval("(" + json_data + ")");
+                        html = html + "<table class='table table-hover'>"
+                            + "<thead>"
+                            + "<tr>"
+                            + "<th>文件编号</th><th>标题</th><th>操作</th>"
+                            + "</tr>"
+                            + "</thead>"
+                            + "<tbody>"
+                        totol(totalcount);
+                        for (var i = 0; i < json_tv.length; i++) {
+
+                                html = html + "<tr><td>" + decode(json_tv[i].id) + "</td><td>" + decode(json_tv[i].titles) + "</td><td><a href=oa_splxq.aspx?lcid=" + json_tv[i].id + "&type=ed>查看详细</a></td></tr>";
+
+                        }
+                        html = html + "</tbody></table>";
+                        document.getElementById("tb").innerHTML = html;
+                    } catch (e) {
+                        document.getElementById("tb").innerHTML = "<span>当前审批流为空请发布审批流。</span>";
+                    }
+
+                },
+                error: function (data) {
+
+                }
+            })
+
         }
 
         function InitPages(pagebox, totalpage, pageindex) {
@@ -267,14 +289,18 @@
                 url: "AsyCenter.aspx",
                 data: {
                     type: "pagels",
+                    key: val,
                     pageindex: pageindex,
                     pagesize: "10"
                 },
                 success: function (data) {
                     var json_tv = "";
                     var html = "";
+                    var totalcount = "";
                     try {
-                        json_tv = eval("(" + data + ")");
+                        totalcount = data.split("|")[0];
+                        var json_data = data.split("|")[1];
+                        json_tv = eval("(" + json_data + ")");
                         html = html + "<table class='table table-hover'>"
                             + "<thead>"
                             + "<tr>"
@@ -282,8 +308,10 @@
                             + "</tr>"
                             + "</thead>"
                             + "<tbody>"
+                        totol(totalcount);
                         for (var i = 0; i < json_tv.length; i++) {
-                            html = html + "<tr><td>" + decode(json_tv[i].id) + "</td><td>" + decode(json_tv[i].titles) + "</td><td><a href=oa_splxq.aspx?lcid=" + json_tv[i].id + "&type=ed>查看详细</a></td></tr>";
+
+                                html = html + "<tr><td>" + decode(json_tv[i].id) + "</td><td>" + decode(json_tv[i].titles) + "</td><td><a href=oa_splxq.aspx?lcid=" + json_tv[i].id + "&type=ed>查看详细</a></td></tr>";
                         }
                         html = html + "</tbody></table>";
                         document.getElementById("tb").innerHTML = html;
@@ -298,8 +326,8 @@
             })
         }
 
-        function totol() {
-            var page = document.getElementById("tol").value;
+        function totol(totalcount) {
+            var page = totalcount;
             var yu = page % 10;
             if (yu == 0) {
                 page = page / 10;
@@ -313,7 +341,6 @@
 </head>
 
 <body>
-    <input type="hidden" id="tol" value='<%=totalnum %>' />
    <input type="hidden" id="j_lc" value='<%=json_lc %>' />
     <div style="width: 100%;height:675px; margin: auto">
         <%--此行不能修改--%>
